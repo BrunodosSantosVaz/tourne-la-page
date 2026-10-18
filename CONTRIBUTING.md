@@ -1,33 +1,29 @@
-# Como contribuir com o Big Bang
+# Como contribuir com Tournepage
 
-Obrigado pelo interesse! O Big Bang é um framework para uma pessoa e suas IAs construírem sistemas profissionais.
+<!-- DOC-16: criado pelo bb init a partir de .bigbang/modelos/comunidade/. Pertence ao projeto: complete com o que
+     for específico (ambiente de desenvolvimento, convenções da stack). -->
 
-## Relatar um problema ou sugerir algo
+Obrigado pelo interesse! Este projeto é construído com o framework [Big Bang](https://github.com/BrunodosSantosVaz/big-bang):
+uma pessoa decide e IAs executam, e toda mudança passa por uma esteira com testes, revisão e homologação.
 
-1. Procure nas [issues](https://github.com/BrunodosSantosVaz/big-bang/issues) se já existe.
-2. Abra uma issue com o que você fez, o que esperava e o que aconteceu, a versão do framework (`.bigbang/VERSION`)
-   e, se for de um sistema feito com o Big Bang, o trecho do log da esteira.
+## Relatar um bug ou pedir algo
+
+1. Procure nas [issues](https://github.com/BrunodosSantosVaz/tournepage/issues) se já existe.
+2. Abra uma issue pelo formulário (Bug ou Ideia). Para bug: o que você fez, o que esperava e o que aconteceu, com a
+   versão e o aparelho ou navegador.
 3. Falha de segurança: **não** abra issue pública com detalhes; veja [SECURITY.md](SECURITY.md).
 
-## Enviar uma mudança
+## Enviar código
 
-- Leia a [especificação](https://github.com/BrunodosSantosVaz/big-bang/wiki/Especificacao): ela é a fonte da verdade, e cada decisão de projeto vira
-  um ADR na [Wiki — Decisões](https://github.com/BrunodosSantosVaz/big-bang/wiki/Decisoes).
-- No próprio framework, use uma branch isolada a partir da `main`, confirme a posse da issue e abra PR para
-  `main`. Depois da CI, revisão independente e release oficial, sincronize `main` em `develop` por outro PR.
-  A [decisão do modo Flash](https://github.com/BrunodosSantosVaz/big-bang/wiki/ADR-0017-modo-flash) dispensa a Fundação deste repositório.
-  A [faxina automática](https://github.com/BrunodosSantosVaz/big-bang/wiki/ADR-0020-faxina-automatica) aguarda a release estável,
-  as duas CIs completas e a sincronização; só apaga branches incorporadas e com trabalho concluído.
-  Confira o run Faxina do Big Bang e libere as posses antes de declarar a entrega encerrada.
-  Use commits em inglês
-  ([Conventional Commits](https://www.conventionalcommits.org/pt-br/)), textos e documentação em português do Brasil.
-- Só biblioteca padrão do Python 3.11+ na CLI `bb`; scripts da esteira em Bash, aprovados pelo `shellcheck`.
-- Mudou algo em `.bigbang/`? Rode `bb gerar`, `python .bigbang/tests/atualizar_esperado.py`, `bb checksums --escrever`,
-  `bb verificar` e a suíte: `python -m unittest discover -s .bigbang/tests` (com `BB_TESTE_DOCKER=1` para o alvo de deploy).
-- Registre o que muda para os projetos em [`.bigbang/MIGRACAO.md`](.bigbang/MIGRACAO.md) e atualize o README.
-- Abra o PR com *O que muda*, *Testes* e *Issue*; a CI completa do mesmo SHA precisa ficar verde.
-  Escreva os testes antes do código. Execute depois de concluir a alteração e reutilize a evidência da CI
-  na revisão, sem repetir a suíte local por hábito. Os consumidores seguem os fluxos gerados de seus projetos.
+- Leia o [README](README.md), a documentação no destino canônico por visibilidade e o [`AGENTS.md`](AGENTS.md), que valem para pessoas e IAs.
+- Trabalhe numa branch a partir da `develop` (bug: a partir da `main`), no padrão de
+  [`.bigbang/processo/07-branches-e-commits.md`](.bigbang/processo/07-branches-e-commits.md).
+- Commits e código em inglês ([Conventional Commits](https://www.conventionalcommits.org/pt-br/)); issues, PRs e
+  documentação em português do Brasil.
+- Bug: o primeiro commit traz o teste que falha; a correção vem no segundo.
+- Os testes de aceite em `tests/aceite/` são travados: não os altere.
+- Atualize a documentação e o README que a mudança tocar.
+- Abra o PR com *O que muda*, *Testes* e *Issue* (`Refs #n`). A CI precisa ficar verde.
 
 ## Código de conduta
 
