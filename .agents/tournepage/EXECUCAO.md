@@ -46,6 +46,7 @@ O conteúdo funcional detalhado ainda precisa de proposta, revisão e publicaç�
 - O dono confirmou que as fontes da identidade visual são só para as funcionalidades do sistema. Para os livros, são quatro sugestões compatíveis com o plugin/documentação (Georgia, Literata, Atkinson Hyperlegible Next, Lexend), mais qualquer fonte instalada no computador. O protótipo e o ícone ainda precisam ser apresentados em F3 para validação.
 - O dono autorizou criar o contrato de autonomia com risco baixo/médio, teto US$ 50, WIP 3, validade de três meses e escopo local. O contrato está no PR #3; o `bb autonomy check` ainda aguarda controles GitHub.
 - O dono autorizou avançar com settings externos do GitHub, mas pediu o passo a passo para ele executar. Guiar um item por vez e conferir antes do próximo; não criar secrets em nome do dono.
+- Próxima ação manual do dono: habilitar Discussions em `Settings → Features → Set up discussions`. Se o assistente oferecer publicar uma mensagem inicial, não publique ainda; a IA fará o post factual idempotente quando a função estiver ativa. Depois, confirmar que a aba Discussions aparece; só então orientar o próximo ajuste. A configuração de rulesets com `gate` deve esperar até o workflow F5 existir.
 
 ## Ordem de execução
 
