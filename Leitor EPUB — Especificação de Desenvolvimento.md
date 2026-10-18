@@ -946,3 +946,11 @@ Referência conferida: `BrunodosSantosVaz/lessentiel`, commit `03d3468f00da71318
 O plano tem 74 RF (54 essenciais, 16 importantes, 4 desejáveis), 29 RN e 38 CA originais, além dos seis CA locais. A implementação ainda não começou. Importantes e desejáveis permanecem no backlog com prioridade; nenhum requisito é considerado entregue por constar num documento.
 
 O próximo modelo deve seguir o roteiro operacional, concluir a Fundação e iniciar a prova dos riscos antes de implementar as telas definitivas. A Wiki ainda precisa de sua primeira página e a toolchain Rust/Cargo precisa ser instalada. A especificação local foi preservada e recebeu este adendo conforme pedido do dono; não se deve apagar a fonte ao preparar uma migração para a Wiki.
+
+## 18. Referência de identidade visual recebida
+
+Em 18/10/2026, o dono adicionou [Tournepage Identidade Visual.dc.html](<Tournepage Identidade Visual.dc.html>), v1.0 · Out 2026. O arquivo original foi preservado. O [inventário operacional](.agents/tournepage/IDENTIDADE-VISUAL.md) organiza a leitura para F3 e para a implementação, com cores, tipografia, geometria, ícones, origem e pendências.
+
+A referência detalha a marca `tournepage` em minúsculas, símbolo da página com dobra, Literata para a marca, Inter na interface, JetBrains Mono para código/dados, família Lucide, paletas, destaques OKLCH e aplicações de capa/leitura/seleção/desfazer. Ela complementa a seção 12. O tema Papel e a fonte Literata usados na demonstração não alteram os padrões Claro/Georgia do leitor, nem removem Automático ou temas personalizados.
+
+O HTML é uma referência de design com dependências do ambiente de exportação (`support.js` ausente no checkout) e de CDNs para fontes/ícones. A implementação deve extrair assets locais e tokens para Rust/Iced, mantendo o aplicativo nativo e sem dependência de rede em execução. Nesta etapa foi feita apenas leitura e organização: nenhum asset foi gerado, nenhuma interface foi implementada e nenhum protótipo ou critério visual foi declarado validado.

@@ -78,7 +78,8 @@ Esta seção pertence ao projeto e é preenchida na Fundação: comandos da stac
 ### Tournepage — preparação autorizada em 18/10/2026
 
 - Este repositório é `BrunodosSantosVaz/tournepage`, um consumidor do Big Bang. O trecho condicional abaixo sobre o próprio framework não se aplica aqui.
-- Leia `.agents/tournepage/EXECUCAO.md`, `.agents/tournepage/BACKLOG.md` e `Leitor EPUB — Especificação de Desenvolvimento.md`, incluindo os adendos 16 e 17, antes de continuar.
+- Leia `.agents/tournepage/EXECUCAO.md`, `.agents/tournepage/BACKLOG.md` e `Leitor EPUB — Especificação de Desenvolvimento.md`, incluindo os adendos 16, 17 e 18, antes de continuar.
+- A identidade visual fornecida está em `Tournepage Identidade Visual.dc.html`; leia também `.agents/tournepage/IDENTIDADE-VISUAL.md` para o inventário de marca, tokens, ícones e dependências da prévia. Preserve o HTML original. A prévia Papel/Literata não altera os padrões Claro/Georgia do leitor.
 - O dono pediu execução autônoma e reservou a implementação para o modelo seguinte. Nesta preparação não há implementação do leitor, Fundação concluída, aprovação de protótipo ou release.
 - As escolhas da especificação já estão feitas: Rust edição 2024, Iced, SQLite, renderização própria, desktop sem webview, licença MIT, execução privada/local. Não refaça uma entrevista sobre essas escolhas.
 - Aplique os padrões de `.bigbang/padroes/`, conferidos com o L’Essentiel, e a skill `.agents/skills/ponytail/SKILL.md`. O escopo completo do usuário prevalece sobre a opção de reduzir recursos em pedidos vagos.

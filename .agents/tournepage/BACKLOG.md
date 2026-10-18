@@ -50,7 +50,7 @@ Refinar Dado/Quando/Então e vincular RF/RN/CA; escrever os testes antes do cód
 | --- | --- | --- |
 | T17 | Retomar, paginação/rolagem, teclado/mouse/trackpad, sumário, progresso, foco/tela cheia. CA-19/23/26, persistência no prazo e cancelamento de layout obsoleto | T03, T10, T13 |
 | T18 | Notas em pop-up, links internos/histórico, confirmação de URL completa, imagens ocultas/zoom, tabelas e copiar texto/referência. CA-20 a 22; recusar esquemas perigosos sem shell | T09, T17 |
-| T19a | Tokens/defaults rastreados ao plugin, fontes/licenças, sete temas e validação de preferências; valores não espalhados pelas telas | T05; fazer antes de T13 |
+| T19a | Extrair tokens da identidade visual fornecida, conforme IDENTIDADE-VISUAL.md, com rastreio ao plugin; Literata na marca, Inter na UI, Lucide local, fontes/licenças, sete modos e preferências. Prévia Papel/Literata não altera default Claro/Georgia | T05; fazer antes de T13 |
 | T19b | Painel de aparência, espaçamentos/alinhamento/hifenização/exceções; CA-24/25, defaults/limites e preview sem perda de posição | T17, T19a |
 | T20 | Colunas −/+, 45 caracteres mínimos, limite dinâmico, resize/restauração da preferência e uma coluna em rolagem. CA-38 com geometria real | T17, T19b |
 | T26 | Fluent pt-BR/en, tema da UI, pastas, escala/reduzir movimento. Atalhos personalizados e atualização opcional em recortes próprios pela prioridade; rede zero por padrão | T11, T19a; integração final após T17 |
@@ -82,6 +82,7 @@ Refinar Dado/Quando/Então e vincular RF/RN/CA; escrever os testes antes do cód
 ## Observações para o refinamento
 
 - T01 cria só o necessário à prova; T05 completa o ciclo local/CI. Não criar oito crates vazias com abstrações futuras.
+- Fundação/F3 reutiliza `Tournepage Identidade Visual.dc.html`, preservado como fonte, para preparar logo, ícone global e Social preview; T13/T17/T21 seguem as aplicações visuais, e T28 exporta os ícones por plataforma. O inventário e os cuidados de extração estão em `IDENTIDADE-VISUAL.md`; esta organização não produz os assets nem valida o protótipo.
 - Persistência vem antes de biblioteca/marcações; evoluir o esquema com migrações incrementais testadas.
 - Os 38 CA originais não cobrem individualmente os 74 RF. Acrescentar cenários antes de programar os RF sem CA específico, sobretudo configurações, filtros, cancelamento e falhas.
 - A matriz abaixo registra o destino de cada requisito, não cobertura realizada. Substituir “a escrever” por caminhos/casos reais e commits na execução. Nenhuma linha é recibo de aprovação.

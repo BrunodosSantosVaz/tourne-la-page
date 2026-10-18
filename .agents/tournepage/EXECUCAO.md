@@ -6,7 +6,7 @@ Preparado em 18/10/2026. Repositório: `BrunodosSantosVaz/tournepage`.
 
 O dono pediu aplicar a especificação em modo autônomo (“go horse”), acrescentar uma camada local rápida além de homologação e produção, seguir as regras do L’Essentiel e preparar tudo para trocar o modelo executor. Esta etapa é a preparação; a próxima sessão implementa o produto.
 
-Leia nesta ordem: `AGENTS.md` (incluindo a seção Projeto), este roteiro, a especificação na raiz com os adendos 16/17, `BACKLOG.md`, `.agents/skills/ponytail/SKILL.md` e os padrões aplicáveis de `.bigbang/padroes/`.
+Leia nesta ordem: `AGENTS.md` (incluindo a seção Projeto), este roteiro, a especificação na raiz com os adendos 16/17/18, `Tournepage Identidade Visual.dc.html` e seu inventário `.agents/tournepage/IDENTIDADE-VISUAL.md`, `BACKLOG.md`, `.agents/skills/ponytail/SKILL.md` e os padrões aplicáveis de `.bigbang/padroes/`.
 
 Não confunda esta entrega com um leitor EPUB pronto. Não há workspace Rust, testes do produto, instaladores ou versão publicada. O estado inicial do código remoto é `cbf9710eba0239c5e88f5a77fa9cbe4c0294758f`.
 
@@ -19,7 +19,7 @@ Não confunda esta entrega com um leitor EPUB pronto. Não há workspace Rust, t
 | Implementação | Rust estável edição 2024, Iced + cosmic-text/wgpu; sem webview/Chromium |
 | Persistência | SQLite embarcado, WAL, migrações, FTS5, backups e cache descartável |
 | Privacidade | Sem conta, nuvem ou telemetria; atualização opcional desligada por padrão |
-| Aparência | L’Essentiel como referência; sete temas, fontes e padrões da seção 12 |
+| Aparência | Identidade visual v1.0 fornecida no HTML: marca em Literata, Inter na UI, Lucide e paletas da seção 12; sete modos e fonte do livro conforme a especificação |
 | Ambientes | Local rápido e isolado; homologação; produção por promoção do artefato aprovado |
 | Código | Padrões Big Bang/L’Essentiel, Ponytail, inglês no código e português na documentação |
 | Licença | MIT; fontes OFL; Georgia apenas se instalada no sistema |
@@ -45,7 +45,7 @@ A Wiki é uma pendência do bootstrap, não motivo para perder este plano: prese
 3. Concluir a Fundação com `.agents/skills/bb-iniciar-projeto/SKILL.md`, reutilizando as decisões já fornecidas. “F0–F5” do Big Bang antecede e difere das fases do aplicativo.
 4. Depois da primeira página da Wiki, conferir `python .bigbang/bin/bb.py docs prepare --repository BrunodosSantosVaz/tournepage`; executar `bb init` conforme as opções abaixo. O modo real continua dependente do contrato e dos controles do framework.
 5. Em F2, adaptar a configuração proposta, publicar documentos produto/stack/design/arquitetura/ADRs na Wiki pelo procedimento do framework e preparar sua rastreabilidade. Não ativar comandos vazios ou scripts inexistentes como se a CI estivesse pronta.
-6. Em F3, usar tokens do L’Essentiel, preparar ícone e protótipo; registrar o que realmente foi validado. A especificação aprova escolhas, não uma tela ainda inexistente. Revisão independente e portões seguem o contrato aplicável; não inventar aprovação do dono.
+6. Em F3, partir da identidade visual fornecida, inventariada em `IDENTIDADE-VISUAL.md`, e manter o vínculo dos tokens com L’Essentiel. Extrair os assets nativos e preparar ícone e protótipo; registrar o que realmente foi validado. O HTML de referência não é um protótipo funcional validado e depende de um `support.js` ausente. Revisão independente e portões seguem o contrato aplicável; não inventar aprovação do dono.
 7. Em F4/F5, inventariar e instalar a esteira do **Tournepage**, Project único, controles e contrato aplicável. Usar `bb generate --dry-run`, `bb generate` e `bb verify`; não editar `.bigbang/` ou arquivos gerados. Não publicar nem alterar permissões porque um exemplo manda.
 8. Abrir/refinar os épicos da sequência do BACKLOG, escrever testes de aceite antes da implementação, adquirir posse e usar worktree. Começar pelos riscos da Fase 0, sem telas definitivas ou expansão de escopo.
 9. Executar as fases em ordem com os portões definidos. Atualizar a matriz de requisitos com evidência real, commit e teste. Relatar bloqueios com o que foi tentado e continuar o trabalho independente possível.
@@ -104,7 +104,7 @@ Commit conferido: `03d3468f00da71318da49373805c1fe66a618721`.
 
 Os dez arquivos `.bigbang/padroes/*.md` são idênticos à origem. A Ponytail foi importada sem alteração com LICENSE. Um adaptador em `.claude/skills/ponytail/SKILL.md` aponta para a fonte canônica. Na próxima sessão, a skill estará disponível pela descoberta do projeto; seu conteúdo já está linkado por AGENTS.
 
-Valores de aparência foram conferidos em `src/platform/reader-style.ts`, `reader-panel.ts`, `reader-toolbar.ts` e `reader-fonts.ts`. O plugin não possui o JSON compartilhado descrito no plano. Criar tokens locais rastreáveis não exige nem autoriza alterar o plugin. Conservar diferenças explícitas do Tournepage: Papel/Grafite, colunas, Inter e novas fontes da seção 10.
+Valores de aparência foram conferidos em `src/platform/reader-style.ts`, `reader-panel.ts`, `reader-toolbar.ts` e `reader-fonts.ts`. O plugin não possui o JSON compartilhado descrito no plano. Criar tokens locais rastreáveis não exige nem autoriza alterar o plugin. A identidade visual adicionada pelo dono detalha as diferenças do Tournepage: marca em Literata, Papel/Grafite, colunas, Inter, Lucide e fontes da seção 10. A prévia Papel/Literata não muda Claro/Georgia como padrões do leitor; referências remotas de fontes/ícones no showcase não devem ir para o runtime nativo.
 
 ## Limites desta entrega e da autonomia
 
