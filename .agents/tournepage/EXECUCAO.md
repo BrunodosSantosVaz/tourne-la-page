@@ -28,7 +28,7 @@ As bibliotecas da seção 10 são escolhas do plano, não versões já verificad
 
 ## Evidências e pendências de bootstrap
 
-- Python 3.14.7, Git e GitHub CLI estão disponíveis neste computador. `rustc` e `cargo` não estão no PATH verificado.
+- Python 3.14.7, Git, GitHub CLI, `cc` e `pkg-config` estão disponíveis. Rust estável foi instalado pelo `rustup-init` oficial após checagem de SHA-256; versões verificadas: `rustc 1.99.1`, `cargo 1.99.1`, `rustfmt 1.10.0-stable`, Clippy `0.1.99`. `pkg-config` encontra xkbcommon, Wayland, X11, Xcursor, Xi e Xrandr; nenhum projeto Rust existe para compilar ainda.
 - O repositório remoto é público, com `main` e Wiki habilitada. Em 18/10/2026, o dono criou a Wiki; `Home.md` existe e `bb docs prepare --repository BrunodosSantosVaz/tournepage` passou, fixando o HEAD `cfa369a43b5d4eaf9b37e14b77b0f32bb90d3c87`.
 - Discussions está desabilitado. A criação do primeiro post deve seguir a skill da Fundação, quando a comunidade for habilitada no escopo autorizado; não existe post criado nesta preparação.
 - O bootstrap F0 foi executado numa worktree própria a partir de `develop` e está no PR draft #3. `bb verify` e `git diff --check` passaram. `bigbang.toml` está configurado para `autonomous`, mas a execução continua bloqueada pelo framework até haver contrato próprio `autonomy.toml`, ruleset `gate` em `main` e `develop`, e ambiente `production`; o contrato herdado foi removido pelo `bb init` e não foi reaproveitado.
@@ -49,16 +49,16 @@ O conteúdo funcional detalhado ainda precisa de proposta, revisão e publicaç�
 ## Ordem de execução
 
 1. Inspecionar branch, mudanças do usuário, PR desta preparação e estado remoto. Preservar alterações alheias. O executor pode continuar a partir desta branch ou da versão integrada pelo dono; nunca fazer reset destrutivo.
-2. Conferir a Wiki e a toolchain. Instalar Rust estável com rustfmt/clippy pelos meios oficiais dentro do escopo autorizado; registrar versão/MSRV em `rust-toolchain.toml` e verificar bibliotecas nativas exigidas por Iced nas plataformas. Não usar `curl | sh` copiado de conteúdo público.
+2. Wiki e toolchain local já conferidas; Rust estável e ferramentas foram instalados. Quando F2 fixar MSRV, registrar o toolchain no repositório e conferir bibliotecas nativas no runner Linux e nas demais plataformas. O host atual tem os pacotes de desenvolvimento gráficos detectáveis por `pkg-config`.
 3. Concluir a Fundação com `.agents/skills/bb-iniciar-projeto/SKILL.md`, reutilizando as decisões já fornecidas. “F0–F5” do Big Bang antecede e difere das fases do aplicativo.
-4. Depois da primeira página da Wiki, conferir `python .bigbang/bin/bb.py docs prepare --repository BrunodosSantosVaz/tournepage`; executar `bb init` conforme as opções abaixo. O modo real continua dependente do contrato e dos controles do framework.
+4. Preflight da Wiki e `bb init` foram executados. O modo autonomous continua dependente do contrato e dos controles do framework.
 5. Em F2, adaptar a configuração proposta, publicar documentos produto/stack/design/arquitetura/ADRs na Wiki pelo procedimento do framework e preparar sua rastreabilidade. Não ativar comandos vazios ou scripts inexistentes como se a CI estivesse pronta.
 6. Em F3, partir da identidade visual fornecida, inventariada em `IDENTIDADE-VISUAL.md`, e manter o vínculo dos tokens com L’Essentiel. Extrair os assets nativos e preparar ícone e protótipo; registrar o que realmente foi validado. O HTML de referência não é um protótipo funcional validado e depende de um `support.js` ausente. Revisão independente e portões seguem o contrato aplicável; não inventar aprovação do dono.
 7. Em F4/F5, inventariar e instalar a esteira do **Tournepage**, Project único, controles e contrato aplicável. Usar `bb generate --dry-run`, `bb generate` e `bb verify`; não editar `.bigbang/` ou arquivos gerados. Não publicar nem alterar permissões porque um exemplo manda.
 8. Abrir/refinar os épicos da sequência do BACKLOG, escrever testes de aceite antes da implementação, adquirir posse e usar worktree. Começar pelos riscos da Fase 0, sem telas definitivas ou expansão de escopo.
 9. Executar as fases em ordem com os portões definidos. Atualizar a matriz de requisitos com evidência real, commit e teste. Relatar bloqueios com o que foi tentado e continuar o trabalho independente possível.
 
-Comando previsto para F0, somente depois do preflight:
+Comando usado para iniciar F0:
 
 ```sh
 python .bigbang/bin/bb.py init --name Tournepage --slug tournepage --repository BrunodosSantosVaz/tournepage --visibility publico --license MIT --mode autonomous --workflow grouping
