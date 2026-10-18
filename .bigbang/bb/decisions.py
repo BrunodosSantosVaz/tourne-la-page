@@ -1,0 +1,220 @@
+"""Owner decisions as labels (spec 11.9) and the AI review approval (spec 11.8).
+
+All AIs use the owner's account, so GitHub cannot tell who put a label. `bb decisao` makes every decision traceable:
+it first comments the owner's own words, then puts the label. `bb revisao aprovar` only puts `pr-aprovado` when the
+PR does not require the owner's review."""
+import datetime
+import base64
+import json
+
+from . import github, names, pipeline
+from . import config as config_module
+from .errors import EXIT_USAGE, EXIT_VERIFICATION_FAILED, BbError
+
+DECISIONS = ("refinamento-aprovado", "prototipo-aprovado", "testes-aprovados", "teste-alterado-aprovado",
+             "homologado", "reprovado", "dono:revisao-ia", "pr-aprovado")
+OPPOSITES = {"homologado": ("reprovado",), "reprovado": ("homologado",), "dono:revisao-ia": ("revisao-humana",),
+             "qa:approved": ("qa:rejected",), "qa:rejected": ("qa:approved",), "owner:ai-review": ("review:human",)}
+ALL_DECISIONS = DECISIONS + tuple(label for label in names.DECISIONS if label not in DECISIONS)  # legacy Portuguese and v3 English spellings (ADR-0024)
+
+
+def _now():
+    return datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+
+
+def _labels(repository, number):
+    return set(json.loads(github.run("api", f"repos/{repository}/issues/{number}", "--jq", "[.labels[].name]")))
+
+
+def _comment(repository, number, body):
+    github.run("api", "-X", "POST", f"repos/{repository}/issues/{number}/comments", "-f", f"body={body}",
+               "--silent")
+
+
+def _add_label(repository, number, label):
+    github.run("api", "-X", "POST", f"repos/{repository}/issues/{number}/labels", "-f", f"labels[]={label}",
+               "--silent")
+
+
+def _remove_label(repository, number, label):
+    try:
+        github.run("api", "-X", "DELETE", f"repos/{repository}/issues/{number}/labels/{label}", "--silent")
+    except BbError:
+        pass  # the label was not there
+
+
+def record_decision(repository, label, number, phrase, ai_name):
+    """Comment the owner's phrase, then put the decision label (and drop its opposite)."""
+    if label not in ALL_DECISIONS:
+        raise BbError(f"{label} não é uma decisão do dono; use uma de: {', '.join(ALL_DECISIONS)}", EXIT_USAGE)
+    if not phrase or not phrase.strip():
+        raise BbError("informe a frase do dono (--frase), com as palavras dele", EXIT_USAGE)
+    quoted = "\n".join(f"> {line}" for line in phrase.strip().splitlines())
+    _comment(repository, number, f"**Decisão do dono:** `{label}`\n\n{quoted}\n\n"
+                                 f"Registrada por `{ai_name}` em {_now()}, com `bb decisao`.")
+    _add_label(repository, number, label)
+    for opposite in OPPOSITES.get(label, ()):
+        _remove_label(repository, number, opposite)
+
+
+def _both_spellings(labels):
+    """Labels in both languages, so every rule below sees a v3 label as its legacy counterpart (ADR-0024)."""
+    labels = set(labels)
+    return labels | {names.label(label, "legacy") for label in labels} | {names.label(label, "v3") for label in labels}
+
+
+def review_blockers(pr_labels, issue_labels, head, changed_paths, diff_text, zones, marker, mode="padrao",
+                    owner_files=False, flags_by_agent=False):
+    """Reasons why the AI may NOT approve this PR (empty = the AI review is enough). The autonomy contract is never
+    approved by an agent; in a v3 project (owner_files) the owner's own files need the owner too, unless he delegated
+    this very PR (owner:ai-review on the PR, never inherited) or the contract delegates flags.toml."""
+    pr_labels, issue_labels = _both_spellings(pr_labels), _both_spellings(issue_labels)
+    contract = [path for path in changed_paths if pipeline.matches(path, pipeline.NEVER_DELEGATED)]
+    if contract:
+        return ["o PR muda o contrato de autonomia (autonomy.toml): a revisão é sempre do dono"]
+    if owner_files:
+        own = [path for path in changed_paths if pipeline.matches(path, pipeline.OWNER_FILES)
+               and not (flags_by_agent and pipeline.matches(path, ("flags.toml",)))]
+        if own and "dono:revisao-ia" not in pr_labels:
+            return [f"o PR muda arquivo do dono ({', '.join(sorted(set(own))[:3])}): a revisão é do dono"]
+    owner_says_ai = "dono:revisao-ia" in pr_labels or "dono:revisao-ia" in issue_labels
+    kind, issue = pipeline.branch_issue(head)
+    if kind in ("teste", "test"):
+        if "testes-revisao-humana" in issue_labels and not owner_says_ai:
+            return ["os testes de aceite deste épico são revisados pelo dono (testes-revisao-humana): ele põe "
+                    "testes-aprovados"]
+        return []
+    if owner_says_ai:
+        return []
+    if "revisao-humana" in pr_labels or "revisao-humana" in issue_labels:
+        return ["o PR tem revisao-humana: só o dono põe pr-aprovado"]
+    if mode == "flash":
+        return []  # opting into Flash delegates routine PR review, never an explicitly human review
+    allow_acceptance = issue is not None and pipeline.only_own_marks_released(diff_text, issue, marker)
+    sensitive = pipeline.sensitive_paths(changed_paths, zones, acceptance_allowed=allow_acceptance)
+    if sensitive:
+        return [f"o PR toca zona sensível ({', '.join(sensitive[:3])}): a revisão é do dono"]
+    return []
+
+
+def _target_text(repository, base):
+    """bigbang.toml of the target branch (None when it has none, as in the framework itself)."""
+    try:
+        encoded = github.run("api", f"repos/{repository}/contents/bigbang.toml", "-X", "GET",
+                             "-f", f"ref={base}", "--jq", ".content")
+    except BbError as exc:
+        if "404" in exc.message:
+            return None
+        raise
+    try:
+        return base64.b64decode(encoded).decode('utf-8')
+    except (ValueError, TypeError, UnicodeError) as exc:
+        raise BbError('configuração da branch de destino não pôde ser conferida', EXIT_VERIFICATION_FAILED) from exc
+
+
+def _target_owner_rules(repository, base):
+    """(owner_files, flags_by_agent) from the target branch: owner files need the owner in a v3 (grouping) project;
+    flags.toml is delegated only by a valid autonomy contract with flags = agent."""
+    import datetime
+    text = _target_text(repository, base)
+    if text is None:
+        return False, False
+    try:
+        raw = config_module.parse(text)
+    except BbError:
+        return True, False
+    workflow = raw.get("workflow") if isinstance(raw.get("workflow"), dict) else {}
+    project = raw.get("project") if isinstance(raw.get("project"), dict) else {}
+    grouping = workflow.get("model") == "grouping"
+    if not grouping or project.get("mode") != "autonomous":
+        return grouping, False
+    try:
+        encoded = github.run("api", f"repos/{repository}/contents/autonomy.toml", "-X", "GET", "-f", f"ref={base}",
+                             "--jq", ".content")
+        import tomllib
+        contract = tomllib.loads(base64.b64decode(encoded).decode("utf-8"))
+    except (BbError, ValueError, TypeError, UnicodeError):
+        return True, False
+    from . import policy
+    usable = not policy.contract_problems(contract, datetime.datetime.now(datetime.timezone.utc).date())
+    return True, usable and contract.get("flags") == "agent"
+
+
+def _target_mode(repository, base):
+    """The PR cannot authorize its own review by changing a local or head config."""
+    text = _target_text(repository, base)
+    return "padrao" if text is None else mode_from_text(text)  # framework: explicit owner labels still apply
+
+
+def label_dialect_from_text(text):
+    """Language of the project's labels in a (possibly partial) target bigbang.toml: 'v3' or 'legacy'."""
+    try:
+        raw = config_module.parse(text)
+    except BbError:
+        return "legacy"
+    board = raw.get("board") if isinstance(raw.get("board"), dict) else {}
+    default = "v3" if isinstance(raw.get("project"), dict) else "legacy"
+    return board.get("labels", default) if board.get("labels") in ("v3", "legacy") else default
+
+
+def mode_from_text(text):
+    """Review policy of a (possibly partial) target bigbang.toml in either language: 'padrao' or 'flash'.
+    The autonomous mode delegates routine review like Flash; any other value is refused."""
+    try:
+        raw = config_module.parse(text)
+    except BbError as exc:
+        raise BbError('configuração da branch de destino não pôde ser conferida', EXIT_VERIFICATION_FAILED) from exc
+    if isinstance(raw.get('project'), dict):
+        value = raw['project'].get('mode', 'normal')
+        mode = {'normal': 'padrao', 'flash': 'flash', 'autonomous': 'flash'}.get(value) if isinstance(value, str) else None
+    else:
+        legacy = raw.get('projeto') or {}
+        value = legacy.get('modo', 'padrao') if isinstance(legacy, dict) else None
+        mode = value if isinstance(value, str) else None
+    if mode not in ('padrao', 'flash'):
+        raise BbError('modo inválido na branch de destino', EXIT_VERIFICATION_FAILED)
+    return mode
+
+
+def approve_review(repository, number, ai_name, zones, marker, report=""):
+    data = json.loads(github.run("pr", "view", str(number), "--repo", repository, "--json",
+                                 "headRefName,baseRefName,baseRefOid,labels,state,changedFiles"))
+    if data["state"] != "OPEN":
+        raise BbError(f"o PR #{number} não está aberto", EXIT_USAGE)
+    pr_labels = {label["name"] for label in data["labels"]}
+    mode = _target_mode(repository, data.get('baseRefOid') or data['baseRefName'])
+    _, issue = pipeline.branch_issue(data["headRefName"])
+    issue_labels = _labels(repository, issue) if issue else set()
+    # The diff endpoint rejects more than 300 files. Preserve old paths on renames, too.
+    pages = json.loads(github.run('api', f'repos/{repository}/pulls/{number}/files?per_page=100',
+                                  '--paginate', '--slurp'))
+    if sum(len(page) for page in pages) != data.get('changedFiles', sum(len(page) for page in pages)):
+        raise BbError('listagem de arquivos incompleta; revisão não registrada', EXIT_VERIFICATION_FAILED)
+    changed, acceptance_diffs = [], []
+    for page in pages:
+        for file in page:
+            path = file['filename']
+            previous = file.get('previous_filename', path)
+            changed.extend((previous, path))
+            if path.startswith('tests/aceite/') or previous.startswith('tests/aceite/'):
+                patch = file.get('patch')
+                if not isinstance(patch, str) or not patch.strip():
+                    raise BbError(f'patch de aceite indisponível para {path}; revisão não registrada',
+                                  EXIT_VERIFICATION_FAILED)
+                acceptance_diffs.append(f'diff --git a/{previous} b/{path}\n--- a/{previous}\n'
+                                        f'+++ b/{path}\n{patch}')
+    diff_text = '\n'.join(acceptance_diffs)
+    base = data.get('baseRefOid') or data['baseRefName']
+    owner_files, flags_by_agent = _target_owner_rules(repository, base)
+    blockers = review_blockers(pr_labels, issue_labels, data["headRefName"], changed, diff_text, zones, marker, mode,
+                               owner_files=owner_files, flags_by_agent=flags_by_agent)
+    if blockers:
+        raise BbError("bb revisao aprovar recusado: " + "; ".join(blockers), EXIT_VERIFICATION_FAILED)
+    body = f"**Revisão da IA: aprovado** (`{ai_name}`, {_now()}, contexto limpo: `.bigbang/agents/revisor-pr.md`)."
+    if report.strip():
+        body += "\n\n" + report.strip()
+    _comment(repository, number, body)
+    text = _target_text(repository, data.get('baseRefOid') or data['baseRefName'])
+    label = names.label("pr-aprovado", label_dialect_from_text(text) if text else "legacy")
+    _add_label(repository, number, label)
+    return label

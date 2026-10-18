@@ -1,0 +1,50 @@
+"""Shared paths for the framework tests."""
+import os
+
+RAIZ = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+BIGBANG = os.path.join(RAIZ, ".bigbang")
+
+
+def caminho(*partes):
+    return os.path.join(RAIZ, *partes)
+
+
+def ler(*partes):
+    logical = '/'.join(partes)
+    if not os.path.exists(caminho(*partes)) and logical.startswith('.bigbang/docs/'):
+        importar_bb()
+        from bb import documentation
+        return documentation.read(RAIZ, logical)
+    with open(caminho(*partes), encoding="utf-8") as arquivo:
+        return arquivo.read()
+
+
+def arquivos_markdown():
+    """Yield every Markdown file tracked in the repository tree (skipping .git)."""
+    for pasta, subpastas, nomes in os.walk(RAIZ):
+        subpastas[:] = [s for s in subpastas if s != ".git"]
+        for nome in sorted(nomes):
+            if nome.endswith(".md"):
+                yield os.path.join(pasta, nome)
+
+
+def importar_bb():
+    """Make the `bb` package (in .bigbang/) importable by the tests."""
+    import sys
+    if BIGBANG not in sys.path:
+        sys.path.insert(0, BIGBANG)
+
+
+def exemplo_toml():
+    with open(os.path.join(BIGBANG, "modelos", "bigbang.toml.exemplo"), encoding="utf-8") as arquivo:
+        return arquivo.read()
+
+
+def ignorar_para_copia(*nomes_na_raiz):
+    """shutil.copytree ignore: VCS/cache everywhere, and the given names only at the repository root."""
+    def ignorar(pasta, nomes):
+        sempre = {".git", "__pycache__", "big-bang-prompt.md", ".worktrees"}
+        if os.path.abspath(pasta) == os.path.abspath(RAIZ):
+            sempre |= set(nomes_na_raiz) | {'.bigbang-docs.json', '.bigbang-producao.json', '.bigbang-framework.toml'}
+        return [nome for nome in nomes if nome in sempre]
+    return ignorar

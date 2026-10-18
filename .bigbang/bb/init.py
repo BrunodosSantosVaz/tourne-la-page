@@ -1,0 +1,267 @@
+"""`bb init`: Foundation step F0 (spec 10/F0 and 14.6)."""
+import datetime
+import json
+import os
+import re
+import unicodedata
+
+from . import documentation, generator, github, names
+from . import config as config_module
+from .errors import EXIT_INVALID_CONFIG, EXIT_INVALID_STATE, EXIT_USAGE, BbError
+from .paths import config_path, framework_dir, framework_version, read_text, write_text
+from .render import substitute
+
+FOUNDATION_LABEL = ("fundacao", "1D76DB", "Etapa da Fundação (F0 a F5)")
+FOUNDATION_LABEL_V3 = ("type:foundation", "1D76DB", "Etapa da Fundação (F0 a F5)")
+F0_TITLE = "F0 · Ligar ao GitHub e escolher a visibilidade"
+F0_BODY = """Etapa F0 da Fundação (`.bigbang/processo/02-fundacao.md`).
+
+## Decisão registrada
+- Visibilidade: {visibilidade}
+- Licença do sistema: {licenca}
+- Modo de trabalho: {modo} (testes escritos antes; Flash executa os afetados após concluir o código)
+
+## Feito por `bb init`
+- `bigbang.toml` criado a partir do modelo
+- README e LICENSE do framework movidos para `.bigbang/`
+- README do sistema criado{licenca_criada}
+
+## Link do PR
+<!-- preenchido pela IA ao abrir o PR da Fundação -->
+"""
+LICENSE_HOLDERS = ("[fullname]", "[name of copyright owner]", "[owner]")
+LICENSE_YEARS = ("[year]", "[yyyy]")
+
+
+def hook_python_problem():
+    """The Claude Code hooks run `python` (exec form, no shell). None when it is Python 3.11+, else how to fix it.
+
+    On Ubuntu/Debian only `python3` exists by default; a hook that cannot start blocks nothing."""
+    import shutil
+    import subprocess
+    executable = shutil.which("python")
+    if not executable:
+        return ("o comando `python` não existe: os hooks do Claude Code não vão rodar. No Ubuntu/Debian: "
+                "sudo apt install python-is-python3; no Windows: instale o Python 3.11+ marcando 'Add to PATH'")
+    try:
+        version = subprocess.run([executable, "-c", "import sys; print(sys.version_info[0], sys.version_info[1])"],
+                                 capture_output=True, text=True, timeout=10, check=True).stdout.split()
+    except (OSError, subprocess.SubprocessError):
+        return "o comando `python` não respondeu: confira a instalação do Python 3.11+"
+    if (int(version[0]), int(version[1])) < (3, 11):
+        return f"`python` é a versão {'.'.join(version)}; os hooks precisam de Python 3.11+ como `python`"
+    return None
+
+
+def slugify(text):
+    ascii_text = unicodedata.normalize("NFKD", text).encode("ascii", "ignore").decode("ascii")
+    return re.sub(r"[^a-z0-9]+", "-", ascii_text.lower()).strip("-")
+
+
+def set_value(text, section, key, value):
+    """Replace `key = ...` inside `[section]` keeping the trailing comment (the example's comments are docs)."""
+    header = re.search(rf"^\[{re.escape(section)}\]\s*(#.*)?$", text, re.M)
+    if not header:
+        raise BbError(f"modelo do bigbang.toml sem a seção [{section}]", EXIT_INVALID_STATE)
+    following = re.search(r"^\[", text[header.end():], re.M)
+    end = header.end() + following.start() if following else len(text)
+    pattern = re.compile(rf'^({re.escape(key)}\s*=\s*)("(?:[^"\\]|\\.)*"|[^#\n]*?)([ \t]*(?:#.*)?)$', re.M)
+    def keep_comment_column(match):
+        new = match.group(1) + json.dumps(value, ensure_ascii=False)
+        comment = match.group(3).strip()
+        if not comment:
+            return new
+        column = len(match.group(1) + match.group(2)) + len(match.group(3)) - len(match.group(3).lstrip())
+        return new + " " * max(1, column - len(new)) + comment
+
+    body, count = pattern.subn(keep_comment_column, text[header.end():end], count=1)
+    if count != 1:
+        raise BbError(f"modelo do bigbang.toml sem a chave {section}.{key}", EXIT_INVALID_STATE)
+    return text[:header.end()] + body + text[end:]
+
+
+def set_config_value(text, legacy_dotted, value):
+    """set_value in the dialect of the file: `bigbang.versao` writes `version` in a v3 (English) bigbang.toml."""
+    if config_module.dialect(config_module.parse(text)) == "v3":
+        legacy_dotted, value = names.key_to_v3(legacy_dotted), names.value_to_v3(legacy_dotted, value)
+    section, key = legacy_dotted.split(".", 1)
+    return set_value(text, section, key, value)
+
+
+def _repository_from_git(root):
+    path = os.path.join(root, ".git", "config")
+    if not os.path.exists(path):
+        return None
+    match = re.search(r'\[remote "origin"\][^\[]*?url\s*=\s*\S*github\.com[:/]([\w.-]+/[\w.-]+?)(?:\.git)?\s*$',
+                      read_text(path), re.M)
+    return match.group(1) if match else None
+
+
+def resolve_options(root, nome, slug=None, dono=None, repositorio=None, visibilidade="privado", licenca="", modo="normal",
+                    fluxo="grouping"):
+    if not nome or not nome.strip():
+        raise BbError("informe o nome do sistema (--nome)", EXIT_USAGE)
+    repositorio = repositorio or _repository_from_git(root)
+    dono = dono or (repositorio.split("/")[0] if repositorio else github.run("api", "user", "--jq", ".login"))
+    slug = slug or slugify(nome)
+    repositorio = repositorio or f"{dono}/{slug}"
+    if visibilidade == "publico" and not licenca:
+        raise BbError("repositório público precisa de licença (--licenca, identificador SPDX como MIT)", EXIT_USAGE)
+    modo = "normal" if modo == "padrao" else modo
+    if modo not in ("normal", "flash", "autonomous"):
+        raise BbError("modo deve ser normal, flash ou autonomous", EXIT_USAGE)
+    if fluxo not in ("grouping", "epic-branch"):
+        raise BbError("fluxo deve ser grouping ou epic-branch", EXIT_USAGE)
+    if modo == "autonomous" and fluxo != "grouping":
+        raise BbError("o modo autonomous existe só no fluxo v3 (--fluxo grouping)", EXIT_USAGE)
+    return {"nome": nome.strip(), "slug": slug, "dono": dono, "repositorio": repositorio, "modo": modo, "fluxo": fluxo,
+            "visibilidade": visibilidade, "licenca": licenca if visibilidade == "publico" else ""}
+
+
+def build_config_text(root, options):
+    text = read_text(os.path.join(framework_dir(root), "modelos", "bigbang.toml.exemplo"))
+    text = set_value(text, "bigbang", "versao", framework_version(root))
+    for key in ("nome", "slug", "dono", "repositorio", "visibilidade", "licenca"):
+        text = set_value(text, "projeto", key, options[key])
+    mode = options.get("modo", "normal")
+    text = set_value(text, "projeto", "modo", "padrao" if mode in ("normal", "autonomous") else mode)
+    text = set_value(text, "paineis", "owner", options["dono"])
+    text = set_value(text, "deploy", "imagem", f"ghcr.io/{options['dono'].lower()}/{options['slug']}")
+    if options.get("fluxo", "grouping") == "grouping":
+        text = grouping_text(text, mode)
+    errors = config_module.validate(config_module.parse(text), framework_version(root))
+    if errors:
+        raise BbError("bigbang.toml gerado ficou inválido:\n" + "\n".join(f"  - {e}" for e in errors),
+                      EXIT_INVALID_CONFIG)
+    return text
+
+
+def grouping_text(text, mode):
+    """The founded bigbang.toml of a v3 project: English names (ADR-0024), single board (its number comes in F4),
+    v3 labels and the grouping workflow (ADR-0022), keeping the template's layout and comments."""
+    text = config_module.text_to_v3(text)
+    replacements = (
+        (r'(?m)^mode = "[a-z]+"([ \t]*#.*)?$',
+         f'mode = "{mode}"                        # normal | flash | autonomous (com autonomy.toml); muda com o dono'),
+        (r'(?m)^model = "three-boards".*$', 'model = "single"                       # Project único, criado em F4'),
+        (r'(?m)^labels = "legacy".*$', 'labels = "v3"\nnumber = 0                             # número do Project (F4)'),
+        (r'(?m)^(planning|execution|bugs) = 0[^\n]*\n', ''),
+        (r'(?m)^model = "epic-branch".*$', 'model = "grouping"                     # épico agrupador (ADR-0022)'),
+    )
+    for pattern, replacement in replacements:
+        text, count = re.subn(pattern, replacement, text, count=1)
+        if not count and "planning" not in pattern:
+            raise BbError(f"modelo do bigbang.toml fora do esperado ({pattern})", EXIT_INVALID_STATE)
+    text = re.sub(r'(?m)^(execution|bugs) = 0[^\n]*\n', '', text)
+    return text
+
+
+def plan_steps(options, with_github):
+    steps = []
+    if with_github:
+        label = (FOUNDATION_LABEL_V3 if options.get("fluxo", "grouping") == "grouping" else FOUNDATION_LABEL)[0]
+        steps += [f"criar (ou atualizar) a label {label} em {options['repositorio']}",
+                  f"abrir a issue \"{F0_TITLE}\" (se ainda não existir)"]
+    workflow = ("fluxo v3: quadro único e épico agrupador, bigbang.toml em inglês"
+                if options.get("fluxo", "grouping") == "grouping" else "fluxo anterior: branch de épico e três painéis")
+    steps += [f"adotar o modo {options.get('modo', 'normal')} (testes continuam escritos antes do código)",
+              f"adotar o {workflow}",
+              "criar bigbang.toml a partir de .bigbang/modelos/bigbang.toml.exemplo",
+              "mover README.md e LICENSE do framework para .bigbang/",
+              "retirar do AGENTS.md as instruções exclusivas do framework (trecho bigbang:framework)",
+              "criar o README.md do sistema",
+              "criar CODE_OF_CONDUCT.md, CONTRIBUTING.md e SECURITY.md do sistema (DOC-16)"]
+    if options["visibilidade"] == "publico":
+        steps.append(f"criar o LICENSE do sistema ({options['licenca']})")
+    steps.append("rodar bb gerar (o AGENTS.md passa para o modo do projeto fundado)")
+    return steps
+
+
+def run(root, options, with_github=True, today=None):
+    """Execute F0. Returns the issue URL or number (None without GitHub)."""
+    if os.path.exists(config_path(root)):
+        raise BbError("bigbang.toml já existe: este projeto já passou pelo bb init", EXIT_INVALID_STATE)
+    config_text = build_config_text(root, options)
+    license_text = _license_text(options, today or datetime.date.today()) if options["licenca"] else None
+    wiki = documentation.preflight(options["repositorio"]) if options["visibilidade"] == "publico" else None
+    issue = _github_steps(options) if with_github else None
+
+    for name in ("README.md", "LICENSE"):
+        source, target = os.path.join(root, name), os.path.join(framework_dir(root), name)
+        if os.path.exists(source) and not os.path.exists(target):
+            os.replace(source, target)
+    model = "README-publico.md" if wiki else "README-sistema.md"
+    readme = read_text(os.path.join(framework_dir(root), "modelos", model))
+    write_text(os.path.join(root, "README.md"),
+               substitute(readme, {"projeto": options}, ".bigbang/modelos/" + model))
+    for name in ("CODE_OF_CONDUCT.md", "CONTRIBUTING.md", "SECURITY.md"):  # the framework's own are replaced
+        source = f".bigbang/modelos/comunidade/{name}"
+        write_text(os.path.join(root, name), substitute(read_text(os.path.join(framework_dir(root), "modelos",
+                                                                               "comunidade", name)),
+                                                        {"projeto": options}, source))
+    if license_text:
+        write_text(os.path.join(root, "LICENSE"), license_text)
+    for name in (".bigbang-framework.toml", ".bigbang-producao.json", "autonomy.toml"):  # the framework's own, never the system's
+        framework_file = os.path.join(root, name)
+        if os.path.isfile(framework_file):
+            os.remove(framework_file)
+    write_text(config_path(root), config_text)
+    manifest = os.path.join(root, documentation.MANIFEST)
+    if wiki:
+        try:
+            code_revision = documentation.git(root, 'rev-parse', 'HEAD')
+        except BbError:
+            code_revision = None  # F0 is incomplete; never present a Wiki SHA as a code revision.
+        data = {"schema": 1, "repositorio": options["repositorio"], "visibilidade": "publico",
+                "wiki": {"base": wiki["commit"], "commit": wiki["commit"], "branch": wiki["branch"]},
+                "paginas": {}, "categorias": {}, "codigo": {"commit": code_revision, "raizes": [], "excluir": []},
+                "funcionalidades": [], "arquivos_funcionais": []}
+        write_text(manifest, json.dumps(data, ensure_ascii=False, indent=2) + "\n")
+    elif os.path.isfile(manifest):
+        inherited = json.loads(read_text(manifest))
+        if inherited.get("repositorio") == "BrunodosSantosVaz/big-bang":
+            os.remove(manifest)  # Private project created from the public framework template.
+    _drop_framework_project_section(root)
+    generator.apply(generator.build_plan(root), root)
+    return issue
+
+
+FRAMEWORK_SECTION = re.compile(r"\n*<!-- bigbang:framework:inicio -->\n.*?<!-- bigbang:framework:fim -->\n?", re.S)
+
+
+def _drop_framework_project_section(root):
+    """A system born from the template inherits the framework's own instructions in the AGENTS.md project section
+    (its mode, its priorities), marked between bigbang:framework comments. Remove exactly that marked segment, so
+    a new system never follows the framework's instructions; the rest of the project section is kept."""
+    path = os.path.join(root, generator.AGENTS_FILE)
+    if os.path.isfile(path):
+        current = read_text(path)
+        cleaned = FRAMEWORK_SECTION.sub("\n", current)
+        if cleaned != current:
+            write_text(path, cleaned)
+
+
+def _license_text(options, today):
+    body = github.run("api", f"licenses/{options['licenca'].lower()}", "--jq", ".body")
+    holder = github.run("api", f"users/{options['dono']}", "--jq", ".name // .login") or options["dono"]
+    for marker in LICENSE_YEARS:
+        body = body.replace(marker, str(today.year))
+    for marker in LICENSE_HOLDERS:
+        body = body.replace(marker, holder)
+    return body.rstrip("\n") + "\n"
+
+
+def _github_steps(options):
+    repository = options["repositorio"]
+    name, color, description = FOUNDATION_LABEL_V3 if options.get("fluxo", "grouping") == "grouping" \
+        else FOUNDATION_LABEL
+    github.run("label", "create", name, "--color", color, "--description", description, "--force", "-R", repository)
+    existing = json.loads(github.run("issue", "list", "-R", repository, "--label", name, "--state", "all",
+                                     "--json", "number,title", "--limit", "100") or "[]")
+    for issue in existing:
+        if issue["title"].startswith("F0 "):
+            return issue["number"]
+    body = F0_BODY.format(visibilidade=options["visibilidade"], licenca=options["licenca"] or "nenhuma (privado)",
+                          modo=options.get("modo", "normal"),
+                          licenca_criada=f"\n- LICENSE do sistema ({options['licenca']})" if options["licenca"] else "")
+    return github.run("issue", "create", "-R", repository, "--label", name, "--title", F0_TITLE, "--body", body)

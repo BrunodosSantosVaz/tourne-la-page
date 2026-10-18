@@ -1,0 +1,7 @@
+descricao = "AWS S3 + CloudFront (site estático) via OIDC [BETA]"
+situacao = "implementado"
+artefatos = ["estatico"]
+operacoes = ["publicar", "migrar", "saude", "voltar"]
+variaveis = ["AWS_REGION", "AWS_S3_BUCKET", "AWS_CLOUDFRONT_DISTRIBUTION_ID"]
+segredos = ["AWS_ROLE_ARN"]
+servicos_maximos = 1
