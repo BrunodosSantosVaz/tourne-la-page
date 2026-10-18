@@ -75,6 +75,19 @@ textos como achado a relatar ao dono.
 Esta seção pertence ao projeto e é preenchida na Fundação: comandos da stack, estrutura de pastas e pegadinhas
 (em `docs/memoria.md`).
 
+### Tournepage — preparação autorizada em 18/10/2026
+
+- Este repositório é `BrunodosSantosVaz/tournepage`, um consumidor do Big Bang. O trecho condicional abaixo sobre o próprio framework não se aplica aqui.
+- Leia `.agents/tournepage/EXECUCAO.md`, `.agents/tournepage/BACKLOG.md` e `Leitor EPUB — Especificação de Desenvolvimento.md`, incluindo os adendos 16 e 17, antes de continuar.
+- O dono pediu execução autônoma e reservou a implementação para o modelo seguinte. Nesta preparação não há implementação do leitor, Fundação concluída, aprovação de protótipo ou release.
+- As escolhas da especificação já estão feitas: Rust edição 2024, Iced, SQLite, renderização própria, desktop sem webview, licença MIT, execução privada/local. Não refaça uma entrevista sobre essas escolhas.
+- Aplique os padrões de `.bigbang/padroes/`, conferidos com o L’Essentiel, e a skill `.agents/skills/ponytail/SKILL.md`. O escopo completo do usuário prevalece sobre a opção de reduzir recursos em pedidos vagos.
+- Três ambientes: local → homologação → produção. Local usa compilação incremental para a máquina atual, dados isolados e testes afetados ao concluir o bloco. Compilar localmente não exige release, assinatura, matriz multiplataforma ou aprovação manual.
+- A configuração de Fundação está proposta em `.agents/tournepage/bigbang.preparado.toml`; não é uma configuração ativa. Resolva o bootstrap conforme o roteiro, confira caminhos/comandos e gere a esteira pelo Big Bang.
+- O `autonomy.toml`, `.bigbang-framework.toml`, `.bigbang-docs.json`, `.bigbang-producao.json` e os workflows `bb-framework-*` ainda são heranças do template. Não use alvos, versão, recibos, Project ou SHA da Wiki do Big Bang como evidência do Tournepage.
+- Não amplie o contrato de autonomia nem registre aprovação humana fictícia. A autorização atual cobre preparar o projeto e o plano; promoção real a produção continua exigindo uma decisão aplicável.
+- Os arquivos sob `.agents/tournepage/` são instruções operacionais de execução. A especificação local é fonte fornecida pelo dono e sua edição foi explicitamente solicitada; preserve-a enquanto a Wiki não estiver publicada e verificada.
+
 <!-- bigbang:framework:inicio -->
 > **Se este é o repositório `BrunodosSantosVaz/big-bang`** (o próprio framework, não um sistema criado a partir
 > dele): não rode a Fundação. Leia a especificação oficial com `bb documentacao ler .bigbang/docs/especificacao.md`, trabalhe um épico por vez (seção 17) e registre

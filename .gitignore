@@ -8,3 +8,7 @@ dist/
 build/
 *.tar.gz
 .DS_Store
+
+# Tournepage local builds and isolated developer data.
+target/
+.local/

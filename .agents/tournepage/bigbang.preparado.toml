@@ -1,0 +1,72 @@
+# Proposta de F2, ainda NÃO ativa. Leia EXECUCAO.md antes de ativar.
+# Os scripts de commands/compiled serão implementados e testados na Fundação/Fase 1.
+# Não use este arquivo para afirmar que a CI ou os pacotes já funcionam.
+
+[bigbang]
+version = "3.1.0"
+origin = "BrunodosSantosVaz/big-bang"
+
+[project]
+mode = "autonomous"
+name = "Tournepage"
+slug = "tournepage"
+owner = "BrunodosSantosVaz"
+repository = "BrunodosSantosVaz/tournepage"
+visibility = "public"
+license = "MIT"
+
+[delivery]
+profile = "compiled"
+target = ""
+artifact_paths = ["crates/**", "assets/**", "locales/**", "migrations/**", "packaging/**", "Cargo.toml", "Cargo.lock", "rust-toolchain.toml", ".cargo/**"]
+version_file = "Cargo.toml"
+ecosystems = ["cargo"]
+
+[compiled]
+systems = ["linux-x64", "linux-arm64", "windows-x64", "windows-arm64", "macos-x64", "macos-arm64"]
+build_linux-x64 = "python scripts/package.py linux-x64"
+build_linux-arm64 = "python scripts/package.py linux-arm64"
+build_windows-x64 = "python scripts/package.py windows-x64"
+build_windows-arm64 = "python scripts/package.py windows-arm64"
+build_macos-x64 = "python scripts/package.py macos-x64"
+build_macos-arm64 = "python scripts/package.py macos-arm64"
+
+[commands]
+affected_tests = "python scripts/test_affected.py"
+install = "cargo fetch --locked"
+lint = "python scripts/lint.py"
+types = "cargo check --workspace --all-targets --locked"
+test = "cargo test --workspace --all-targets --locked"
+acceptance_test = "python scripts/test_acceptance.py"
+architecture = "python scripts/check_architecture.py"
+coverage = "python scripts/coverage.py"
+build = "cargo build --workspace --release --locked"
+
+[tests]
+min_coverage = 80
+pending_marker = "#[ignore]"
+test_pattern = '^\s*(?:pub\s+)?(?:async\s+)?fn\s+(?:test_|ca_|rn_)\w+\s*\('
+structural_paths = ["Cargo.toml", "Cargo.lock", "crates/*/Cargo.toml", "rust-toolchain.toml", ".cargo/**", "migrations/**", "assets/tokens/**", "scripts/**", "packaging/**"]
+
+[security]
+asvs_level = "L2"
+browser_database = false
+sensitive_paths = ["crates/epub-core/**", "crates/storage/**", "crates/annotations/**", "migrations/**", "packaging/**", "scripts/**"]
+
+[board]
+model = "single"
+labels = "v3"
+owner = "BrunodosSantosVaz"
+number = 0 # Pendente: Project do Tournepage, nunca reutilizar o número de outro projeto.
+
+[agents]
+names = ["codex-1", "claude-1"]
+tasks_per_agent = 1
+lease_hours = 24
+confirm_seconds = 10
+
+[flags]
+max_age_days = 30
+
+[workflow]
+model = "grouping"
