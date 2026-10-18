@@ -19,7 +19,7 @@ Não confunda esta entrega com um leitor EPUB pronto. Não há workspace Rust, t
 | Implementação | Rust estável edição 2024, Iced + cosmic-text/wgpu; sem webview/Chromium |
 | Persistência | SQLite embarcado, WAL, migrações, FTS5, backups e cache descartável |
 | Privacidade | Sem conta, nuvem ou telemetria; atualização opcional desligada por padrão |
-| Aparência | Identidade visual v1.0 fornecida no HTML: marca em Literata, Inter na UI, Lucide e paletas da seção 12; sete modos e fonte do livro conforme a especificação |
+| Aparência | Identidade visual v1.0 fornecida no HTML aplica-se às funcionalidades do sistema: marca em Literata, Inter na UI, Lucide e paletas da seção 12; a tipografia do livro é escolha do leitor |
 | Ambientes | Local rápido e isolado; homologação; produção por promoção do artefato aprovado |
 | Código | Padrões Big Bang/L’Essentiel, Ponytail, inglês no código e português na documentação |
 | Licença | MIT; fontes OFL; Georgia apenas se instalada no sistema |
@@ -31,8 +31,8 @@ As bibliotecas da seção 10 são escolhas do plano, não versões já verificad
 - Python 3.14.7, Git, GitHub CLI, `cc` e `pkg-config` estão disponíveis. Rust estável foi instalado pelo `rustup-init` oficial após checagem de SHA-256; versões verificadas: `rustc 1.99.1`, `cargo 1.99.1`, `rustfmt 1.10.0-stable`, Clippy `0.1.99`. `pkg-config` encontra xkbcommon, Wayland, X11, Xcursor, Xi e Xrandr; nenhum projeto Rust existe para compilar ainda.
 - O repositório remoto é público, com `main` e Wiki habilitada. Em 18/10/2026, o dono criou a Wiki; `Home.md` existe e `bb docs prepare --repository BrunodosSantosVaz/tournepage` passou, fixando o HEAD `cfa369a43b5d4eaf9b37e14b77b0f32bb90d3c87`.
 - Discussions está desabilitado. A criação do primeiro post deve seguir a skill da Fundação, quando a comunidade for habilitada no escopo autorizado; não existe post criado nesta preparação.
-- O bootstrap F0 foi executado numa worktree própria a partir de `develop` e está no PR draft #3. `bb verify` e `git diff --check` passaram. `bigbang.toml` está configurado para `autonomous`, mas a execução continua bloqueada pelo framework até haver contrato próprio `autonomy.toml`, ruleset `gate` em `main` e `develop`, e ambiente `production`; o contrato herdado foi removido pelo `bb init` e não foi reaproveitado.
-- `.bigbang-framework.toml`, `.bigbang-docs.json`, `.bigbang-producao.json`, `autonomy.toml` e os workflows `bb-framework-*` são heranças do Big Bang. Projetos, versões, commits e permissões neles não são comprovações do Tournepage.
+- O bootstrap F0 foi executado numa worktree própria a partir de `develop` e está no PR draft #3. `bb verify` e `git diff --check` passaram. `bigbang.toml` está configurado para `autonomous`; o contrato Tournepage foi criado, mas `bb autonomy check` ainda aguarda rulesets com `gate` em `main`/`develop` e o ambiente `production` restrito à `main`.
+- Na base anterior ao F0, `.bigbang-framework.toml`, `.bigbang-docs.json`, `.bigbang-producao.json`, `autonomy.toml` e os workflows `bb-framework-*` são heranças do Big Bang. O F0 remove os contratos/configuração herdados e instala apenas o manifesto documental público e o `autonomy.toml` do Tournepage aprovado pelo dono. Não reutilize outros projetos como evidência.
 - Os workflows herdados condicionam seus jobs ao repositório do Big Bang. Jobs ignorados não são CI verde do produto.
 - Rulesets, ambientes, secrets e Project ainda precisam ser inventariados em F4. Não alegar que estão configurados. Não solicitar tokens na conversa.
 
@@ -41,10 +41,11 @@ O conteúdo funcional detalhado ainda precisa de proposta, revisão e publicaç�
 ## Ponto de execução em 18/10/2026
 
 - PR #1 mantém a preparação da especificação, identidade visual, L’Essentiel/Ponytail, adendos 16–18 e camada de teste local; ainda está draft e aponta para `main`.
-- `develop` foi criado do `main` original (`cbf9710eba0239c5e88f5a77fa9cbe4c0294758f`). Issue F0 é #2; PR draft F0 é #3, branch `fundacao/0-ligar-github`, commit `4a5bb97`.
-- F0 ainda requer revisão/aceite antes do merge. A PR não instala código do leitor e não valida produto.
-- O dono ainda precisa responder se a identidade v1.0 está aprovada para prototipação. O padrão de leitura Claro/Georgia permanece conforme a especificação.
-- F4 exigirá autorização explícita para configurações externas do GitHub (rulesets, ambiente, Discussions, secrets e painéis). Não criar secrets em nome do dono.
+- `develop` foi criado do `main` original (`cbf9710eba0239c5e88f5a77fa9cbe4c0294758f`). Issue F0 é #2; PR draft F0 é #3, branch `fundacao/0-ligar-github`, commit atual começa por `c33d13e`.
+- O dono autorizou seguir com F0 e o merge para entregar a versão local; PR #3 continua draft enquanto aguarda revisão independente em contexto limpo. O F0 não instala código do leitor nem valida o produto.
+- O dono confirmou que as fontes da identidade visual são só para as funcionalidades do sistema. Para os livros, são quatro sugestões compatíveis com o plugin/documentação (Georgia, Literata, Atkinson Hyperlegible Next, Lexend), mais qualquer fonte instalada no computador. O protótipo e o ícone ainda precisam ser apresentados em F3 para validação.
+- O dono autorizou criar o contrato de autonomia com risco baixo/médio, teto US$ 50, WIP 3, validade de três meses e escopo local. O contrato está no PR #3; o `bb autonomy check` ainda aguarda controles GitHub.
+- O dono autorizou avançar com settings externos do GitHub, mas pediu o passo a passo para ele executar. Guiar um item por vez e conferir antes do próximo; não criar secrets em nome do dono.
 
 ## Ordem de execução
 
@@ -104,7 +105,7 @@ Validar na Fase 1 a atualização de versão pelo Big Bang sobre `Cargo.toml`, i
 - Demonstrar texto acessível e seleção com Iced + AccessKit antes das telas definitivas. Se não funcionar, registrar a evidência e a decisão necessária; não adotar webview ou trocar Iced silenciosamente.
 - Testar limites de ZIP/XML/SVG, tentativas de saída de diretório, referências externas e preservação dos EPUBs. Limites devem funcionar por recurso, por livro e por operação, com cancelamento; uma decompression ratio não substitui limite absoluto.
 - Persistência em até 1 s resolve o conflito entre RN-20 e RNF-11. Testar transação, queda, backup online SQLite/WAL e restauração antes de tratar dados reais como seguros.
-- Validar licenças dos dados de hifenização e o carregamento de fontes nativas. As fontes do plugin são WOFF2; usar TTF/OTF OFL quando o carregador exigir.
+- Validar licenças dos dados de hifenização e o carregamento de fontes nativas. Literata, Atkinson Hyperlegible Next e Lexend do plugin são WOFF2; usar TTF/OTF OFL quando o carregador exigir. O catálogo do SO pode usar `cosmic_text::FontSystem`, inicializado uma vez e compartilhado ([API](https://docs.rs/cosmic-text/latest/cosmic_text/struct.FontSystem.html)); confirme versão na F2.
 
 ## Referência do L’Essentiel
 
@@ -112,10 +113,10 @@ Commit conferido: `03d3468f00da71318da49373805c1fe66a618721`.
 
 Os dez arquivos `.bigbang/padroes/*.md` são idênticos à origem. A Ponytail foi importada sem alteração com LICENSE. Um adaptador em `.claude/skills/ponytail/SKILL.md` aponta para a fonte canônica. Na próxima sessão, a skill estará disponível pela descoberta do projeto; seu conteúdo já está linkado por AGENTS.
 
-Valores de aparência foram conferidos em `src/platform/reader-style.ts`, `reader-panel.ts`, `reader-toolbar.ts` e `reader-fonts.ts`. O plugin não possui o JSON compartilhado descrito no plano. Criar tokens locais rastreáveis não exige nem autoriza alterar o plugin. A identidade visual adicionada pelo dono detalha as diferenças do Tournepage: marca em Literata, Papel/Grafite, colunas, Inter, Lucide e fontes da seção 10. A prévia Papel/Literata não muda Claro/Georgia como padrões do leitor; referências remotas de fontes/ícones no showcase não devem ir para o runtime nativo.
+Valores do plugin L’Essentiel foram conferidos em `src/platform/reader-panel.ts` e na Wiki `RN-0002-Controles`/`Leitura-local-e-acabamento`: três famílias incluídas (Literata, Atkinson Hyperlegible Next, Lexend) e Georgia do sistema, que em conjunto formam as quatro sugestões; o Tournepage também lista qualquer família instalada no SO. A API `cosmic_text::FontSystem` pode fornecer o catálogo do SO ([documentação](https://docs.rs/cosmic-text/latest/cosmic_text/struct.FontSystem.html)); confirme versão na F2 e inicialize uma vez. A identidade visual do Tournepage fornece marca em Literata, Inter para a interface, Papel/Grafite, Lucide e paletas próprias. A prévia Papel/Literata não define a tipografia do livro; referências remotas de fontes/ícones no showcase não devem ir para o runtime nativo.
 
 ## Limites desta entrega e da autonomia
 
-Não alterar `autonomy.toml` para ampliar riscos, custos, flags, validade ou publicação. O arquivo herdado ainda não é um contrato Tournepage validado. Conferir `bb autonomy check` depois da Fundação e dos controles; se faltar autorização para uma etapa, explicar o requisito exato do arquivo/skill aplicável e pedir apenas a decisão indispensável, sem repetir escolhas já dadas.
+Não alterar `autonomy.toml` para ampliar riscos, custos, flags, validade ou publicação. O dono autorizou o contrato atual, local-only, com valores registrados no PR #3. Conferir `bb autonomy check` após instalar os controles solicitados ao dono; publicação em produção permanece fora da delegação atual.
 
 Esta preparação não mescla PR, publica versão, cria segredos, muda permissões ou afirma homologação. A promoção real deve respeitar o “aval” do dono/contrato aplicável e usar o mesmo artefato homologado. Atualizar o handoff e os resultados ao fim de cada entrega para o próximo modelo retomar sem presumir sucesso.

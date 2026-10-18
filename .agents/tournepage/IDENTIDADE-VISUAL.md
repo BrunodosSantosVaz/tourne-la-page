@@ -50,7 +50,7 @@ Tokens semânticos adicionais estão explicitados para Papel/Grafite: `danger` =
 | Marca/logotipo/títulos/capas geradas | Literata; logotipo com peso 500 e tracking −0,02 em |
 | Interface | Inter; xs 12/500, sm 13/400, md 15/400, lg 18/500, xl 24/500 (tamanho/peso) |
 | Código/dados/CFI | JetBrains Mono |
-| Texto do livro | Escolha do leitor: Georgia do sistema, Literata, Source Serif 4, Merriweather, Atkinson Hyperlegible Next e Lexend |
+| Texto do livro | Fora da identidade visual: o leitor escolhe entre quatro sugestões (Georgia do sistema, Literata, Atkinson Hyperlegible Next e Lexend) ou qualquer família instalada listada pelo sistema operacional |
 | Ícones | Base Lucide, traço linear sem preenchimento, cantos arredondados, grade 24 px; exibição de 16 px em listas e 20 px nas barras; `text-muted`, ativo em `text` |
 | Espaços | 4, 8, 12, 16, 24, 32, 48 e 64 px |
 | Raios | sm 4 px em botões/campos, md 8 px em cartões/menus, lg 12 px em pop-ups/diálogos |
@@ -62,7 +62,7 @@ Os nomes de cada ícone estão em `iconGroups` no HTML, agrupados em Biblioteca,
 
 ## Relação com o plano e próximos recortes
 
-- Marca em Literata não altera a fonte padrão do livro. O HTML usa `wordmarkFont=Literata` e `readerTheme=Papel` na prévia; a especificação mantém **Claro + Georgia** no leitor, com Literata quando Georgia não estiver disponível. As alternativas Source Serif 4/Inter no tweak do logotipo são explorações da prévia, não novas variantes padronizadas.
+- Marca em Literata não altera a fonte do livro. O dono confirmou em 18/10/2026 que as fontes da identidade visual valem somente para as funcionalidades do sistema. O HTML usa `wordmarkFont=Literata` e `readerTheme=Papel` na prévia; as preferências de leitura são separadas e seguem as quatro sugestões do plugin/documentação, além do catálogo de fontes do SO. A alternativa Inter no tweak do logotipo é exploração da prévia, não nova variante padronizada.
 - T19a extrai o contrato de tokens para o aplicativo nativo a partir desta fonte, preservando o vínculo com L’Essentiel. O JSON compartilhado com o plugin continua sendo uma entrega futura; o HTML não comprova que já exista.
 - F3 reaproveita a identidade recebida para produzir o ícone global, variantes do logotipo e Social preview. T28 usa os formatos de ícone necessários ao empacotamento. Essa extração/exportação ainda não foi realizada.
 - As aplicações mostram capa substituta (RF-BIB-17), página de leitura, menu de seleção com cinco cores e ferramentas, progresso e aviso com desfazer. Orientam T13/T17/T21; não substituem prova de interação/acessibilidade, telas de biblioteca/configurações ou portões da Fase 0.

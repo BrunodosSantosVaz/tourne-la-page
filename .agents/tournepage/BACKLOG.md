@@ -1,6 +1,6 @@
 # Backlog operacional do Tournepage
 
-Preparado em 18/10/2026. Todos os itens estão **planejados**, sem implementação ou teste do produto concluído. T00–T29 são identificadores locais; registrar os números reais quando criar issues. Fonte: especificação da raiz, 74 RF, 29 RN, 38 CA originais e seis CA locais.
+Preparado em 18/10/2026. Todos os itens estão **planejados**, sem implementação ou teste do produto concluído. T00–T29 são identificadores locais; registrar os números reais quando criar issues. Fonte: especificação da raiz, 74 RF, 29 RN, 39 CA originais e seis CA locais.
 
 ## Procedimento por tarefa
 
@@ -50,12 +50,12 @@ Refinar Dado/Quando/Então e vincular RF/RN/CA; escrever os testes antes do cód
 | --- | --- | --- |
 | T17 | Retomar, paginação/rolagem, teclado/mouse/trackpad, sumário, progresso, foco/tela cheia. CA-19/23/26, persistência no prazo e cancelamento de layout obsoleto | T03, T10, T13 |
 | T18 | Notas em pop-up, links internos/histórico, confirmação de URL completa, imagens ocultas/zoom, tabelas e copiar texto/referência. CA-20 a 22; recusar esquemas perigosos sem shell | T09, T17 |
-| T19a | Extrair tokens da identidade visual fornecida, conforme IDENTIDADE-VISUAL.md, com rastreio ao plugin; Literata na marca, Inter na UI, Lucide local, fontes/licenças, sete modos e preferências. Prévia Papel/Literata não altera default Claro/Georgia | T05; fazer antes de T13 |
+| T19a | Extrair tokens da identidade visual fornecida para as funcionalidades do sistema, conforme IDENTIDADE-VISUAL.md; Literata na marca, Inter na UI, Lucide local e sete modos. Para o livro: quatro sugestões compatíveis com o plugin (Georgia, Literata, Atkinson Hyperlegible Next, Lexend) e catálogo completo das fontes instaladas no SO; sem Source Serif 4/Merriweather empacotadas | T05; fazer antes de T13 |
 | T19b | Painel de aparência, espaçamentos/alinhamento/hifenização/exceções; CA-24/25, defaults/limites e preview sem perda de posição | T17, T19a |
 | T20 | Colunas −/+, 45 caracteres mínimos, limite dinâmico, resize/restauração da preferência e uma coluna em rolagem. CA-38 com geometria real | T17, T19b |
 | T26 | Fluent pt-BR/en, tema da UI, pastas, escala/reduzir movimento. Atalhos personalizados e atualização opcional em recortes próprios pela prioridade; rede zero por padrão | T11, T19a; integração final após T17 |
 
-**Portão 3:** CA-19 a 26/38, defaults do plugin comprovados, navegação sem perder posição, teclado completo e reflow/fluidez medidos. T19 divide-se em duas issues para evitar ciclo T13 → T19 → T17 → T13.
+**Portão 3:** CA-19 a 26/38/39, defaults do plugin comprovados, navegação sem perder posição, teclado completo e reflow/fluidez medidos. T19 divide-se em duas issues para evitar ciclo T13 → T19 → T17 → T13.
 
 ## Fase 4 — Marcações e busca
 
@@ -84,7 +84,7 @@ Refinar Dado/Quando/Então e vincular RF/RN/CA; escrever os testes antes do cód
 - T01 cria só o necessário à prova; T05 completa o ciclo local/CI. Não criar oito crates vazias com abstrações futuras.
 - Fundação/F3 reutiliza `Tournepage Identidade Visual.dc.html`, preservado como fonte, para preparar logo, ícone global e Social preview; T13/T17/T21 seguem as aplicações visuais, e T28 exporta os ícones por plataforma. O inventário e os cuidados de extração estão em `IDENTIDADE-VISUAL.md`; esta organização não produz os assets nem valida o protótipo.
 - Persistência vem antes de biblioteca/marcações; evoluir o esquema com migrações incrementais testadas.
-- Os 38 CA originais não cobrem individualmente os 74 RF. Acrescentar cenários antes de programar os RF sem CA específico, sobretudo configurações, filtros, cancelamento e falhas.
+- Os 39 CA originais não cobrem individualmente os 74 RF. Acrescentar cenários antes de programar os RF sem CA específico, sobretudo configurações, filtros, cancelamento e falhas.
 - A matriz abaixo registra o destino de cada requisito, não cobertura realizada. Substituir “a escrever” por caminhos/casos reais e commits na execução. Nenhuma linha é recibo de aprovação.
 
 ## Matriz dos 74 requisitos
@@ -133,7 +133,7 @@ Refinar Dado/Quando/Então e vincular RF/RN/CA; escrever os testes antes do cód
 | RF-LEI-13 | Importante | T17 | A escrever antes do código: Ir para porcentagem, posição ou página impressa |
 | RF-LEI-14 | Essencial | T18 | A escrever antes do código: Selecionar e copiar texto, com opção de incluir a referência |
 | RF-PER-01 | Essencial | T19a/T19b | A escrever antes do código: Temas: Automático (segue o sistema), Claro, Papel, Sépia, Escuro, Grafite e Noite, mais temas personalizados (seção 12.3) |
-| RF-PER-02 | Essencial | T19a/T19b | A escrever antes do código: Fonte de leitura: fontes incluídas no programa e fontes do sistema |
+| RF-PER-02 | Essencial | T19a/T19b | A escrever antes do código: Fonte de leitura: quatro sugestões compatíveis com o plugin (Georgia, Literata, Atkinson Hyperlegible Next, Lexend) e qualquer família instalada listada pelo sistema operacional |
 | RF-PER-03 | Essencial | T19b | A escrever antes do código: Tamanho da fonte, altura da linha, espaço entre letras, palavras e parágrafos |
 | RF-PER-04 | Essencial | T19b | A escrever antes do código: Alinhamento à esquerda, centralizado, à direita ou justificado, com hifenização ligada ou desligada |
 | RF-PER-05 | Essencial | T19b | A escrever antes do código: Largura da coluna de texto e margens |

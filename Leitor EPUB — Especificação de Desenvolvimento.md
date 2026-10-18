@@ -158,7 +158,7 @@ Mesmo conjunto de controles do plugin L'Essentiel, com pré-visualização ao vi
 | ID | Requisito | Prioridade |
 | --- | --- | --- |
 | RF-PER-01 | Temas: Automático (segue o sistema), Claro, Papel, Sépia, Escuro, Grafite e Noite, mais temas personalizados (seção 12.3) | Essencial |
-| RF-PER-02 | Fonte de leitura: fontes incluídas no programa e fontes do sistema | Essencial |
+| RF-PER-02 | Fonte de leitura: quatro sugestões (Georgia, Literata, Atkinson Hyperlegible Next e Lexend) e qualquer família instalada listada pelo sistema operacional | Essencial |
 | RF-PER-03 | Tamanho da fonte, altura da linha, espaço entre letras, palavras e parágrafos | Essencial |
 | RF-PER-04 | Alinhamento à esquerda, centralizado, à direita ou justificado, com hifenização ligada ou desligada | Essencial |
 | RF-PER-05 | Largura da coluna de texto e margens | Essencial |
@@ -437,6 +437,7 @@ Cada critério segue o formato **Dado / Quando / Então** e deve virar um teste 
 | CA-25 | RF-PER-08, RN-28 | Fonte global 18 e exceção de 22 no livro A | O leitor abre o livro B | O livro B usa 18; o livro A continua com 22 |
 | CA-26 | RNF-06 | Capítulo longo em modo paginado | O leitor vira 100 páginas seguidas | Nenhum quadro passa de 16 ms (medido) |
 | CA-38 | RF-PER-10, RN-29 | Janela de 1.600 px, fonte 20, 1 coluna | O leitor clica em + duas vezes e depois estreita a janela para 800 px | Aparecem 3 colunas com pelo menos 45 caracteres por linha; com 800 px aparece 1; ao alargar de novo, voltam as 3 |
+| CA-39 | RF-PER-02 | Sistema operacional com fontes instaladas além das quatro sugestões | O leitor abre a lista, escolhe uma fonte instalada e reinicia o aplicativo | A lista contém as quatro sugestões e as famílias instaladas detectadas; a escolha é aplicada e persistida; se a família deixar de existir, usa Georgia e depois Literata como fallback |
 
 ### 8.4 Marcações
 
@@ -606,7 +607,7 @@ Rust em todo o projeto, com Iced na interface (decidido) e diagramação de text
 | Testes | `insta` (snapshots), `proptest`, `cargo-fuzz`, `criterion` | Modelo, CFI, robustez e metas de desempenho | Nenhuma |
 | Empacotamento | `cargo-packager` + manifesto Flatpak | `.dmg` assinado e notarizado; `.msi` assinado; AppImage, Flatpak, `.deb` e `.rpm` | `cargo-dist` |
 | CI | GitHub Actions | Matriz macOS, Windows e Linux; clippy, rustfmt, `cargo-deny`, testes e corpus | Nenhuma |
-| Fontes incluídas | Do plugin: Literata, Atkinson Hyperlegible Next e Lexend. Novas, para leitura longa: Source Serif 4 e Merriweather. Georgia vem do sistema, quando existir. Interface: Inter. Código: JetBrains Mono | Licença OFL; serifadas para leitura longa, opções para dislexia e baixa visão | Fontes do sistema |
+| Fontes incluídas | Leitura: Literata, Atkinson Hyperlegible Next e Lexend (as três famílias incluídas no L’Essentiel); Georgia e o catálogo de todas as famílias instaladas vêm do sistema. Interface do Tournepage: Inter; código/dados: JetBrains Mono | Fontes incluídas com licenças OFL; Georgia não é redistribuída | Fontes instaladas no sistema |
 
 ## 11. Modelo de dados
 
@@ -684,8 +685,8 @@ Os tokens ficam num arquivo JSON versionado, lido pela crate `theme` e pelo plug
 | Grupo | Tokens | Exemplo de uso |
 | --- | --- | --- |
 | Cor | `bg`, `bg-elevated`, `text`, `text-muted`, `border`, `accent`, `link`, `selection`, `highlight-yellow` … `highlight-purple`, `danger`, `focus-ring` | Cada tema define todos os tokens |
-| Tipografia da interface | `ui-font`, tamanhos `xs` 12, `sm` 13, `md` 15, `lg` 18, `xl` 24 | Inter na interface |
-| Tipografia de leitura | `read-font`, `read-size`, `read-line-height`, `read-letter-spacing`, `read-word-spacing`, `read-paragraph-spacing`, `read-indent`, escala de títulos h1 a h6 | Preferências do leitor alteram estes tokens |
+| Tipografia da interface | `ui-font`, tamanhos `xs` 12, `sm` 13, `md` 15, `lg` 18, `xl` 24 | Inter na interface; as fontes da identidade visual aplicam-se às funcionalidades do sistema |
+| Tipografia de leitura | `read-font`, `read-size`, `read-line-height`, `read-letter-spacing`, `read-word-spacing`, `read-paragraph-spacing`, `read-indent`, escala de títulos h1 a h6 | Preferências do leitor escolhem entre quatro modelos sugeridos e todas as famílias disponíveis no sistema operacional |
 | Espaço | Escala de 4: 4, 8, 12, 16, 24, 32, 48, 64 | Margens, distâncias entre componentes |
 | Medida | `measure-min` 45, `measure-default` 66, `measure-max` 90 caracteres | Largura da coluna de texto |
 | Raio | `radius-sm` 4, `radius-md` 8, `radius-lg` 12 | Botões, cartões, pop-ups |
@@ -758,7 +759,7 @@ Os valores iniciais e os limites são os mesmos do plugin, para que quem usa os 
 | Preferência | Padrão | Opções |
 | --- | --- | --- |
 | Tema | Claro | Os 7 temas da seção 12.3 e personalizados |
-| Fonte | Georgia, do sistema; onde não existir (Linux), Literata | Georgia, Literata, Atkinson Hyperlegible Next, Lexend, Source Serif 4, Merriweather e fontes do sistema |
+| Fonte | Georgia, do sistema; se não estiver disponível, Literata | Quatro sugestões compatíveis com o L’Essentiel — Georgia, Literata, Atkinson Hyperlegible Next e Lexend — mais todas as famílias instaladas que o sistema operacional disponibilizar |
 | Tamanho da fonte | 20 px | 14 a 32 px, de 2 em 2 |
 | Altura da linha | 1,65 | 1,2 a 2,2, de 0,05 em 0,05 |
 | Largura do texto | 760 px | 560 a 1.000 px, de 20 em 20; ou 30% a 100% da janela, de 5 em 5 |
@@ -815,7 +816,7 @@ O trabalho segue seis fases em sequência. A Fase 0 ataca primeiro os dois maior
 | 0 — Prova dos riscos | Renderização nativa, seleção → origem → CFI, Unicode, paginação e prova de acessibilidade | Seleção sobrevive ao reflow; tipografia medida; texto e controles acessíveis; limitações demonstradas e registradas |
 | 1 — Fundação executável | Workspace, portas e adaptadores, isolamento dos três ambientes, migrações, testes de arquitetura e CI | Fluxo local executa sem instalador; dados isolados; primeiros testes reais e CI do sistema passam |
 | 2 — EPUB e biblioteca | Importação EPUB 2/3, cobertura do anexo A, metadados, monitoramento e navegação da biblioteca | CA-01 a CA-18 aplicáveis passam; arquivos originais intactos; corpus cresce com origem/licença registradas |
-| 3 — Leitura e aparência | Leitor, navegação, notas do livro, fontes, temas, preferências e colunas | CA-19 a CA-26 e CA-38 passam; teclado e desempenho medidos |
+| 3 — Leitura e aparência | Leitor, navegação, notas do livro, fontes, temas, preferências e colunas | CA-19 a CA-26, CA-38 e CA-39 passam; teclado e desempenho medidos |
 | 4 — Marcações e busca | Âncora dupla, destaques, notas, marcadores, exportação/importação e busca | CA-27 a CA-34 e CA-37 passam; migração não perde marcações |
 | 5 — Candidata e distribuição | Auditoria final, acessibilidade nas três plataformas, desempenho, backups e instaladores | Essenciais completos; CA-35/36 manuais registrados; homologação do artefato identificado; promoção autorizada do mesmo artefato |
 
@@ -847,7 +848,7 @@ O maior risco é a diagramação própria: justificação, hifenização e sele�
 - [x] Colunas: 1 por padrão, o leitor escolhe quantas com + e − (decidido; RN-29).
 - [x] PDF: não planejado por enquanto (decidido).
 - [x] Sincronização entre computadores: não planejada por enquanto (decidido).
-- [x] Fontes: as do plugin mais Source Serif 4 e Merriweather (decidido; seção 10).
+- [x] Fontes: quatro sugestões compatíveis com o plugin e qualquer família instalada selecionável (confirmado pelo dono em 18/10/2026; adendo 19).
 - [x] Licença: MIT, como no plugin (decidido).
 - [x] Preferências: os padrões são os mesmos do plugin (decidido; seção 12.7).
 
@@ -937,20 +938,30 @@ Referência conferida: `BrunodosSantosVaz/lessentiel`, commit `03d3468f00da71318
 
 - Iced + AccessKit e leitores de tela precisam de prova real já na Fase 0. A existência de uma biblioteca não comprova texto de leitura acessível, seleção ou operação por teclado. Não marcar CA-35/36 como automático ou concluído sem as verificações previstas.
 - O JSON de tokens compartilhado ainda não existe no L’Essentiel consultado: valores estão em `reader-style.ts`, `reader-panel.ts` e `reader-toolbar.ts`. Criar um contrato local versionado e rastreado à origem; compartilhar em ambos os projetos exige mudança própria no plugin, fora desta preparação.
-- Fontes do plugin estão em WOFF2; verificar suporte efetivo no carregador nativo e obter TTF/OTF com licença OFL quando necessário. Não redistribuir Georgia.
+- Literata, Atkinson Hyperlegible Next e Lexend do plugin estão em WOFF2; verificar suporte efetivo no carregador nativo e obter TTF/OTF com licença OFL quando necessário. Não redistribuir Georgia. O catálogo das fontes instaladas pode usar `cosmic_text::FontSystem`, que carrega fontes do sistema uma vez; confirmar versão/API no F2.
 - Licenças de fontes, padrões de hifenização, corpus e dependências transitivas entram na auditoria. Não presumir que todos os dados de uma crate têm a licença do código Rust.
 - Metas de tamanho, memória, velocidade e 500+ livros são critérios a demonstrar. Medir em hardware descrito e runners controlados; não declarar conformidade por um build passar.
 
 ### 17.5 Estado desta preparação
 
-O plano tem 74 RF (54 essenciais, 16 importantes, 4 desejáveis), 29 RN e 38 CA originais, além dos seis CA locais. A implementação ainda não começou. Importantes e desejáveis permanecem no backlog com prioridade; nenhum requisito é considerado entregue por constar num documento.
+O plano tem 74 RF (54 essenciais, 16 importantes, 4 desejáveis), 29 RN e 39 CA originais, além dos seis CA locais. A implementação ainda não começou. Importantes e desejáveis permanecem no backlog com prioridade; nenhum requisito é considerado entregue por constar num documento.
 
-O próximo modelo deve seguir o roteiro operacional, concluir a Fundação e iniciar a prova dos riscos antes de implementar as telas definitivas. A Wiki ainda precisa de sua primeira página e a toolchain Rust/Cargo precisa ser instalada. A especificação local foi preservada e recebeu este adendo conforme pedido do dono; não se deve apagar a fonte ao preparar uma migração para a Wiki.
+O próximo modelo deve seguir o roteiro operacional, concluir a Fundação e iniciar a prova dos riscos antes de implementar as telas definitivas. A especificação local foi preservada e recebeu os adendos conforme pedido do dono; não se deve apagar a fonte ao preparar uma migração para a Wiki.
 
 ## 18. Referência de identidade visual recebida
 
 Em 18/10/2026, o dono adicionou [Tournepage Identidade Visual.dc.html](<Tournepage Identidade Visual.dc.html>), v1.0 · Out 2026. O arquivo original foi preservado. O [inventário operacional](.agents/tournepage/IDENTIDADE-VISUAL.md) organiza a leitura para F3 e para a implementação, com cores, tipografia, geometria, ícones, origem e pendências.
 
-A referência detalha a marca `tournepage` em minúsculas, símbolo da página com dobra, Literata para a marca, Inter na interface, JetBrains Mono para código/dados, família Lucide, paletas, destaques OKLCH e aplicações de capa/leitura/seleção/desfazer. Ela complementa a seção 12. O tema Papel e a fonte Literata usados na demonstração não alteram os padrões Claro/Georgia do leitor, nem removem Automático ou temas personalizados.
+A referência detalha a marca `tournepage` em minúsculas, símbolo da página com dobra, Literata para a marca, Inter na interface, JetBrains Mono para código/dados, família Lucide, paletas, destaques OKLCH e aplicações de capa/leitura/seleção/desfazer. Ela complementa a seção 12. As fontes de identidade visual valem para as funcionalidades do sistema; a tipografia do livro segue as preferências específicas de leitura e o complemento do adendo 19.
 
-O HTML é uma referência de design com dependências do ambiente de exportação (`support.js` ausente no checkout) e de CDNs para fontes/ícones. A implementação deve extrair assets locais e tokens para Rust/Iced, mantendo o aplicativo nativo e sem dependência de rede em execução. Nesta etapa foi feita apenas leitura e organização: nenhum asset foi gerado, nenhuma interface foi implementada e nenhum protótipo ou critério visual foi declarado validado.
+O HTML é uma referência de design com dependências do ambiente de exportação (`support.js` ausente no checkout) e de CDNs para fontes/ícones. A implementação deve extrair assets locais e tokens para Rust/Iced, mantendo o aplicativo nativo e sem dependência de rede em execução. A separação entre identidade da interface e escolha tipográfica do livro foi confirmada pelo dono no adendo 19.
+
+## 19. Adendo — Identidade da interface e fontes de leitura
+
+Em 18/10/2026, o dono confirmou que as fontes da identidade visual se aplicam somente às funcionalidades e à interface do sistema. Elas não definem nem limitam as fontes dos livros.
+
+Para o texto dos livros, o seletor oferece quatro modelos sugeridos conforme a documentação do plugin: Georgia (fonte do sistema), Literata, Atkinson Hyperlegible Next e Lexend (famílias incluídas no programa, conforme suas licenças). Além dessas sugestões, deve listar todas as famílias de fontes que o sistema operacional disponibilizar para o aplicativo e permitir selecionar qualquer uma delas. A fonte escolhida persiste nas preferências globais e nas exceções por livro previstas em RF-PER-08.
+
+Georgia não pode ser redistribuída. Se uma escolha salva deixar de estar disponível, aplicar fallback determinístico: Georgia quando instalada, depois Literata. A seleção não carrega caminhos arbitrários; o catálogo vem do sistema de fontes do `cosmic-text` já previsto na stack, inicializado uma vez e compartilhado, evitando varreduras a cada abertura da lista. Disponibilidade e fallback precisam de cobertura multiplataforma em CA-39.
+
+O plano anterior mencionava Source Serif 4 e Merriweather como fontes adicionais para o livro. Essa ampliação fica revogada: as únicas sugestões empacotadas para leitura são Literata, Atkinson Hyperlegible Next e Lexend, além de Georgia do sistema. Isso não altera as fontes da marca/interface nem autoriza dependência nova.
