@@ -29,14 +29,22 @@ As bibliotecas da seção 10 são escolhas do plano, não versões já verificad
 ## Evidências e pendências de bootstrap
 
 - Python 3.14.7, Git e GitHub CLI estão disponíveis neste computador. `rustc` e `cargo` não estão no PATH verificado.
-- O repositório remoto é público, com `main`, zero issues na consulta inicial e Wiki habilitada. A Wiki não apresentou HEAD acessível na consulta; verificar novamente com a autenticação disponível e, se ainda não houver página, criar a primeira pela interface antes do preflight do Big Bang.
+- O repositório remoto é público, com `main` e Wiki habilitada. Em 18/10/2026, o dono criou a Wiki; `Home.md` existe e `bb docs prepare --repository BrunodosSantosVaz/tournepage` passou, fixando o HEAD `cfa369a43b5d4eaf9b37e14b77b0f32bb90d3c87`.
 - Discussions está desabilitado. A criação do primeiro post deve seguir a skill da Fundação, quando a comunidade for habilitada no escopo autorizado; não existe post criado nesta preparação.
-- Não há `bigbang.toml`. A simulação de `bb init` foi conferida; a execução real não foi feita. `bb init` público exige Wiki inicializada e remove as configurações exclusivas do framework.
+- O bootstrap F0 foi executado numa worktree própria a partir de `develop` e está no PR draft #3. `bb verify` e `git diff --check` passaram. `bigbang.toml` está configurado para `autonomous`, mas a execução continua bloqueada pelo framework até haver contrato próprio `autonomy.toml`, ruleset `gate` em `main` e `develop`, e ambiente `production`; o contrato herdado foi removido pelo `bb init` e não foi reaproveitado.
 - `.bigbang-framework.toml`, `.bigbang-docs.json`, `.bigbang-producao.json`, `autonomy.toml` e os workflows `bb-framework-*` são heranças do Big Bang. Projetos, versões, commits e permissões neles não são comprovações do Tournepage.
 - Os workflows herdados condicionam seus jobs ao repositório do Big Bang. Jobs ignorados não são CI verde do produto.
 - Rulesets, ambientes, secrets e Project ainda precisam ser inventariados em F4. Não alegar que estão configurados. Não solicitar tokens na conversa.
 
-A Wiki é uma pendência do bootstrap, não motivo para perder este plano: preservar a especificação fornecida e estas instruções. O framework exige a primeira página pela interface; não contornar mudando a visibilidade do repositório ou usando a Wiki de outro projeto. Enquanto depender disso, podem avançar pesquisa, contratos e preparação local autorizados. Só solicitar a intervenção específica quando ela for necessária à próxima etapa dependente.
+O conteúdo funcional detalhado ainda precisa de proposta, revisão e publicação versionadas na Wiki pelo processo 18; a Home padrão não comprova cobertura documental. Preserve a especificação fornecida até a publicação confirmada. Não publique conteúdo sem passar pelo PR e pela revisão documental.
+
+## Ponto de execução em 18/10/2026
+
+- PR #1 mantém a preparação da especificação, identidade visual, L’Essentiel/Ponytail, adendos 16–18 e camada de teste local; ainda está draft e aponta para `main`.
+- `develop` foi criado do `main` original (`cbf9710eba0239c5e88f5a77fa9cbe4c0294758f`). Issue F0 é #2; PR draft F0 é #3, branch `fundacao/0-ligar-github`, commit `4a5bb97`.
+- F0 ainda requer revisão/aceite antes do merge. A PR não instala código do leitor e não valida produto.
+- O dono ainda precisa responder se a identidade v1.0 está aprovada para prototipação. O padrão de leitura Claro/Georgia permanece conforme a especificação.
+- F4 exigirá autorização explícita para configurações externas do GitHub (rulesets, ambiente, Discussions, secrets e painéis). Não criar secrets em nome do dono.
 
 ## Ordem de execução
 
