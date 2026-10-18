@@ -2,6 +2,8 @@
 
 Fonte fornecida pelo dono em 18/10/2026: [Tournepage Identidade Visual.dc.html](<../../Tournepage Identidade Visual.dc.html>), identificada no próprio documento como v1.0 · Out 2026. O HTML original foi preservado, sem alteração ou execução. SHA-256 da fonte lida: `2443121469e4f138ba74066d4ba45fd46b9b8a20db97d558b2d184d47ec587bf`.
 
+Na conferência de diff, o HTML original apresenta espaços numa linha vazia (380). Eles foram mantidos para preservar a fonte byte a byte; as instruções Markdown foram conferidas separadamente.
+
 Esta referência completa o design da especificação para a Fundação/F3 e as tarefas T19a/T19b. São orientações de preparação; não há tokens de produção, arquivos de ícone exportados ou protótipo validado nesta entrega.
 
 ## Marca e símbolo
