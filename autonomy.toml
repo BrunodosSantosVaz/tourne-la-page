@@ -1,0 +1,12 @@
+# Contrato Tournepage aprovado pelo dono em 18/10/2026.
+# Escopo atual: execução e teste local; sem QA ou publicação delegada.
+version = 1
+targets = ["local"]
+risk = ["low", "medium"]
+gates = ["backlog", "refinement", "prototype", "tests", "pr"]
+flags = "owner"
+wip = 3
+attempts = 3
+max_cost_usd = 50
+publish_window = "00:00-23:59"
+expires = "2027-01-18"
