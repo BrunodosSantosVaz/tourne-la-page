@@ -3,8 +3,8 @@
   "repositorio": "BrunodosSantosVaz/tourne-la-page",
   "visibilidade": "publico",
   "wiki": {
-    "base": "ab4999b436faa8f64f73c047767d2850b0e57d72",
-    "commit": "466852fc7148c27fcdc30ae5f8a9ed8e2b534f20",
+    "base": "219d638203188841680848f13e5244f52a6dddc9",
+    "commit": "575bbaf735168726af9a67e265b75c80244aabfb",
     "branch": "master",
     "proposta": "bigbang/proposta-4-produto"
   },
@@ -75,7 +75,7 @@
     }
   },
   "codigo": {
-    "commit": "aae35459046371a90029069cd8b940252709762e",
+    "commit": "70a71d0389f805702c76ea70d607e4290df1bff6",
     "raizes": [
       "app/",
       "crates/",
@@ -522,9 +522,9 @@
       ],
       "hashes": {
         "packaging/linux/build.sh": "9818c5366c345b8d7d6b51b5b8013b9c62a52dcd727f2b5fc3a5b9aa4a760093",
-        "scripts/package.py": "5687b322a70a47299c1bd763e7e7269387e1c899208461fda3663e90246b265c",
+        "scripts/package.py": "a81ef7539e43268e5b226392cea0d04ccec7434b9278b0aa589f66a7c0a97a9f",
         "scripts/test_ci.py": "c1608166738407a4cb9e265be58743728aadec4ae0819e4f2319395ed444432c",
-        "scripts/test_package.py": "d5fa449f8e4871b32e90eb63d8f174f04d363a3398da2d75504adef2788741a0"
+        "scripts/test_package.py": "3deb28f0a4b8c4c80b6821f7fc7abb537d51f18b38d960fcda881b19f8ee40f6"
       },
       "testes": [
         "scripts/test_package.py:test_linux_bundle_contains_launcher_binary_licenses_and_verified_manifest",

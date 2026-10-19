@@ -28,5 +28,6 @@
   "Desempenho em bibliotecas grandes e fuzzing": 34,
   "Internacionalização e acabamento multiplataforma": 35,
   "Endurecer confiança dos checks com token no Big Bang": 36,
-  "Refatorar a composição do leitor para os limites COD-09": 42
+  "Refatorar a composição do leitor para os limites COD-09": 42,
+  "Limitar importação de temas e sinalizar falhas de leitura do banco": 44
 }
