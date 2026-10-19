@@ -117,6 +117,16 @@ def bundle(binary, system, version, output):
         return result
 
 
+
+def verify_installation(launcher, package_root, environment, version):
+    # Windows does not resolve a relative executable against cwd with shell=False.
+    subprocess.run([str(launcher.resolve()), "--verify-install", "install-verification.json"],
+                   cwd=package_root, env=environment, check=True)
+    details = json.loads((package_root / "install-verification.json").read_text())
+    if details["database"] != "ok" or details["version"] != version:
+        raise SystemExit("The native installation verification failed")
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("system", choices=TARGETS)
@@ -178,15 +188,7 @@ def main():
         verification.update({"TOURNEPAGE_ENV": "homologacao", "XDG_DATA_HOME": temporary,
                              "LOCALAPPDATA": temporary, "APPDATA": temporary, "HOME": temporary})
         package_root = extracted / "Tourne-la-page"
-        if expected_os == "Linux":
-            subprocess.run(["./AppRun", "--verify-install", "install-verification.json"], cwd=package_root, env=verification, check=True)
-        elif expected_os == "Windows":
-            subprocess.run([".\\tourne-la-page.exe", "--verify-install", "install-verification.json"], cwd=package_root, env=verification, check=True)
-        else:
-            subprocess.run(["./Tourne la page.app/Contents/MacOS/tourne-la-page", "--verify-install", "install-verification.json"], cwd=package_root, env=verification, check=True)
-        details = json.loads((package_root / "install-verification.json").read_text())
-        if details["database"] != "ok" or details["version"] != version:
-            raise SystemExit("The native installation verification failed")
+        verify_installation(launcher, package_root, verification, version)
         print("Extracted native package initialized its database outside the checkout.")
     print(archive_path)
 
