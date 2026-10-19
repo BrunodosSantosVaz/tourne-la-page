@@ -19,14 +19,16 @@ def install():
             raise SystemExit("macOS CI packaging requires an absolute GITHUB_PATH")
         subprocess.run(["brew", "install", "bash", "coreutils"], cwd=ROOT, check=True)
         directories = []
-        for formula, suffix, command in (("bash", "bin", "bash"),
-                                         ("coreutils", "libexec/gnubin", "sha256sum")):
+        for formula, suffix in (("bash", "bin"), ("coreutils", "libexec/gnubin")):
             prefix = subprocess.check_output(["brew", "--prefix", formula], cwd=ROOT, text=True).strip()
             if not Path(prefix).is_absolute() or "\n" in prefix or "\r" in prefix:
                 raise SystemExit("Homebrew returned an invalid tool prefix")
             directory = Path(prefix) / suffix
-            subprocess.run([str(directory / command), "--version"], cwd=ROOT, check=True)
             directories.append(str(directory))
+        tool_environment = os.environ.copy()
+        tool_environment["PATH"] = os.pathsep.join(directories + [os.environ.get("PATH", "")])
+        subprocess.run(["bash", "--version"], cwd=ROOT, env=tool_environment, check=True)
+        subprocess.run(["sha256sum", "--version"], cwd=ROOT, env=tool_environment, check=True)
         # The runner applies this file before choosing the next step's Bash executable.
         with Path(path_file).open("a", encoding="utf-8") as output:
             output.write("\n".join(directories) + "\n")

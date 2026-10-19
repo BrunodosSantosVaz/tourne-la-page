@@ -119,9 +119,15 @@ def bundle(binary, system, version, output):
 
 
 def verify_installation(launcher, package_root, environment, version):
+    package_root = Path(package_root).resolve(strict=True)
+    executable = Path(launcher).resolve(strict=True)
+    allowed = {package_root / "AppRun", package_root / "tourne-la-page.exe",
+               package_root / "Tourne la page.app/Contents/MacOS/tourne-la-page"}
+    if executable not in allowed or not executable.is_file():
+        raise ValueError("The smoke executable must be a known launcher inside the extracted package")
     # Windows does not resolve a relative executable against cwd with shell=False.
-    subprocess.run([str(launcher.resolve()), "--verify-install", "install-verification.json"],
-                   cwd=package_root, env=environment, check=True)
+    subprocess.run(["tourne-la-page", "--verify-install", "install-verification.json"],
+                   executable=str(executable), cwd=package_root, env=environment, check=True)
     details = json.loads((package_root / "install-verification.json").read_text())
     if details["database"] != "ok" or details["version"] != version:
         raise SystemExit("The native installation verification failed")
