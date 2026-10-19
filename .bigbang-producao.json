@@ -1,0 +1,46 @@
+{
+  "O backend sobe sem erro": [
+    "nao-se-aplica",
+    "Aplicativo desktop local sem servidor/backend remoto; inicialização nativa e SQLite verificadas na candidata."
+  ],
+  "O front compila": [
+    "portao",
+    "ci"
+  ],
+  "As migrações rodam do zero e a partir da versão anterior": [
+    "portao",
+    "testes"
+  ],
+  "O ambiente sobe pelo método de deploy do alvo": [
+    "portao",
+    "candidata"
+  ],
+  "Nenhum segredo no pacote do front": [
+    "portao",
+    "seguranca"
+  ],
+  "Rotas privadas exigem autenticação": [
+    "nao-se-aplica",
+    "Não há rotas HTTP, conta ou serviço multiusuário; os dados pertencem ao usuário do sistema operacional."
+  ],
+  "CORS de produção configurado por ambiente": [
+    "nao-se-aplica",
+    "Interface nativa sem webview ou servidor HTTP; não há requisições browser/API."
+  ],
+  "Testes de limite de requisições presentes e passando": [
+    "nao-se-aplica",
+    "Não existem endpoints de autenticação ou API. Os limites de ZIP/spine/leitura são testados no parser."
+  ],
+  "/api/health responde sem autenticação": [
+    "nao-se-aplica",
+    "Desktop sem servidor HTTP; a candidata executa --verify-install com banco temporário fora do checkout."
+  ],
+  "O README documenta as variáveis de ambiente sem valores": [
+    "portao",
+    "builtin"
+  ],
+  "A auditoria de segurança não tem achado crítico ou alto aberto": [
+    "portao",
+    "builtin"
+  ]
+}

@@ -7,19 +7,19 @@ on:
   pull_request:
     types: [labeled]
   workflow_run:
-    workflows: [Framework gate]
+    workflows: [CI]
     types: [completed]
 
 permissions:
   contents: read
 
 concurrency:
-  group: bb-framework-merge-pr-${{ github.event.pull_request.number || github.event.workflow_run.head_branch }}
+  group: bb-merge-pr-${{ github.event.pull_request.number || github.event.workflow_run.head_branch }}
   cancel-in-progress: false
 
 jobs:
   merge:
-    if: github.repository == 'BrunodosSantosVaz/big-bang' && ((github.event_name == 'pull_request' && contains(fromJSON('["pr:approved","pr-aprovado","approved:tests","testes-aprovados"]'), github.event.label.name)) || (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'pull_request'))
+    if: ${{ (github.event_name == 'pull_request' && contains(fromJSON('["pr:approved","pr-aprovado","approved:tests","testes-aprovados"]'), github.event.label.name)) || (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'pull_request') }}
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1

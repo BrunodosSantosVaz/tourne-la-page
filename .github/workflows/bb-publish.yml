@@ -23,12 +23,12 @@ permissions:
   contents: read
 
 concurrency:
-  group: bb-framework-publish
+  group: bb-publish
   cancel-in-progress: false
 
 jobs:
   check:
-    if: github.repository == 'BrunodosSantosVaz/big-bang' && (vars.PROJECT_OWNER != '')
+    if: ${{ vars.PROJECT_OWNER != '' }}
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -64,7 +64,7 @@ jobs:
 
   publish:
     needs: check
-    if: github.repository == 'BrunodosSantosVaz/big-bang' && (!inputs.dry_run)
+    if: ${{ !inputs.dry_run }}
     runs-on: ubuntu-24.04
     environment: production
     steps:
