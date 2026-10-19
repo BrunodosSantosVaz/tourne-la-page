@@ -1,49 +1,56 @@
 ---
 name: bb-montar-github
-description: Use em F4 da Fundação para guiar permissões e montar labels, painéis, rulesets e ambientes no GitHub, conferindo cada item antes do próximo. Nunca pede o valor de tokens.
+description: Use em F4 da Fundação para guiar permissões e montar labels v3, o Project único, rulesets com o check gate e o ambiente production, conferindo cada item antes do próximo. Nunca pede o valor de tokens.
 ---
-<!-- Gerado pelo Big Bang v3.1.0 a partir de .bigbang/skills/bb-montar-github/SKILL.md. Não edite: personalize em bigbang.toml. -->
+<!-- Gerado pelo Big Bang v3.1.0 a partir de .bigbang/pipeline/skills/bb-montar-github/SKILL.md. Não edite: personalize em bigbang.toml. -->
 
-# Montar o GitHub
+# Montar o GitHub (v3)
 
 ## Quando usar
 
-Em F4, com produto, stack e design aprovados ou design não aplicável registrado.
+Em F4, com produto, stack e design aprovados, ou com o design registrado como não aplicável.
 
 ## Antes de começar
 
-Os caminhos de documentação do sistema citados aqui são identificadores lógicos: leia com `bb documentacao ler <caminho>`. Em públicos, escreva e revise a proposta na Wiki; em privados, mantenha os arquivos locais. Aplique `.bigbang/processo/18-documentacao.md`, incluindo inventário, matriz, links e publicação confirmada também no Flash. README público é uma apresentação breve com Wiki, Discussions e painéis; conteúdo completo e screenshots ficam na Wiki.
+Os caminhos de documentação do sistema citados aqui são identificadores lógicos: leia com `bb docs read <caminho>`. Em públicos, escreva e revise a proposta na Wiki; em privados, mantenha os arquivos locais. Aplique `.bigbang/processo/18-documentacao.md`, incluindo inventário, matriz, links e publicação confirmada em todos os modos. README público é uma apresentação breve com Wiki, Discussions e o quadro; conteúdo completo e screenshots ficam na Wiki.
 
-Leia `AGENTS.md`, `.bigbang/processo/02-fundacao.md` (F4), `.bigbang/processo/04-paineis.md`,
-`.bigbang/processo/11-seguranca-operacional.md` e `bigbang.toml`. Consulte a documentação/plano atuais do GitHub.
+Leia `AGENTS.md`, `.bigbang/processo/02-fundacao.md` (F4), `.bigbang/pipeline/process/board.md`,
+`.bigbang/processo/11-seguranca-operacional.md` e `bigbang.toml`. Consulte a documentação e o plano atuais do GitHub.
 
 ## Passos
 
-Habilite Discussions no escopo autorizado e publique o primeiro post factual com `bb comunidade primeiro-post`.
-Em públicos, confira Wiki e painéis separados; audite conteúdo antes de publicar um painel existente.
-Registre Wiki, Discussions e três painéis no README e na Wiki; confira Social preview preparado em F3.
+Habilite Discussions no escopo autorizado e publique o primeiro post factual com `bb community welcome-post`. Em
+públicos, confira a Wiki e o quadro; audite o conteúdo antes de deixar o quadro com leitura pública. Registre a Wiki,
+Discussions e o quadro no README e na Wiki, e confira o Social preview preparado em F3.
 
-1. Um item por vez: mostre comando exato, propósito, efeito e qualquer limitação do plano. Espere o dono agir ou autorizar;
-   confira o resultado com leitura por gh antes de seguir. Nunca trate configuração desejada como aplicada.
-2. Confira escopo project no gh; oriente o dono a criar um `PROJETO_TOKEN` por projeto com validade e escopos mínimos
-   e guardá-lo via `gh secret set PROJETO_TOKEN`. Confira só nome/metadados do secret, jamais seu valor.
-3. Confira secret scanning/push protection; ambiente producao com aprovação do dono e só main; staging no perfil deploy;
-   rulesets de main/develop/epico com PR, checks check/regras/seguranca e bloqueio de força/exclusão.
-4. Deploy: credenciais do alvo, preferindo OIDC. Confira variáveis PROJETO_OWNER/números dos painéis, merge commit
-   permitido e exclusão automática de branch desligada. Se o plano não suportar uma proteção, explique e peça decisão.
-5. Com autorização, use `.bigbang/scripts/criar-labels.sh`, `.bigbang/scripts/criar-paineis.sh` e
-   `.bigbang/scripts/configurar-repositorio.sh` (itens 3, 4, 5 e 7), sempre primeiro com `--simular`;
-   não recrie sua lógica. Registre os números reais dos painéis no `bigbang.toml`, acrescente as issues da Fundação.
-6. Execute `bb status` e confira os três painéis. Registre evidências no PR de F4 e peça aprovação.
+1. Um item por vez: mostre o comando exato, o propósito, o efeito e as limitações do plano. Espere o dono agir ou
+   autorizar e confira o resultado com uma leitura pelo `gh` antes de seguir.
+2. Confira o escopo `project` no `gh`. Oriente o dono a criar um `PROJECT_TOKEN` por projeto, com validade e escopos
+   mínimos, e a guardá-lo com `gh secret set PROJECT_TOKEN`. Confira só o nome e os metadados do segredo.
+3. Rode `bb board labels` (catálogo v3, idempotente) e `bb board create --title "<produto>"`. Registre no
+   `bigbang.toml` (`[board]`, `model = "single"`, `number = N`) e nas variáveis `PROJECT_OWNER` e
+   `PROJECT_NUMBER` os valores impressos.
+4. Proteções:
+   - secret scanning e push protection;
+   - ambiente `production` só a partir da `main` e com a aprovação do dono (no autonomous, conforme o contrato);
+   - `staging` no perfil deploy;
+   - rulesets de `main` e `develop` com PR, o check obrigatório `gate` e bloqueio de força e exclusão;
+   - merge commit permitido e exclusão automática de branch desligada.
+   No deploy, credenciais do alvo, preferindo OIDC.
+5. No modo autonomous, rode `bb autonomy check`; ele recusa o repositório sem esses controles (ou privado numa conta
+   pessoal Free). Se o plano não suportar uma proteção, explique e peça a decisão do dono.
+6. Rode `bb board show` e acrescente as issues da Fundação ao quadro. Registre as evidências no PR de F4 e peça a
+   aprovação.
 
 ## Pare e pergunte quando
 
-Cada item exigir ação/permissão do dono, o plano limitar proteção ou a conferência não confirmar o resultado.
+Algum item exigir ação ou permissão do dono, o plano limitar uma proteção ou a conferência não confirmar o resultado.
 
 ## Nunca
 
-Peça, leia ou exponha o valor de token; amplie escopos silenciosamente; aprove o ambiente producao.
+Peça, leia ou exponha o valor de um token; amplie escopos em silêncio; aprove o ambiente production.
 
 ## Pronto quando
 
-F4 aprovado, configuração efetiva registrada e `bb status` lendo os três painéis, com limitações aceitas explicitamente.
+F4 está aprovado, a configuração efetiva está registrada e `bb board show` lê o quadro único, com as limitações
+aceitas explicitamente.

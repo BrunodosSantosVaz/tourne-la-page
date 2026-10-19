@@ -2,7 +2,7 @@
 name: bb-prototipar
 description: Use para vamos montar o protótipo de um épico com-prototipo cujo refinamento já foi aprovado. Itera um protótipo navegável até aprovação do dono.
 ---
-<!-- Gerado pelo Big Bang v3.1.0 a partir de .bigbang/skills/bb-prototipar/SKILL.md. Não edite: personalize em bigbang.toml. -->
+<!-- Gerado pelo Big Bang v3.1.0 a partir de .bigbang/pipeline/skills/bb-prototipar/SKILL.md. Não edite: personalize em bigbang.toml. -->
 
 # Prototipar épico
 
@@ -12,17 +12,17 @@ Para protótipo de épico; para design da Fundação, use `bb-design-kit`.
 
 ## Antes de começar
 
-Os caminhos de documentação do sistema citados aqui são identificadores lógicos: leia com `bb documentacao ler <caminho>`. Em públicos, escreva e revise a proposta na Wiki; em privados, mantenha os arquivos locais. Aplique `.bigbang/processo/18-documentacao.md`, incluindo inventário, matriz, links e publicação confirmada também no Flash. README público é uma apresentação breve com Wiki, Discussions e painéis; conteúdo completo e screenshots ficam na Wiki.
+Os caminhos de documentação do sistema citados aqui são identificadores lógicos: leia com `bb docs read <caminho>`. Em públicos, escreva e revise a proposta na Wiki; em privados, mantenha os arquivos locais. Aplique `.bigbang/processo/18-documentacao.md`, incluindo inventário, matriz, links e publicação confirmada também no Flash. README público é uma apresentação breve com Wiki, Discussions e painéis; conteúdo completo e screenshots ficam na Wiki.
 
 Leia `AGENTS.md`, `DESIGN.md`, épico/critérios, `.bigbang/processo/03-planejamento.md` e `.bigbang/padroes/frontend.md`.
-Confirme com-prototipo e refinamento-aprovado.
+Confirme `prototype:required` e `approved:refinement`.
 
 ## Passos
 
 1. Monte protótipo navegável em `docs/prototipos/N/`, cobrindo telas/critérios do épico com tokens/componentes do kit.
 2. Ligue o protótipo no épico; mostre fluxos e estados, confira acessibilidade e itere com os comentários do dono.
-3. Peça aprovação; com a resposta explícita, `bb decisao prototipo-aprovado N --frase "palavras do dono"`.
-4. Incorpore o protótipo como referência dos critérios; confira a movimentação para Próxima sprint, sem iniciar código.
+3. Peça aprovação; com a resposta explícita, `bb decision approved:prototype N --quote "palavras do dono"`.
+4. Incorpore o protótipo como referência dos critérios; confira `bb move N Ready` após os critérios e a decisão de flag, sem iniciar código.
 
 ## Pare e pergunte quando
 
@@ -34,4 +34,4 @@ Invente aprovação, ignore reprovação ou use cores/fontes fora dos tokens.
 
 ## Pronto quando
 
-Protótipo aprovado e ligado aos critérios; épico em Próxima sprint.
+Protótipo aprovado e ligado aos critérios; épico em Ready, aguardando seleção para a sprint.

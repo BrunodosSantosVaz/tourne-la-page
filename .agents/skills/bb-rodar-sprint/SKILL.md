@@ -1,48 +1,49 @@
 ---
 name: bb-rodar-sprint
-description: Use para vamos rodar a sprint ou vamos encerrar a sprint. Confere portões, usa os botões da esteira e coordena testes, tarefas, documentação e retrospectiva.
+description: Use para vamos rodar a sprint ou vamos encerrar a sprint. Seleciona épicos, roda bb sprint start e coordena testes, tarefas, documentação e retrospectiva no fluxo agrupador.
 ---
-<!-- Gerado pelo Big Bang v3.1.0 a partir de .bigbang/skills/bb-rodar-sprint/SKILL.md. Não edite: personalize em bigbang.toml. -->
+<!-- Gerado pelo Big Bang v3.1.0 a partir de .bigbang/pipeline/skills/bb-rodar-sprint/SKILL.md. Não edite: personalize em bigbang.toml. -->
 
-# Rodar ou encerrar sprint
+# Rodar ou encerrar sprint (v3)
 
 ## Quando usar
 
-Ao iniciar, retomar ou encerrar sprint; não confunda sprint com release de épico.
+Ao iniciar, retomar ou encerrar uma sprint. A release é cortada da `develop` depois; não confunda sprint com release.
 
-Consulte `projeto.modo`. No Flash, reutilize a autorização do plano sem pedir outro sim por tarefa. A ordem
-teste → tarefas continua: escreva os testes antes e execute os afetados após concluir o código (`bb testes`).
-Use a CI do mesmo SHA e não repita tudo por hábito. Estrutura, major/minor e produção exigem suíte completa.
-Veja `.bigbang/processo/17-flash.md`.
+Consulte `project.mode` e `.bigbang/pipeline/process/modes.md`. No normal, o dono decide nos portões. No Flash, você aprova o trabalho comum e chama o dono para o crítico. No autonomous, você só age dentro do `autonomy.toml`; fora dele, o portão fica bloqueado até a decisão registrada do dono.
 
 ## Antes de começar
 
-Os caminhos de documentação do sistema citados aqui são identificadores lógicos: leia com `bb documentacao ler <caminho>`. Em públicos, escreva e revise a proposta na Wiki; em privados, mantenha os arquivos locais. Aplique `.bigbang/processo/18-documentacao.md`, incluindo inventário, matriz, links e publicação confirmada também no Flash. README público é uma apresentação breve com Wiki, Discussions e painéis; conteúdo completo e screenshots ficam na Wiki.
+Os caminhos de documentação do sistema citados aqui são identificadores lógicos: leia com `bb docs read <caminho>`. Em públicos, escreva e revise a proposta na Wiki; em privados, mantenha os arquivos locais. Aplique `.bigbang/processo/18-documentacao.md`, incluindo inventário, matriz, links e publicação confirmada em todos os modos. README público é uma apresentação breve com Wiki, Discussions e o quadro; conteúdo completo e screenshots ficam na Wiki.
 
-Leia `AGENTS.md`, `.bigbang/processo/05-sprint.md`, `06-execucao.md`, `14-automacoes.md` e `bigbang.toml`.
-Use `bb status` para conferir estado e pendências.
+Leia `AGENTS.md`, `.bigbang/pipeline/process/sprint.md`, `execution.md`, `bigbang.toml` e `flags.toml`. Use
+`bb board show` para o estado e as pendências.
 
 ## Passos
 
-1. Iniciar: confira Definition of Ready de cada épico em Próxima sprint, token válido sem ler seu valor,
-   CI verde na ponta da develop e nada pendente da sprint anterior. Pergunte ao dono como entregar: **por sprint**
-   (uma release com todos os épicos prontos, `epico=sprint`) ou **por épico**; registre a resposta no comentário de
-   início da sprint. Trabalhe em paralelo as tarefas desbloqueadas de épicos diferentes, até `ias.tarefas_por_ia`.
-2. Execute Iniciar sprint por `gh workflow run`, com os inputs do workflow existente e simular=true; mostre o plano.
-   Só então execute de verdade e acompanhe o resultado. Não recrie branches/issues previstas pelo script.
-3. Por épico, `bb-escrever-testes-aceite`; após o PR do teste mesclado, Criar branches; `bb-codar-tarefa` nas tarefas
-   desbloqueadas; `bb-documentar-epico`. Leia cada skill ao entrar na etapa e liste pendências do dono a cada pausa.
-4. Encerrar: resuma publicado/em andamento, registre data de fim pelo botão Encerrar (primeiro simulação),
-   siga `bb-retrospectiva`; trabalho incompleto segue para próxima sprint, não é declarado concluído.
+1. Seleção: para cada épico em Ready escolhido pelo dono, registre `bb decision approved:selection N --quote "…"`.
+   O controlador leva o cartão a Selected. Respeite o WIP (`epics_in_progress`, ou `wip` do contrato no
+   autonomous). Confira também o token válido sem ler o valor, a CI verde na ponta da `develop` e nada pendente da
+   sprint anterior.
+2. Rode `bb sprint start` (ou o botão *Start sprint* com `dry_run=true`) e mostre o plano. Para cada épico ele cria
+   como sub-issues o teste de aceite, as tarefas e a documentação, com as dependências nativas, e a branch
+   `test/<n>-<slug>` a partir da `develop`. Depois rode de verdade e confira: o épico vai para In Progress.
+3. Por épico: `bb-escrever-testes-aceite`. Depois do merge do teste, rode `bb branches` (botão *Create branches*)
+   para as tarefas desbloqueadas; siga `bb-codar-tarefa` nelas e `bb-documentar-epico` por último. Trabalhe em
+   paralelo as tarefas de épicos diferentes, até o limite de posses por agente.
+4. Quando todas as sub-issues de um épico fecharem, ele está pronto para a release; siga `bb-entregar-epico`.
+5. Encerrar: resuma o que foi publicado e o que segue em andamento e siga `bb-retrospectiva`. Trabalho incompleto
+   continua na próxima sprint e nunca é declarado concluído.
 
 ## Pare e pergunte quando
 
-Um portão recusar, CI ficar vermelha ou faltar decisão/revisão/homologação. Explique o motivo, sem forçar o avanço.
+Um portão recusar, a CI ficar vermelha ou faltar decisão, revisão ou homologação. Explique o motivo sem forçar.
 
 ## Nunca
 
-Pule o teste do épico, enfraqueça portões ou tome decisões humanas para destravar a sprint.
+Pule o teste do épico, crie branch de épico (o épico só agrupa), enfraqueça portões ou tome decisões do dono.
 
 ## Pronto quando
 
-Na execução, épicos em Homologação ou adiante; no encerramento, data e retrospectiva registradas com pendências explícitas.
+Na execução, cada épico selecionado está em In Progress com as sub-issues criadas e as tarefas andando. No
+encerramento, a retrospectiva está registrada e as pendências estão explícitas.

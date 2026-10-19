@@ -1,48 +1,66 @@
 ---
 name: bb-entregar-epico
-description: Use para vamos homologar ou vamos publicar um épico ou bug. Mostra candidata e critérios, registra a decisão do dono e confere checklist e portão sem aprovar o ambiente de produção.
+description: Use para vamos homologar ou vamos publicar. Corta a release da develop, leva a candidata a QA, registra a decisão do dono e confere o portão da publicação sem aprovar o ambiente production.
 ---
-<!-- Gerado pelo Big Bang v3.1.0 a partir de .bigbang/skills/bb-entregar-epico/SKILL.md. Não edite: personalize em bigbang.toml. -->
+<!-- Gerado pelo Big Bang v3.1.0 a partir de .bigbang/pipeline/skills/bb-entregar-epico/SKILL.md. Não edite: personalize em bigbang.toml. -->
 
-# Entregar épico ou bug
+# Entregar épicos (v3)
 
 ## Quando usar
 
-Na homologação ou publicação de release por épico/bug; nunca como aprovação implícita de produção.
+Para cortar a release, homologar a candidata e publicar. CI verde nunca é aprovação de produção.
+
+Consulte `project.mode` e `.bigbang/pipeline/process/modes.md`. No normal, o dono decide nos portões. No Flash, você aprova o trabalho comum e chama o dono para o crítico. No autonomous, você só age dentro do `autonomy.toml`; fora dele, o portão fica bloqueado até a decisão registrada do dono.
 
 ## Antes de começar
 
-Os caminhos de documentação do sistema citados aqui são identificadores lógicos: leia com `bb documentacao ler <caminho>`. Em públicos, escreva e revise a proposta na Wiki; em privados, mantenha os arquivos locais. Aplique `.bigbang/processo/18-documentacao.md`, incluindo inventário, matriz, links e publicação confirmada também no Flash. README público é uma apresentação breve com Wiki, Discussions e painéis; conteúdo completo e screenshots ficam na Wiki.
+Os caminhos de documentação do sistema citados aqui são identificadores lógicos: leia com `bb docs read <caminho>`. Em públicos, escreva e revise a proposta na Wiki; em privados, mantenha os arquivos locais. Aplique `.bigbang/processo/18-documentacao.md`, incluindo inventário, matriz, links e publicação confirmada em todos os modos. README público é uma apresentação breve com Wiki, Discussions e o quadro; conteúdo completo e screenshots ficam na Wiki.
 
-Leia `AGENTS.md`, `.bigbang/processo/09-entrega.md`, `bigbang.toml`, épico/bug, critérios, documentação e candidata/staging.
+Leia `AGENTS.md`, `.bigbang/pipeline/process/delivery.md`, `bigbang.toml`, `flags.toml`, os épicos com os
+critérios, a documentação e a candidata ou o staging.
 
 ## Passos
 
-0. Entrega por sprint (combinada no início da sprint): quando todos os épicos da sprint estão prontos, rode
-   Integrar release com `epico=sprint`; homologue cada épico da candidata única e publique uma vez.
-
-1. Homologar: mostre link, versão/SHA, o que testar e critérios. Espere homologado ou reprovado com motivo.
-   Registre `bb decisao homologado N --frase "palavras do dono"`, ou reprovado com a frase correspondente.
-2. Reprovado: crie nova tarefa de correção no mesmo épico pelo botão Tarefa de correção, com motivo;
-   fluxo normal até próxima candidata, sem sobrescrever a candidata anterior.
-3. Publicar: execute `bb checklist producao`; confira homologação, docs, bloqueios de segurança, PR/CI no SHA exato,
-   candidata intacta e changelog. Rode Publicar em produção com simular=true e mostre o portão.
-4. Só com ordem explícita do dono nesta conversa execute simular=false. Logo depois, rode
-   `bash .bigbang/esteira/nucleo/scripts/link-aprovacao.sh bb-publicar-producao.yml` e entregue ao humano que aprova
-   o bloco que ele imprime: link direto do run e passos (Review deployments → producao → Approve and deploy).
-   Não aprove por API. Publique o mesmo artefato/digest homologado, sem recompilar.
-5. Confira release, saúde, fechamento e devolução de main. Para sem-release, siga o botão Publicar sem release e seu
-   portão; Publicar sem release (`bb-publicar-sem-release.yml`) e Voltar versão (`bb-voltar-versao.yml`) também
-   esperam aprovação: entregue o link e os passos do mesmo jeito.
+1. Cortar: com os épicos prontos (sub-issues fechadas), rode `bb release cut` (botão *Cut release*, primeiro com
+   `dry_run=true`). Ele cria `release/x.y.z` da `develop`, a trava da versão e o milestone; `bb release items`
+   lista os épicos. Épico que mudou o artefato sem homologação vai com a flag desligada.
+2. Candidata: o botão *Candidate* gera `vX.Y.Z-rc.N` e roda `bb pipeline candidate-ready`. Os épicos vão para QA
+   (ou para Releasing com `qa:not-applicable`) e o PR release → `main` é aberto.
+3. Homologar: mostre o link, a versão e o SHA, o que testar e os critérios.
+   - `qa:human`: espere a decisão do dono e registre `bb decision qa:approved N --quote "…"`.
+   - Reprovação: registre `qa:rejected` e rode `bb qa reject N --reason "…"` (botão *QA reject*). Ele cria a tarefa
+     de correção a partir da release; a candidata seguinte nunca sobrescreve a anterior.
+   - `qa:agent` delegado pelo modo: um agente sem posse no épico homologa a candidata atual e registra
+     `bb qa verdict N --candidate vX.Y.Z-rc.N --digest sha256:… --verdict approved --agent SEU-NOME`.
+4. Publicar: rode `bb release gate --epic N…` e `bb release publish --version x.y.z --dry-run` e mostre o portão.
+   O portão confere:
+   - homologação ou flag desligada;
+   - pendências só de épicos no escuro;
+   - nenhuma `blocks-production`;
+   - candidata igual à ponta da release;
+   - PR verde.
+5. Só com a ordem do dono nesta conversa (ou dentro do `autonomy.toml` no autonomous) rode o botão *Publish* com
+   `dry_run=false`. Entregue ao humano que aprova o link do run e os passos que o job imprime (Review deployments →
+   production → Approve and deploy). Não aprove por API. A publicação:
+   - mescla na `main`;
+   - promove os mesmos bytes da candidata;
+   - conclui os épicos entregues e deixa os do escuro com a flag desligada;
+   - fecha o milestone e devolve a `main` à `develop`.
+6. Depois: confira a saúde. Ligar a flag de um épico no escuro é decisão do dono (`bb flag on <nome>`). Mudança sem
+   artefato sai de `maintenance/*` (`bb release maintenance --pr N`). Voltar versão usa o botão *Rollback*, também
+   atrás da aprovação.
 
 ## Pare e pergunte quando
 
-Faltar homologação/ordem, qualquer check falhar, candidata mudar ou existir bloqueio. Retorno de versão também exige ordem.
+Faltar homologação ou ordem, qualquer check falhar, a candidata mudar ou existir bloqueio. Voltar versão também
+exige ordem.
 
 ## Nunca
 
-Aprove ambiente producao, invente decisão, burle portão ou confunda CI verde com autorização de produção.
+Aprove o ambiente production, invente decisão, homologue o que você mesmo entregou, recompile o artefato
+homologado ou burle o portão.
 
 ## Pronto quando
 
-Épico/bug Concluída, versão/artefato conferidos e resultado de produção registrado; pendências não são sucesso.
+Os épicos estão em Done (ou entregues no escuro, com a flag registrada), a versão e o digest foram conferidos e o
+resultado da produção está registrado. Pendência não é sucesso.
