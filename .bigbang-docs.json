@@ -3,10 +3,10 @@
   "repositorio": "BrunodosSantosVaz/tourne-la-page",
   "visibilidade": "publico",
   "wiki": {
-    "base": "ecd2d8cc536a891f1403005acc070b2f288dd9d0",
-    "commit": "27193eced3604e5f840f9d0aa5100974db5afa76",
+    "base": "27193eced3604e5f840f9d0aa5100974db5afa76",
+    "commit": "96cef1e1a2bfe2a2fd41dba275f1b72831360773",
     "branch": "master",
-    "proposta": "bigbang/proposta-64-pacotes"
+    "proposta": "bigbang/proposta-64-executaveis-seguros"
   },
   "paginas": {
     "docs/Produto.md": "Produto",
@@ -77,7 +77,7 @@
     }
   },
   "codigo": {
-    "commit": "c123623239e6109feabcea6b654cdddb04659f96",
+    "commit": "813eb754bfb14f54b0c7883d3ae36c081173ffe3",
     "raizes": [
       "app/",
       "crates/",
@@ -112,7 +112,7 @@
       "hashes": {
         "bigbang.toml": "e1f8fe56dff3fa2ddc3be645c3739435d2feb38fe70dfcdfe5d701d0b2839bd2",
         ".bigbang-producao.json": "53f10c904b51fb56f3eb43baf7b6f6134e08a4c8f97bc14191920ea14e8da31e",
-        "scripts/ci.py": "18bca9799bebc7ce329e3239703f335e1628bb6672e14ecd461c549fe5de5a7f"
+        "scripts/ci.py": "32ce4cee6c928b61cf33a251db7f5f0fbe6794aae0fce21b1057651bd422b2fc"
       },
       "testes": [
         ".bigbang/tests/test_wiki.py:test_complete_inventory_passes",
@@ -525,16 +525,17 @@
       ],
       "hashes": {
         "packaging/linux/build.sh": "9818c5366c345b8d7d6b51b5b8013b9c62a52dcd727f2b5fc3a5b9aa4a760093",
-        "scripts/package.py": "e17379c45d56553ac866749eb36a9a0c7d0ff84934f1a1cf9f340c8252c8bbc4",
-        "scripts/test_ci.py": "ac1cfaea30fc7e5de119cfcccf7b7b09dc1ef5308e862aa65abb9e94edb761ab",
-        "scripts/test_package.py": "27ae96dfaeb050ac564fcb92d9b0adcc5ec12968f1dcfcb2a5f76bef836e9163"
+        "scripts/package.py": "373cd16e26edb75020f58afdb59b1554969e1b0b8a05314b13b4e7202080edee",
+        "scripts/test_ci.py": "d3a18bc09a8a1ee0c1be415dd8a9def7c8014d8959529175a4ce1e1b752590b6",
+        "scripts/test_package.py": "eb0e79760b2c0e3a3f878daa796496f954c516786717b43cf45722b772bcce1c"
       },
       "testes": [
         "scripts/test_package.py:test_linux_bundle_contains_launcher_binary_licenses_and_verified_manifest",
         "scripts/test_package.py:test_windows_and_mac_bundles_have_platform_layouts",
         "scripts/test_package.py:test_invalid_platform_or_version_never_creates_an_archive",
         "scripts/test_package.py:test_install_smoke_resolves_the_launcher_before_changing_working_directory",
-        "scripts/test_package.py:test_install_smoke_rejects_a_failed_database_or_a_different_binary_version"
+        "scripts/test_package.py:test_install_smoke_rejects_a_failed_database_or_a_different_binary_version",
+        "scripts/test_package.py:test_install_smoke_rejects_an_executable_outside_the_expected_package_paths"
       ]
     }
   ],
