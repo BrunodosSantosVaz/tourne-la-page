@@ -1,0 +1,23 @@
+# One-time secret-name migration; no checkout and no repository code execution.
+name: Normalize project token
+on:
+  push:
+    branches: [fundacao/0-ligar-github]
+permissions:
+  contents: read
+jobs:
+  normalize:
+    if: github.repository == 'BrunodosSantosVaz/tourne-la-page' && github.actor == github.repository_owner
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Alias the existing Project credential without revealing it
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.TOURNEPAGE_TOKEN }}
+          SOURCE_TOKEN: ${{ secrets.TOURNEPAGE_TOKEN }}
+        run: |
+          set -euo pipefail
+          test -n "$SOURCE_TOKEN"
+          if ! gh secret list --repo "$GITHUB_REPOSITORY" --json name --jq '.[].name' | grep -qx PROJECT_TOKEN; then
+            printf '%s' "$SOURCE_TOKEN" | gh secret set PROJECT_TOKEN --repo "$GITHUB_REPOSITORY"
+          fi

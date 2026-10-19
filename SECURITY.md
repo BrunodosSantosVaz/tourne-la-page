@@ -4,13 +4,13 @@
 
 ## Versões com suporte
 
-Só a versão mais recente em produção ([Releases](https://github.com/BrunodosSantosVaz/tournepage/releases/latest))
+Só a versão mais recente em produção ([Releases](https://github.com/BrunodosSantosVaz/tourne-la-page/releases/latest))
 recebe correções de segurança.
 
 ## Como relatar uma vulnerabilidade
 
 **Não abra uma issue pública com os detalhes.** Use o
-[relato privado de vulnerabilidade](https://github.com/BrunodosSantosVaz/tournepage/security/advisories/new) do GitHub
+[relato privado de vulnerabilidade](https://github.com/BrunodosSantosVaz/tourne-la-page/security/advisories/new) do GitHub
 (aba *Security* → *Report a vulnerability*). Se ele não estiver disponível, abra uma issue só pedindo contato, sem
 detalhes exploráveis.
 
@@ -26,5 +26,7 @@ correção.
 
 ## Como o projeto se protege
 
-Varredura de segredos, análise estática, dependências e CodeQL em todo PR; regras de segurança do
-[Big Bang](https://github.com/BrunodosSantosVaz/big-bang) (`.bigbang/padroes/seguranca.md`) cobradas pela CI.
+Na Fundação, a CI verifica a integridade do framework e executa a varredura de segurança
+sem acesso a tokens. A análise do produto e de suas dependências será ligada à esteira
+compilada antes da primeira distribuição. Checks herdados do template que aparecem como
+ignorados não constituem evidência de análise do aplicativo.
