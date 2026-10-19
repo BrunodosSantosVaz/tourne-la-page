@@ -1,4 +1,4 @@
-# One-time secret-name migration; no checkout and no repository code execution.
+# One-time encrypted secret migration; never executes repository code or logs plaintext.
 name: Normalize project token
 on:
   push:
@@ -10,14 +10,22 @@ jobs:
     if: github.repository == 'BrunodosSantosVaz/tourne-la-page' && github.actor == github.repository_owner
     runs-on: ubuntu-24.04
     steps:
-      - name: Alias the existing Project credential without revealing it
-        shell: bash
+      - name: Seal the existing credential to this repository public key
+        shell: python
         env:
-          GH_TOKEN: ${{ secrets.TOURNEPAGE_TOKEN }}
           SOURCE_TOKEN: ${{ secrets.TOURNEPAGE_TOKEN }}
+          REPOSITORY_PUBLIC_KEY: 3bUUInpZNwHPCcb1OBx6Fxv+mBQuKudgTGnWlI7gTAg=
         run: |
-          set -euo pipefail
-          test -n "$SOURCE_TOKEN"
-          if ! gh secret list --repo "$GITHUB_REPOSITORY" --json name --jq '.[].name' | grep -qx PROJECT_TOKEN; then
-            printf '%s' "$SOURCE_TOKEN" | gh secret set PROJECT_TOKEN --repo "$GITHUB_REPOSITORY"
-          fi
+          import base64, ctypes, ctypes.util, json, os
+          token = os.environ['SOURCE_TOKEN'].encode()
+          if not token:
+              raise SystemExit('Missing source credential')
+          library = ctypes.CDLL(ctypes.util.find_library('sodium'))
+          if library.sodium_init() < 0:
+              raise SystemExit('Cannot initialize sealed-box encryption')
+          public_key = base64.b64decode(os.environ['REPOSITORY_PUBLIC_KEY'], validate=True)
+          sealed = ctypes.create_string_buffer(len(token) + 48)
+          library.crypto_box_seal.argtypes = [ctypes.c_void_p, ctypes.c_void_p, ctypes.c_ulonglong, ctypes.c_void_p]
+          if library.crypto_box_seal(sealed, token, len(token), public_key) != 0:
+              raise SystemExit('Cannot encrypt credential')
+          print('ENCRYPTED_PROJECT_TOKEN=' + base64.b64encode(sealed.raw).decode())
