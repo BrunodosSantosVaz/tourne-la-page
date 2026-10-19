@@ -34,5 +34,9 @@ class ReleaseChecks(unittest.TestCase):
             self.assertEqual(github_path.read_text().splitlines(), [
                 "/opt/homebrew/opt/bash/bin", "/opt/homebrew/opt/coreutils/libexec/gnubin"])
             run.assert_any_call(["brew", "install", "bash", "coreutils"], cwd=ci.ROOT, check=True)
-            run.assert_any_call(["/opt/homebrew/opt/bash/bin/bash", "--version"], cwd=ci.ROOT, check=True)
-            run.assert_any_call(["/opt/homebrew/opt/coreutils/libexec/gnubin/sha256sum", "--version"], cwd=ci.ROOT, check=True)
+            probes = [call for call in run.call_args_list if call.args[0] in
+                      (["bash", "--version"], ["sha256sum", "--version"])]
+            self.assertEqual(len(probes), 2)
+            for probe in probes:
+                self.assertTrue(probe.kwargs["env"]["PATH"].startswith(
+                    "/opt/homebrew/opt/bash/bin:/opt/homebrew/opt/coreutils/libexec/gnubin:"))
