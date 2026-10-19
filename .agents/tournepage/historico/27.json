@@ -1,0 +1,26 @@
+{
+  "issue": 27,
+  "title": "Consolidar histórico: Rastreabilidade, documentação e release multiplataforma",
+  "kind": "retrospective-documentation",
+  "recorded_at": "2026-10-19",
+  "code_commit": "70a71d0389f805702c76ea70d607e4290df1bff6",
+  "wiki_commit": "575bbaf735168726af9a67e265b75c80244aabfb",
+  "page": "Distribuicao-nativa",
+  "requirements": [
+    "TL-D01",
+    "TL-F01"
+  ],
+  "sources": [
+    "packaging/linux/build.sh",
+    "scripts/package.py",
+    "scripts/test_ci.py",
+    "scripts/test_package.py"
+  ],
+  "scenarios": [
+    "scripts/test_package.py:test_linux_bundle_contains_launcher_binary_licenses_and_verified_manifest",
+    "scripts/test_package.py:test_windows_and_mac_bundles_have_platform_layouts",
+    "scripts/test_package.py:test_invalid_platform_or_version_never_creates_an_archive"
+  ],
+  "evidence": "Implementação local previamente experimentada e aprovada pelo dono; consolidação documental atual. A CI do produto e os seis pacotes ainda devem ser comprovados na entrega #4/#10.",
+  "limits": "Não registra TDD retroativo, homologação da candidata, execução destes cenários ou produção. Pendências integrais na Wiki/Limites-e-backlog e issues #28–#36, #42 e #44."
+}

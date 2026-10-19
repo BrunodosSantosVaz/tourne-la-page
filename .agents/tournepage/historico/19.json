@@ -1,0 +1,25 @@
+{
+  "issue": 19,
+  "title": "Consolidar histórico: Destaques e comentários unificados em post-its",
+  "kind": "retrospective-documentation",
+  "recorded_at": "2026-10-19",
+  "code_commit": "70a71d0389f805702c76ea70d607e4290df1bff6",
+  "wiki_commit": "575bbaf735168726af9a67e265b75c80244aabfb",
+  "page": "Destaques-e-comentarios",
+  "requirements": [
+    "TL-R04",
+    "TL-R06"
+  ],
+  "sources": [
+    "app/src/reader/annotations.rs",
+    "app/src/reader/preferences.rs"
+  ],
+  "scenarios": [
+    "app/src/reader/diagnostics.rs:annotations_are_created_once_and_comments_are_optional",
+    "app/src/reader/reading_history/tests.rs:switching_books_immediately_preserves_the_previous_books_last_comment",
+    "app/src/reader/reading_history/tests.rs:returning_to_a_book_before_its_async_write_finishes_reads_the_pending_snapshot",
+    "app/src/reader/reading_history/tests.rs:an_earlier_write_failure_cannot_unlock_the_closing_snapshot"
+  ],
+  "evidence": "Implementação local previamente experimentada e aprovada pelo dono; consolidação documental atual. A CI do produto e os seis pacotes ainda devem ser comprovados na entrega #4/#10.",
+  "limits": "Não registra TDD retroativo, homologação da candidata, execução destes cenários ou produção. Pendências integrais na Wiki/Limites-e-backlog e issues #28–#36, #42 e #44."
+}
