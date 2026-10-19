@@ -76,6 +76,7 @@ fn reopening_schema_one_preserves_existing_folders_and_preferences() {
             .as_nanos()
     ));
     let folder = PathBuf::from("/books/already-imported");
+    std::fs::create_dir_all(&dir).unwrap();
     {
         let previous = LibraryStore::open(&dir).unwrap();
         previous.add_folder(&folder).unwrap();

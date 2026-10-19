@@ -25,7 +25,7 @@ class DesktopRegistration(unittest.TestCase):
             refresh.assert_called_once_with(data_home)
             self.assertEqual(
                 icon.read_bytes(),
-                (root / 'assets/brand/identity/03-app/circulo/azul/png/icone-circulo-azul-32.png').read_bytes(),
+                (root / 'assets/brand/icons/app-32.png').read_bytes(),
             )
 
     def test_launcher_with_spaces_uses_same_id_as_window_and_has_valid_icons(self):

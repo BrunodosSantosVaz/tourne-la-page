@@ -44,7 +44,12 @@ class Packages(unittest.TestCase):
                 self.assertIn("Tourne-la-page/AppRun", names)
                 self.assertIn("Tourne-la-page/bin/tourne-la-page", names)
                 self.assertIn("Tourne-la-page/licenses/Inter-OFL.txt", names)
-                self.assertFalse(any(".local" in name or "Cargo.toml" in name for name in names))
+                self.assertFalse(any(part in {".local", "Cargo.toml"}
+                                     for name in names for part in Path(name).parts))
+                metadata = [name for name in names if Path(name).name.startswith("Cargo.toml")]
+                self.assertTrue(metadata)
+                self.assertTrue(all(name.startswith("Tourne-la-page/licenses/rust/")
+                                    and name.endswith(".txt") for name in metadata))
                 manifest = json.load(source.extractfile("Tourne-la-page/manifest.json"))
                 digest = hashlib.sha256(source.extractfile("Tourne-la-page/bin/tourne-la-page").read()).hexdigest()
                 self.assertEqual(manifest["files"]["bin/tourne-la-page"], digest)

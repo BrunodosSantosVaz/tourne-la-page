@@ -60,10 +60,7 @@ fn close(state: &Reader) -> Element<'_, Message> {
 }
 
 fn content(state: &Reader) -> Element<'_, Message> {
-    column![row![mark(64), iced::widget::space::horizontal(),
-            action::focusable(button(icon_svg("x", 16)).on_press(Message::CloseAbout)
-                .width(32).height(32).padding(8).style(move |_, status| picker_style(state, status)).into(), "about-close", Message::CloseAbout, None)]
-            .align_y(Alignment::Center),
+    column![mark(64),
         text(brand::NAME).font(Font::with_name("Literata")).size(32),
         text("Menos ruído, mais leitura.").size(16).color(muted_for(state)),
         text(format!("Versão {} · edição local", brand::VERSION)).size(14),
