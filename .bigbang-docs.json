@@ -1,19 +1,116 @@
 {
   "schema": 1,
-  "repositorio": "BrunodosSantosVaz/tournepage",
+  "repositorio": "BrunodosSantosVaz/tourne-la-page",
   "visibilidade": "publico",
   "wiki": {
     "base": "cfa369a43b5d4eaf9b37e14b77b0f32bb90d3c87",
-    "commit": "cfa369a43b5d4eaf9b37e14b77b0f32bb90d3c87",
-    "branch": "master"
+    "commit": "4cc45d71aed1396ae6011f2a97001c98efa7a1f1",
+    "branch": "master",
+    "proposta": "bigbang/proposta-4-fundacao"
   },
-  "paginas": {},
-  "categorias": {},
+  "paginas": {
+    "docs/Produto.md": "Produto",
+    "docs/Stack.md": "Stack",
+    "docs/Arquitetura.md": "Arquitetura",
+    "docs/Design.md": "Design",
+    "docs/Requisitos.md": "Requisitos",
+    "docs/Funcionalidades.md": "Funcionalidades",
+    "docs/Uso.md": "Uso",
+    "docs/Referencia.md": "Referencia",
+    "docs/Seguranca.md": "Seguranca",
+    "docs/Operacao.md": "Operacao",
+    "docs/Historico.md": "Historico",
+    "docs/Limites-e-backlog.md": "Limites-e-backlog",
+    "docs/Fundacao.md": "Fundacao",
+    "docs/Rastreabilidade.md": "Rastreabilidade",
+    "PRODUTO.md": "Produto",
+    "STACK.md": "Stack",
+    "DESIGN.md": "Design",
+    "docs/arquitetura.md": "Arquitetura",
+    "docs/decisoes/ADR-0003-distribuicao.md": "Historico"
+  },
+  "categorias": {
+    "produto": {
+      "pagina": "Produto"
+    },
+    "tecnologia": {
+      "pagina": "Stack"
+    },
+    "arquitetura": {
+      "pagina": "Arquitetura"
+    },
+    "design": {
+      "pagina": "Design"
+    },
+    "requisitos": {
+      "pagina": "Requisitos"
+    },
+    "funcionalidades": {
+      "pagina": "Funcionalidades"
+    },
+    "uso": {
+      "pagina": "Uso"
+    },
+    "referencia": {
+      "pagina": "Referencia"
+    },
+    "seguranca": {
+      "pagina": "Seguranca"
+    },
+    "operacao": {
+      "pagina": "Operacao"
+    },
+    "historico": {
+      "pagina": "Historico"
+    }
+  },
   "codigo": {
-    "commit": "cbf9710eba0239c5e88f5a77fa9cbe4c0294758f",
-    "raizes": [],
+    "commit": "c33d13e3093bdead716927b0439f31f2cf90571e",
+    "raizes": [
+      "bigbang.toml"
+    ],
     "excluir": []
   },
-  "funcionalidades": [],
-  "arquivos_funcionais": []
+  "funcionalidades": [
+    {
+      "id": "fundacao",
+      "pagina": "Fundacao",
+      "requisitos": [
+        "TL-F01"
+      ],
+      "fontes": [
+        "bigbang.toml"
+      ],
+      "hashes": {
+        "bigbang.toml": "e1f8fe56dff3fa2ddc3be645c3739435d2feb38fe70dfcdfe5d701d0b2839bd2"
+      },
+      "testes": [
+        ".bigbang/tests/test_wiki.py:test_complete_inventory_passes",
+        ".bigbang/tests/test_wiki.py:test_new_implemented_module_without_documentation_blocks_delivery"
+      ]
+    }
+  ],
+  "arquivos_funcionais": [
+    {
+      "caminho": "Leitor EPUB — Especificação de Desenvolvimento.md",
+      "motivo": "Fonte original fornecida pelo dono, preservada até confirmar publicação idêntica na Wiki; não é documentação canônica."
+    },
+    {
+      "caminho": "GUIA-TESTE-LOCAL.md",
+      "motivo": "Fonte original fornecida pelo dono, preservada até confirmar publicação idêntica na Wiki; não é documentação canônica."
+    },
+    {
+      "caminho": "docs/decisoes/ADR-0001-stack-local.md",
+      "motivo": "Fonte original fornecida pelo dono, preservada até confirmar publicação idêntica na Wiki; não é documentação canônica."
+    },
+    {
+      "caminho": "docs/decisoes/ADR-0002-marca-tourne-la-page.md",
+      "motivo": "Fonte original fornecida pelo dono, preservada até confirmar publicação idêntica na Wiki; não é documentação canônica."
+    }
+  ],
+  "requisitos": {
+    "TL-F01": {
+      "pagina": "Requisitos"
+    }
+  }
 }

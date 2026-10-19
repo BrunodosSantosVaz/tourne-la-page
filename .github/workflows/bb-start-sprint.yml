@@ -20,12 +20,11 @@ permissions:
   contents: read
 
 concurrency:
-  group: bb-framework-start-sprint
+  group: bb-start-sprint
   cancel-in-progress: false
 
 jobs:
   start:
-    if: github.repository == 'BrunodosSantosVaz/big-bang'
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1

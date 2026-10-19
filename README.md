@@ -1,15 +1,13 @@
-# Tournepage
+# Tourne la page
 
-Projeto organizado pelo Big Bang. O produto, a stack e as funcionalidades são definidos e documentados na Fundação;
-este README não declara entregas que ainda não ocorreram.
+Leitor EPUB para desktop em preparação para sua primeira distribuição. Esta etapa liga a Fundação do Big Bang ao repositório; os pacotes do aplicativo serão entregues pela esteira compilada.
 
-[Documentação oficial](https://github.com/BrunodosSantosVaz/tournepage/wiki) ·
-[Discussions](https://github.com/BrunodosSantosVaz/tournepage/discussions) ·
-[Issues](https://github.com/BrunodosSantosVaz/tournepage/issues) ·
-[Releases](https://github.com/BrunodosSantosVaz/tournepage/releases)
+[Wiki](https://github.com/BrunodosSantosVaz/tourne-la-page/wiki) ·
+[Discussions](https://github.com/BrunodosSantosVaz/tourne-la-page/discussions) ·
+[Quadro](https://github.com/users/BrunodosSantosVaz/projects/34) ·
+[Issues](https://github.com/BrunodosSantosVaz/tourne-la-page/issues) ·
+[Releases](https://github.com/BrunodosSantosVaz/tourne-la-page/releases)
 
-Os três painéis públicos serão ligados aqui ao concluir F4. Guias, requisitos, arquitetura, design, operação,
-segurança, histórico e a matriz de cobertura ficam exclusivamente na Wiki. Atualize esta apresentação e os links
-no mesmo ciclo da entrega.
+A Wiki concentra os requisitos, decisões e instruções do produto. O quadro registra o estado real de cada tarefa; a existência de uma issue não indica entrega publicada.
 
-Licença do sistema: [MIT](LICENSE). O framework mantém sua própria licença em `.bigbang/LICENSE`.
+Licença: [MIT](LICENSE). O framework mantém sua própria licença em `.bigbang/LICENSE`.

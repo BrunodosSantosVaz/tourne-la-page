@@ -1,80 +1,66 @@
-# Configuração do projeto no Big Bang. Fonte única de tudo que as ferramentas precisam.
-# Criado por `bb init` (F0) e completado na Fundação. Mudar este arquivo é zona sensível (revisão humana).
-# O gerador valida o esquema e recusa chaves desconhecidas. Depois de mudar, rode `bb gerar`.
+# Configuração ativa da entrega inicial; decisões e limites documentados na Wiki.
+# Flash concentra as verificações e reutiliza a CI do mesmo SHA na candidata.
+# O contrato autonomous local foi preservado, sem ampliar delegações de publicação.
 
 [bigbang]
-version = "3.1.0"                       # versão do framework instalada (igual a .bigbang/VERSION)
-origin = "BrunodosSantosVaz/big-bang"  # de onde vêm as atualizações
+version = "3.1.0"
+origin = "BrunodosSantosVaz/big-bang"
 
 [project]
-mode = "autonomous"                        # normal | flash | autonomous (com autonomy.toml); muda com o dono
-name = "Tournepage"
-slug = "tournepage"
-owner = "BrunodosSantosVaz"             # login do GitHub do dono
-repository = "BrunodosSantosVaz/tournepage"
-visibility = "public"               # privado | publico
-license = "MIT"                        # obrigatório se publico (identificador SPDX, ex.: "MIT")
+mode = "flash"
+name = "Tourne la page"
+slug = "tourne-la-page"
+owner = "BrunodosSantosVaz"
+repository = "BrunodosSantosVaz/tourne-la-page"
+visibility = "public"
+license = "MIT"
 
 [delivery]
-profile = "deploy"                      # deploy | compilado
-target = "vps-docker"                    # deploy: alvo implementado em `bb alvos`; compilado: ""
-artifact_paths = ["src/", "migrations/", "Dockerfile", "package.json", "package-lock.json"]
-version_file = "package.json"          # único arquivo com a versão do artefato (definido em F2)
-ecosystems = ["npm", "docker"]           # pacotes da stack para o Dependabot (definido em F2)
+profile = "compiled"
+target = ""
+artifact_paths = ["app/**", "scripts/package.py", "crates/**", "assets/**", "locales/**", "migrations/**", "packaging/**", "Cargo.toml", "Cargo.lock", "rust-toolchain.toml", ".cargo/**"]
+version_file = "Cargo.toml"
+ecosystems = ["cargo"]
 
-[compiled]                            # só no perfil compilado
-# Cada build_<sistema> deixa exatamente um arquivo em $BB_SAIDA (lê BB_VERSAO, BB_RC, BB_SISTEMA). ADR-0009.
-# Sistemas: windows-x64, windows-arm64, linux-x64, linux-arm64, macos-x64, macos-arm64, android (APK/AAB).
-systems = ["windows-x64", "linux-x64"]
-build_windows-x64 = "python packaging/windows/build.py"
-build_linux-x64 = "bash packaging/linux/build.sh"
+[compiled]
+systems = ["linux-x64", "linux-arm64", "windows-x64", "windows-arm64", "macos-x64", "macos-arm64"]
+build_linux-x64 = "python scripts/package.py linux-x64"
+build_linux-arm64 = "python scripts/package.py linux-arm64"
+build_windows-x64 = "python scripts/package.py windows-x64"
+build_windows-arm64 = "python scripts/package.py windows-arm64"
+build_macos-x64 = "python scripts/package.py macos-x64"
+build_macos-arm64 = "python scripts/package.py macos-arm64"
 
-[deploy]                               # só no perfil deploy
-# artefato = "imagem"                  # padrão; formatos disponíveis em `bb alvos`
-# runner = ["self-hosted", "rede-deploy"]  # só publicação; build/testes continuam no runner público
-# preparar_rede = "bash deploy/rede.sh"    # script aprovado; segredo apenas por ambiente, nunca literal
-image = "ghcr.io/brunodossantosvaz/tournepage"
-staging_url = "https://staging.exemplo.com"
-production_url = "https://exemplo.com"
-smoke = "npm run test:smoke"
-# Opcionais (com o padrão): servicos = ["app=Dockerfile"] (servico=Dockerfile, uma imagem por serviço),
-# plataformas = ["linux/amd64"] (linux/arm64 para servidor ARM), caminho_saude = "/api/health",
-# servico_migrar = "migrar", servico_checar = "" (pré-checagem do servidor antes de migrar).
-
-[commands]                             # definidos em F2 para a stack escolhida
-# Flash: unidade/integração/aceite afetados e cobertura. Vazio = suíte completa.
-# Recebe BB_BASE_TESTES (SHA) e BB_ARQUIVOS_ALTERADOS (caminho de arquivo JSON com os caminhos).
+[commands]
 affected_tests = ""
-install = "npm ci"
-lint = "npm run lint"
-types = "npm run typecheck"
-test = "npm test"
-acceptance_test = "npm run test:acceptance"
-architecture = "npm run test:architecture"
-coverage = "npm run test:coverage"
-build = "npm run build"
+install = "python scripts/ci.py install"
+lint = "python scripts/ci.py lint"
+types = "python scripts/ci.py types"
+test = "python scripts/ci.py test"
+acceptance_test = "python scripts/ci.py acceptance"
+architecture = "python scripts/ci.py architecture"
+coverage = "python scripts/ci.py coverage"
+build = "python scripts/ci.py build"
 
 [tests]
-min_coverage = 80                  # % nas camadas de domínio e aplicação
-pending_marker = "test.failing"        # como a stack marca teste com falha esperada (xfail strict, test.failing…)
-test_pattern = "(it|test)\\("          # regex que identifica a declaração de um teste na stack
+min_coverage = 80
+pending_marker = "#[ignore]"
+test_pattern = '^\s*(?:pub\s+)?fn\s+[A-Za-z_]\w*\s*\('
+structural_paths = ["Cargo.toml", "Cargo.lock", "crates/*/Cargo.toml", "rust-toolchain.toml", ".cargo/**", "migrations/**", "assets/tokens/**", "scripts/**", "packaging/**"]
 
 [security]
-asvs_level = "L2"                      # L1 | L2 (L2 obrigatório com dado pessoal ou dinheiro)
-browser_database = false             # true só com ADR (SEG-IA-01)
-sensitive_paths = ["src/**/auth/**", "src/**/payments/**", "migrations/**"]
-# Sempre sensíveis, além da lista: .github/**, tests/aceite/** (exceto no PR de teste do épico, cuja revisão
-# segue as labels testes-revisao-*), STACK.md, DESIGN.md, PRODUTO.md, bigbang.toml, flags.toml e os arquivos
-# de dependência da stack.
+asvs_level = "L2"
+browser_database = false
+sensitive_paths = ["crates/epub-core/**", "crates/storage/**", "crates/annotations/**", "migrations/**", "packaging/**", "scripts/**"]
 
-[board]                              # preenchido em F4
-model = "single"                       # Project único, criado em F4
+[board]
+model = "single"
 labels = "v3"
-number = 0                             # número do Project (F4)
 owner = "BrunodosSantosVaz"
+number = 34
 
 [agents]
-names = ["claude-1", "claude-2", "codex-1"]
+names = ["codex-1", "claude-1"]
 tasks_per_agent = 1
 lease_hours = 24
 confirm_seconds = 10
@@ -83,4 +69,4 @@ confirm_seconds = 10
 max_age_days = 30
 
 [workflow]
-model = "grouping"                     # épico agrupador (ADR-0022)
+model = "grouping"

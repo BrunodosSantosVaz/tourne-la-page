@@ -1,4 +1,4 @@
-# Gerado pelo Big Bang v3.1.0 a partir de .bigbang/pipeline/framework/files/.github/workflows/bb-candidate.yml.tmpl. Não edite: personalize em bigbang.toml.
+# Gerado pelo Big Bang v3.1.0 a partir de .bigbang/pipeline/profiles/compiled/files/.github/workflows/bb-candidate.yml.tmpl. Não edite: personalize em bigbang.toml.
 # Candidate of the v3 grouping workflow (ADR-0022): the same build, scan and publication steps of the
 # profile; then the epics of the release go to QA (bb pipeline candidate-ready) and the release PR opens.
 name: Candidate
@@ -11,12 +11,11 @@ permissions:
   contents: read
 
 concurrency:
-  group: bb-framework-candidate-${{ github.ref_name }}
+  group: bb-candidate-${{ github.ref_name }}
   cancel-in-progress: false
 
 jobs:
   preparar:
-    if: github.repository == 'BrunodosSantosVaz/big-bang'
     runs-on: ubuntu-24.04
     outputs:
       pular: ${{ steps.v.outputs.pular }}
@@ -39,7 +38,7 @@ jobs:
 
   testes:
     needs: preparar
-    if: github.repository == 'BrunodosSantosVaz/big-bang' && (needs.preparar.outputs.pular != 'true')
+    if: ${{ needs.preparar.outputs.pular != 'true' }}
     runs-on: ubuntu-24.04
     permissions:
       contents: read
@@ -53,17 +52,16 @@ jobs:
           python-version: '3.12'
       - run: bash .bigbang/esteira/nucleo/scripts/comando.sh instalar
       - name: Validar testes (Flash reutiliza CI do mesmo commit)
-        run: bash .bigbang/pipeline/framework/scripts/testes-candidata.sh
+        run: bash .bigbang/esteira/nucleo/scripts/testes-candidata.sh
         env:
           GH_TOKEN: ${{ github.token }}
 
   build:
-    if: github.repository == 'BrunodosSantosVaz/big-bang'
     needs: [preparar, testes]
     strategy:
       fail-fast: false
       matrix:
-        include: [{"sistema": "universal", "runner": "ubuntu-24.04"}]
+        include: [{"sistema": "linux-x64", "runner": "ubuntu-24.04"}, {"sistema": "linux-arm64", "runner": "ubuntu-24.04-arm"}, {"sistema": "windows-x64", "runner": "windows-2025"}, {"sistema": "windows-arm64", "runner": "windows-11-arm"}, {"sistema": "macos-x64", "runner": "macos-15-intel"}, {"sistema": "macos-arm64", "runner": "macos-15"}]
     runs-on: ${{ matrix.runner }}
     name: build (${{ matrix.sistema }})
     steps:
@@ -78,13 +76,20 @@ jobs:
         run: bash .bigbang/esteira/nucleo/scripts/comando.sh instalar
         env:
           BB: python .bigbang/bin/bb.py
-      - name: Reproducible framework package and SHA-256
+      - name: Compilar
         shell: bash
-        run: |
-          python .bigbang/bin/bb.py verify
-          python .bigbang/bin/bb.py framework candidate --output candidata
-          python .bigbang/bin/bb.py framework candidate --output "$RUNNER_TEMP/rebuild"
-          cmp candidata/bigbang-v*.tar.gz "$RUNNER_TEMP"/rebuild/bigbang-v*.tar.gz
+        run: bash .bigbang/esteira/perfis/compilado/scripts/candidata-build.sh
+        env:
+          BB: python .bigbang/bin/bb.py
+          BB_SISTEMA: ${{ matrix.sistema }}
+          BB_VERSAO: ${{ needs.preparar.outputs.versao }}
+          BB_RC: ${{ needs.preparar.outputs.rc }}
+          # Code signing (optional, only in this step): keystore/certificate in base64, passwords and alias.
+          # The build command of the project decides how to use them (ADR-0009).
+          BB_ASSINATURA_ARQUIVO: ${{ secrets.BB_ASSINATURA_ARQUIVO }}
+          BB_ASSINATURA_SENHA: ${{ secrets.BB_ASSINATURA_SENHA }}
+          BB_ASSINATURA_ALIAS: ${{ secrets.BB_ASSINATURA_ALIAS }}
+          BB_ASSINATURA_SENHA_CHAVE: ${{ secrets.BB_ASSINATURA_SENHA_CHAVE }}
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: candidata-${{ matrix.sistema }}
@@ -92,7 +97,6 @@ jobs:
           retention-days: 7
 
   publicar:
-    if: github.repository == 'BrunodosSantosVaz/big-bang'
     needs: [preparar, build]
     runs-on: ubuntu-24.04
     permissions:
@@ -126,10 +130,7 @@ jobs:
         with:
           subject-path: 'candidata/*'
       - name: Pre-release
-        run: |
-          python .bigbang/bin/bb.py package --output "$RUNNER_TEMP/notes-package" --notes "$RUNNER_TEMP/notes.md"
-          gh release create "$TAG" candidata/* --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" \
-            --prerelease --title "Big Bang $TAG" --notes-file "$RUNNER_TEMP/notes.md"
+        run: bash .bigbang/esteira/perfis/compilado/scripts/candidata-publicar.sh
         env:
           GH_TOKEN: ${{ github.token }}
           TAG: ${{ needs.preparar.outputs.tag }}
@@ -137,12 +138,11 @@ jobs:
 
   candidate-ready:
     needs: [preparar, publicar]
-    if: github.repository == 'BrunodosSantosVaz/big-bang' && (vars.PROJECT_OWNER != '')
+    if: ${{ vars.PROJECT_OWNER != '' }}
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          ref: develop  # trusted code runs with the token; the release branch is only data (--branch)
           persist-credentials: false
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
