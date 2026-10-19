@@ -1,0 +1,24 @@
+[package]
+name = "app"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+
+[[bin]]
+name = "tourne-la-page"
+path = "src/main.rs"
+
+[dependencies]
+app-core.workspace = true
+epub-core.workspace = true
+iced = { version = "=0.14.0", default-features = false, features = ["advanced", "tokio", "wgpu", "tiny-skia", "image-without-codecs", "svg", "thread-pool", "linux-theme-detection", "x11", "wayland"] }
+iced_runtime = "=0.14.0"
+fontdb = "=0.24.0"
+image = { version = "=0.25.10", default-features = false, features = ["png", "jpeg", "webp", "gif"] }
+rfd = "=0.17.2"
+storage.workspace = true
+serde = { version = "=1.0.229", features = ["derive"] }
+serde_json = "=1.0.154"
+thiserror.workspace = true
+tokio = { version = "=1.53.3", features = ["rt", "sync", "time"] }

@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;1,7..72,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=Merriweather:wght@400;700&family=Atkinson+Hyperlegible+Next:wght@400;700&family=Lexend:wght@400;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+body{margin:0;background:#F4F2EC;color:#2B2722;font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#1A4FB4;text-decoration:underline;text-underline-offset:2px}a:hover{color:#0F3580}
+*{box-sizing:border-box}
+</style>
+</helmet>
+
+<div style="max-width:1240px;margin:0 auto;padding:48px 32px 120px;display:flex;flex-direction:column;gap:96px">
+
+<!-- CAPA -->
+<section data-screen-label="00 Capa" style="background:#FCFBF7;border-radius:12px;padding:72px 64px;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:48px;align-items:end;min-height:520px;border:1px solid #E7E3DA">
+  <div style="display:flex;flex-direction:column;gap:32px">
+    <div style="font:500 12px/1 'JetBrains Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#6D665D">Identidade visual · v1.0 · Out 2026</div>
+    <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap">
+      <svg style="flex-shrink:0" width="64" height="80" viewBox="-4 -4 88 108" aria-hidden="true"><polygon points="0,0 80,0 80,70 50,100 0,100" fill="#2B2722" stroke="#2B2722" stroke-width="6" stroke-linejoin="round"></polygon><polygon points="80,70 50,70 50,100" fill="#1A4FB4" stroke="#1A4FB4" stroke-width="6" stroke-linejoin="round"></polygon></svg>
+      <div style="font-family:{{ wordFont }};font-weight:500;font-size:clamp(40px,6vw,76px);letter-spacing:-0.02em;line-height:1;min-width:0">tournepage</div>
+    </div>
+    <p style="margin:0;font:400 22px/1.5 Literata,serif;color:#2B2722;max-width:30ch;text-wrap:pretty">Menos ruído, mais leitura.</p>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:12px;font-size:15px;line-height:1.6;color:#6D665D">
+    <p style="margin:0;text-wrap:pretty">Leitor de EPUB nativo para macOS, Windows e Linux. A identidade parte do mesmo princípio do produto: a interface recua e o texto fica em primeiro plano.</p>
+    <div style="display:flex;gap:24px;flex-wrap:wrap;font:500 12px/1.4 'JetBrains Mono',monospace;color:#2B2722;padding-top:16px;border-top:1px solid #E7E3DA">
+      <span>01 Logo</span><span>02 Ícone</span><span>03 Cores</span><span>04 Tipografia</span><span>05 Ícones</span><span>06 Tokens</span><span>07 Aplicações</span>
+    </div>
+  </div>
+</section>
+
+<!-- 01 LOGO -->
+<section data-screen-label="01 Logo" style="display:flex;flex-direction:column;gap:32px">
+  <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:32px;align-items:end">
+    <div style="display:flex;flex-direction:column;gap:8px"><div style="font:500 12px/1 'JetBrains Mono',monospace;color:#6D665D">01</div><h2 style="margin:0;font:500 40px/1.1 Literata,serif;letter-spacing:-0.01em">Logo</h2></div>
+    <p style="margin:0;font-size:15px;line-height:1.6;color:#6D665D;max-width:62ch;text-wrap:pretty">O símbolo é uma página com o canto inferior dobrado: o gesto de virar a página que dá nome ao produto (<em>tourner la page</em>). A página usa a cor do texto; a dobra, a cor de destaque. O nome é sempre escrito em minúsculas.</p>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px">
+    <div style="background:#FCFBF7;border:1px solid #E7E3DA;border-radius:12px;aspect-ratio:4/3;display:flex;flex-direction:column;justify-content:space-between;padding:20px">
+      <div style="flex:1;display:flex;align-items:center;justify-content:center;gap:14px">
+        <svg style="flex-shrink:0" width="36" height="45" viewBox="-4 -4 88 108"><polygon points="0,0 80,0 80,70 50,100 0,100" fill="#2B2722" stroke="#2B2722" stroke-width="6" stroke-linejoin="round"></polygon><polygon points="80,70 50,70 50,100" fill="#1A4FB4" stroke="#1A4FB4" stroke-width="6" stroke-linejoin="round"></polygon></svg>
+        <span style="font-family:{{ wordFont }};font-weight:500;font-size:clamp(24px,3vw,40px);letter-spacing:-0.02em;color:#2B2722">tournepage</span>
+      </div>
+      <div style="font:500 11px/1 'JetBrains Mono',monospace;color:#6D665D">Horizontal · principal</div>
+    </div>
+    <div style="background:#FCFBF7;border:1px solid #E7E3DA;border-radius:12px;aspect-ratio:4/3;display:flex;flex-direction:column;justify-content:space-between;padding:20px">
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px">
+        <svg style="flex-shrink:0" width="48" height="60" viewBox="-4 -4 88 108"><polygon points="0,0 80,0 80,70 50,100 0,100" fill="#2B2722" stroke="#2B2722" stroke-width="6" stroke-linejoin="round"></polygon><polygon points="80,70 50,70 50,100" fill="#1A4FB4" stroke="#1A4FB4" stroke-width="6" stroke-linejoin="round"></polygon></svg>
+        <span style="font-family:{{ wordFont }};font-weight:500;font-size:30px;letter-spacing:-0.02em;color:#2B2722">tournepage</span>
+      </div>
+      <div style="font:500 11px/1 'JetBrains Mono',monospace;color:#6D665D">Vertical</div>
+    </div>
+    <div style="background:#FCFBF7;border:1px solid #E7E3DA;border-radius:12px;aspect-ratio:4/3;display:flex;flex-direction:column;justify-content:space-between;padding:20px">
+      <div style="flex:1;display:flex;align-items:center;justify-content:center">
+        <svg style="flex-shrink:0" width="72" height="90" viewBox="-4 -4 88 108"><polygon points="0,0 80,0 80,70 50,100 0,100" fill="#2B2722" stroke="#2B2722" stroke-width="6" stroke-linejoin="round"></polygon><polygon points="80,70 50,70 50,100" fill="#1A4FB4" stroke="#1A4FB4" stroke-width="6" stroke-linejoin="round"></polygon></svg>
+      </div>
+      <div style="font:500 11px/1 'JetBrains Mono',monospace;color:#6D665D">Símbolo</div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px">
+    <div style="background:#141516;border-radius:12px;aspect-ratio:3/2;display:flex;align-items:center;justify-content:center;gap:10px">
+      <svg style="flex-shrink:0" width="24" height="30" viewBox="-4 -4 88 108"><polygon points="0,0 80,0 80,70 50,100 0,100" fill="#DDDDDD" stroke="#DDDDDD" stroke-width="6" stroke-linejoin="round"></polygon><polygon points="80,70 50,70 50,100" fill="#8AB4F8" stroke="#8AB4F8" stroke-width="6" stroke-linejoin="round"></polygon></svg>
+      <span style="font-family:{{ wordFont }};font-weight:500;font-size:clamp(16px,1.9vw,26px);letter-spacing:-0.02em;color:#DDDDDD">tournepage</span>
+    </div>
+    <div style="background:#1A4FB4;border-radius:12px;aspect-ratio:3/2;display:flex;align-items:center;justify-content:center;gap:10px">
+      <svg style="flex-shrink:0" width="24" height="30" viewBox="-4 -4 88 108"><polygon points="0,0 80,0 80,70 50,100 0,100" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="6" stroke-linejoin="round"></polygon><polygon points="80,70 50,70 50,100" fill="#1A4FB4" stroke="#1A4FB4" stroke-width="2" stroke-linejoin="round"></polygon></svg>
+      <span style="font-family:{{ wordFont }};font-weight:500;font-size:clamp(16px,1.9vw,26px);letter-spacing:-0.02em;color:#FFFFFF">tournepage</span>
+    </div>
+    <div style="background:#FAF7F0;border:1px solid #E7E3DA;border-radius:12px;aspect-ratio:3/2;display:flex;align-items:center;justify-content:center;gap:10px">
+      <svg style="flex-shrink:0" width="24" height="30" viewBox="-4 -4 88 108"><polygon points="0,0 80,0 80,70 50,100 0,100" fill="#342D22" stroke="#342D22" stroke-width="6" stroke-linejoin="round"></polygon><polygon points="80,70 50,70 50,100" fill="#7A4B12" stroke="#7A4B12" stroke-width="6" stroke-linejoin="round"></polygon></svg>
+      <span style="font-family:{{ wordFont }};font-weight:500;font-size:clamp(16px,1.9vw,26px);letter-spacing:-0.02em;color:#342D22">tournepage</span>
+    </div>
+    <div style="background:#FFFFFF;border:1px solid #E7E3DA;border-radius:12px;aspect-ratio:3/2;display:flex;align-items:center;justify-content:center;gap:10px">
+      <svg style="flex-shrink:0" width="24" height="30" viewBox="-4 -4 88 108"><polygon points="0,0 80,0 80,70 50,100 0,100" fill="#000000" stroke="#000000" stroke-width="6" stroke-linejoin="round"></polygon><polygon points="80,70 50,70 50,100" fill="#FFFFFF" stroke="#000000" stroke-width="6" stroke-linejoin="round"></polygon></svg>
+      <span style="font-family:{{ wordFont }};font-weight:500;font-size:clamp(16px,1.9vw,26px);letter-spacing:-0.02em;color:#000000">tournepage</span>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;font:500 11px/1.4 'JetBrains Mono',monospace;color:#6D665D;margin-top:-20px">
+    <span>Escuro · temas Escuro, Grafite, Noite</span><span>Sobre cor de destaque</span><span>Sépia · usa o link do tema</span><span>Monocromático · impressão e 1 cor</span>
+  </div>
+
+  <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px">
+    <div style="background:#FCFBF7;border:1px solid #E7E3DA;border-radius:12px;padding:24px;display:flex;flex-direction:column;gap:20px">
+      <div style="font:600 13px/1 Inter,sans-serif">Área de proteção e tamanho mínimo</div>
+      <div style="display:flex;align-items:center;gap:40px;flex-wrap:wrap">
+        <div style="padding:22px;border:1px dashed #1A4FB4;background:repeating-linear-gradient(45deg,#EEF2FB 0 6px,#FCFBF7 6px 12px)">
+          <div style="background:#FCFBF7;display:flex;align-items:center;gap:10px">
+            <svg style="flex-shrink:0" width="22" height="28" viewBox="-4 -4 88 108"><polygon points="0,0 80,0 80,70 50,100 0,100" fill="#2B2722" stroke="#2B2722" stroke-width="6" stroke-linejoin="round"></polygon><polygon points="80,70 50,70 50,100" fill="#1A4FB4" stroke="#1A4FB4" stroke-width="6" stroke-linejoin="round"></polygon></svg>
+            <span style="font-family:{{ wordFont }};font-weight:500;font-size:24px;letter-spacing:-0.02em">tournepage</span>
+          </div>
+        </div>
+        <div style="display:flex;align-items:flex-end;gap:20px">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:6px"><svg style="flex-shrink:0" width="13" height="16" viewBox="-4 -4 88 108"><polygon points="0,0 80,0 80,70 50,100 0,100" fill="#2B2722" stroke="#2B2722" stroke-width="6" stroke-linejoin="round"></polygon><polygon points="80,70 50,70 50,100" fill="#1A4FB4" stroke="#1A4FB4" stroke-width="6" stroke-linejoin="round"></polygon></svg><span style="font:500 10px 'JetBrains Mono',monospace;color:#6D665D">16 px</span></div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:6px"><span style="font-family:{{ wordFont }};font-weight:500;font-size:14px">tournepage</span><span style="font:500 10px 'JetBrains Mono',monospace;color:#6D665D">80 px</span></div>
+        </div>
+      </div>
+      <p style="margin:0;font-size:13px;line-height:1.6;color:#6D665D">Margem livre igual à largura da dobra em todos os lados. Símbolo a partir de 16 px; logotipo completo a partir de 80 px de largura.</p>
+    </div>
+    <div style="background:#FCFBF7;border:1px solid #E7E3DA;border-radius:12px;padding:24px;display:flex;flex-direction:column;gap:20px">
+      <div style="font:600 13px/1 Inter,sans-serif">Não fazer</div>
+      <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px">
+        <div style="display:flex;flex-direction:column;gap:8px"><div style="aspect-ratio:1;background:#F4F2EC;border-radius:8px;display:flex;align-items:center;justify-content:center"><svg style="flex-shrink:0" width="56" height="30" viewBox="-4 -4 88 108" preserveAspectRatio="none"><polygon points="0,0 80,0 80,70 50,100 0,100" fill="#2B2722"></polygon><polygon points="80,70 50,70 50,100" fill="#1A4FB4"></polygon></svg></div><span style="font-size:12px;color:#6D665D">Distorcer</span></div>
+        <div style="display:flex;flex-direction:column;gap:8px"><div style="aspect-ratio:1;background:#F4F2EC;border-radius:8px;display:flex;align-items:center;justify-content:center"><svg style="flex-shrink:0" width="30" height="38" viewBox="-4 -4 88 108"><polygon points="0,0 80,0 80,70 50,100 0,100" fill="#C2410C"></polygon><polygon points="80,70 50,70 50,100" fill="#16A34A"></polygon></svg></div><span style="font-size:12px;color:#6D665D">Trocar cores</span></div>
+        <div style="display:flex;flex-direction:column;gap:8px"><div style="aspect-ratio:1;background:#F4F2EC;border-radius:8px;display:flex;align-items:center;justify-content:center"><svg style="flex-shrink:0" width="30" height="38" viewBox="-4 -4 88 108" style="transform:rotate(-18deg)"><polygon points="0,0 80,0 80,70 50,100 0,100" fill="#2B2722"></polygon><polygon points="80,70 50,70 50,100" fill="#1A4FB4"></polygon></svg></div><span style="font-size:12px;color:#6D665D">Girar</span></div>
+        <div style="display:flex;flex-direction:column;gap:8px"><div style="aspect-ratio:1;background:#F4F2EC;border-radius:8px;display:flex;align-items:center;justify-content:center"><span style="font:700 15px Inter,sans-serif;text-transform:uppercase;letter-spacing:.04em">TournePage</span></div><span style="font-size:12px;color:#6D665D">Maiúsculas</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 ÍCONE -->
+<section data-screen-label="02 Ícone do app" style="display:flex;flex-direction:column;gap:32px">
+  <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:32px;align-items:end">
+    <div style="display:flex;flex-direction:column;gap:8px"><div style="font:500 12px/1 'JetBrains Mono',monospace;color:#6D665D">02</div><h2 style="margin:0;font:500 40px/1.1 Literata,serif;letter-spacing:-0.01em">Ícone do aplicativo</h2></div>
+    <p style="margin:0;font-size:15px;line-height:1.6;color:#6D665D;max-width:62ch;text-wrap:pretty">Página em Tinta sobre fundo Papel. Um único desenho para os três sistemas; muda apenas a forma do contêiner exigida por cada plataforma.</p>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px">
+    <div style="background:#FCFBF7;border:1px solid #E7E3DA;border-radius:12px;padding:32px 24px 20px;display:flex;flex-direction:column;align-items:center;gap:24px">
+      <div style="width:144px;height:144px;border-radius:32px;background:#FCFBF7;box-shadow:0 1px 2px rgba(43,39,34,.12),0 8px 24px rgba(43,39,34,.10),inset 0 0 0 1px #E7E3DA;display:flex;align-items:center;justify-content:center">
+        <svg style="flex-shrink:0" width="62" height="78" viewBox="-4 -4 88 108"><polygon points="0,0 80,0 80,70 50,100 0,100" fill="#2B2722" stroke="#2B2722" stroke-width="6" stroke-linejoin="round"></polygon><polygon points="80,70 50,70 50,100" fill="#1A4FB4" stroke="#1A4FB4" stroke-width="6" stroke-linejoin="round"></polygon></svg>
+      </div>
+      <div style="font:500 11px/1 'JetBrains Mono',monospace;color:#6D665D;align-self:flex-start">macOS · .icns · cantos contínuos</div>
+    </div>
+    <div style="background:#FCFBF7;border:1px solid #E7E3DA;border-radius:12px;padding:32px 24px 20px;display:flex;flex-direction:column;align-items:center;gap:24px">
+      <div style="width:144px;height:144px;border-radius:8px;background:#FCFBF7;box-shadow:inset 0 0 0 1px #E7E3DA;display:flex;align-items:center;justify-content:center">
+        <svg style="flex-shrink:0" width="62" height="78" viewBox="-4 -4 88 108"><polygon points="0,0 80,0 80,70 50,100 0,100" fill="#2B2722" stroke="#2B2722" stroke-width="6" stroke-linejoin="round"></polygon><polygon points="80,70 50,70 50,100" fill="#1A4FB4" stroke="#1A4FB4" stroke-width="6" stroke-linejoin="round"></polygon></svg>
+      </div>
+      <div style="font:500 11px/1 'JetBrains Mono',monospace;color:#6D665D;align-self:flex-start">Windows · .ico · raio 4 % </div>
+    </div>
+    <div style="background:#FCFBF7;border:1px solid #E7E3DA;border-radius:12px;padding:32px 24px 20px;display:flex;flex-direction:column;align-items:center;gap:24px">
+      <div style="width:144px;height:144px;border-radius:72px;background:#FCFBF7;box-shadow:inset 0 0 0 1px #E7E3DA;display:flex;align-items:center;justify-content:center">
+        <svg style="flex-shrink:0" width="56" height="70" viewBox="-4 -4 88 108"><polygon points="0,0 80,0 80,70 50,100 0,100" fill="#2B2722" stroke="#2B2722" stroke-width="6" stroke-linejoin="round"></polygon><polygon points="80,70 50,70 50,100" fill="#1A4FB4" stroke="#1A4FB4" stroke-width="6" stroke-linejoin="round"></polygon></svg>
+      </div>
+      <div style="font:500 11px/1 'JetBrains Mono',monospace;color:#6D665D;align-self:flex-start">Linux · .svg / .png · Flatpak e AppImage</div>
+    </div>
+  </div>
+  <div style="background:#FCFBF7;border:1px solid #E7E3DA;border-radius:12px;padding:24px;display:flex;align-items:flex-end;gap:32px;flex-wrap:wrap">
+    <sc-for list="{{ iconSizes }}" as="s" hint-placeholder-count="6">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:10px">
+        <div style="width:{{ s.px }}px;height:{{ s.px }}px;border-radius:{{ s.r }}px;background:#FCFBF7;box-shadow:inset 0 0 0 1px #DCD7CC;display:flex;align-items:center;justify-content:center">
+          <svg style="flex-shrink:0" width="{{ s.w }}" height="{{ s.h }}" viewBox="-4 -4 88 108"><polygon points="0,0 80,0 80,70 50,100 0,100" fill="#2B2722" stroke="#2B2722" stroke-width="6" stroke-linejoin="round"></polygon><polygon points="80,70 50,70 50,100" fill="#1A4FB4" stroke="#1A4FB4" stroke-width="6" stroke-linejoin="round"></polygon></svg>
+        </div>
+        <span style="font:500 10px 'JetBrains Mono',monospace;color:#6D665D">{{ s.px }}</span>
+      </div>
+    </sc-for>
+  </div>
+</section>
+
+<!-- 03 CORES -->
+<section data-screen-label="03 Cores" style="display:flex;flex-direction:column;gap:32px">
+  <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:32px;align-items:end">
+    <div style="display:flex;flex-direction:column;gap:8px"><div style="font:500 12px/1 'JetBrains Mono',monospace;color:#6D665D">03</div><h2 style="margin:0;font:500 40px/1.1 Literata,serif;letter-spacing:-0.01em">Cores</h2></div>
+    <p style="margin:0;font-size:15px;line-height:1.6;color:#6D665D;max-width:62ch;text-wrap:pretty">A marca usa as cores do tema Papel. Na interface, cada tema define todos os tokens e uma única cor de destaque (o link). As cinco cores de marcação são calculadas em OKLCH com a mesma luminosidade e croma, variando só o matiz.</p>
+  </div>
+
+  <div style="display:grid;grid-template-columns:2fr 2fr 1fr 1fr 1fr;gap:12px">
+    <sc-for list="{{ brand }}" as="c" hint-placeholder-count="5">
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="height:160px;border-radius:12px;background:{{ c.hex }};box-shadow:inset 0 0 0 1px rgba(43,39,34,.12)"></div>
+        <div style="display:flex;flex-direction:column;gap:2px"><span style="font:600 14px Inter,sans-serif">{{ c.name }}</span><span style="font:400 11px/1.5 'JetBrains Mono',monospace;color:#6D665D">{{ c.hex }} · {{ c.token }}</span><span style="font-size:12px;color:#6D665D">{{ c.use }}</span></div>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <div style="font:600 13px/1 Inter,sans-serif">Temas de leitura</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px">
+      <sc-for list="{{ themes }}" as="t" hint-placeholder-count="7">
+        <div style="background:{{ t.bg }};border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:14px;box-shadow:inset 0 0 0 1px rgba(128,128,128,.25)">
+          <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font:600 15px Inter,sans-serif;color:{{ t.text }}">{{ t.name }}</span><span style="font:400 11px 'JetBrains Mono',monospace;color:{{ t.muted }}">{{ t.origin }}</span></div>
+          <p style="margin:0;font:400 17px/1.6 Literata,serif;color:{{ t.text }}">A interface recua e o texto fica. <span style="color:{{ t.link }};text-decoration:underline;text-underline-offset:3px">Uma nota</span> abre ao lado.</p>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <sc-for list="{{ t.hl }}" as="h" hint-placeholder-count="5">
+              <span style="font:400 14px/1.5 Literata,serif;color:{{ t.text }};background:{{ h.bg }};box-shadow:inset 0 -3px 0 {{ h.line }};padding:0 4px;border-radius:2px">{{ h.name }}</span>
+            </sc-for>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;font:400 10px/1.4 'JetBrains Mono',monospace;color:{{ t.muted }};padding-top:10px;border-top:1px solid {{ t.border }}">
+            <span>bg<br>{{ t.bg }}</span><span>text<br>{{ t.text }}</span><span>muted<br>{{ t.muted }}</span><span>link<br>{{ t.link }}</span>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    <p style="margin:0;font-size:12px;color:#6D665D">No tema Noite o destaque vira um sublinhado grosso colorido, como previsto na especificação.</p>
+  </div>
+
+  <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px">
+    <div style="background:#FCFBF7;border:1px solid #E7E3DA;border-radius:12px;padding:24px;display:flex;flex-direction:column;gap:14px">
+      <div style="font:600 13px/1 Inter,sans-serif">Marcações · valores OKLCH</div>
+      <sc-for list="{{ hlSpec }}" as="h" hint-placeholder-count="5">
+        <div style="display:grid;grid-template-columns:24px 80px repeat(3,minmax(0,1fr));gap:12px;align-items:center;font:400 11px 'JetBrains Mono',monospace;color:#6D665D">
+          <span style="width:24px;height:24px;border-radius:4px;background:{{ h.light }}"></span>
+          <span style="font:500 13px Inter,sans-serif;color:#2B2722">{{ h.name }}</span>
+          <span>claro {{ h.light }}</span><span>escuro {{ h.dark }}</span><span>noite {{ h.night }}</span>
+        </div>
+      </sc-for>
+      <p style="margin:0;font-size:12px;line-height:1.6;color:#6D665D">Claro, Papel, Sépia: L 0,91 · C 0,09. Escuro, Grafite: L 0,45 · C 0,08. Noite (sublinhado): L 0,72 · C 0,14. Matizes 95 · 150 · 245 · 350 · 305.</p>
+    </div>
+    <div style="background:#FCFBF7;border:1px solid #E7E3DA;border-radius:12px;padding:24px;display:flex;flex-direction:column;gap:14px">
+      <div style="font:600 13px/1 Inter,sans-serif">Tokens semânticos · Papel / Grafite</div>
+      <sc-for list="{{ semantic }}" as="s" hint-placeholder-count="7">
+        <div style="display:grid;grid-template-columns:110px 24px minmax(0,1fr) 24px minmax(0,1fr);gap:10px;align-items:center;font:400 11px 'JetBrains Mono',monospace;color:#6D665D">
+          <span style="color:#2B2722">{{ s.token }}</span>
+          <span style="width:24px;height:24px;border-radius:4px;background:{{ s.l }};box-shadow:inset 0 0 0 1px rgba(43,39,34,.15)"></span><span>{{ s.l }}</span>
+          <span style="width:24px;height:24px;border-radius:4px;background:{{ s.d }};box-shadow:inset 0 0 0 1px rgba(43,39,34,.15)"></span><span>{{ s.d }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<!-- 04 TIPOGRAFIA -->
+<section data-screen-label="04 Tipografia" style="display:flex;flex-direction:column;gap:32px">
+  <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:32px;align-items:end">
+    <div style="display:flex;flex-direction:column;gap:8px"><div style="font:500 12px/1 'JetBrains Mono',monospace;color:#6D665D">04</div><h2 style="margin:0;font:500 40px/1.1 Literata,serif;letter-spacing:-0.01em">Tipografia</h2></div>
+    <p style="margin:0;font-size:15px;line-height:1.6;color:#6D665D;max-width:62ch;text-wrap:pretty">Literata é a voz da marca: logotipo, títulos e capas geradas. Inter fica na interface; JetBrains Mono, em código e dados. Todas com licença OFL. No livro aberto, a fonte é escolha do leitor.</p>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px">
+    <div style="background:#FCFBF7;border:1px solid #E7E3DA;border-radius:12px;padding:24px;display:flex;flex-direction:column;gap:16px">
+      <span style="font:500 11px 'JetBrains Mono',monospace;color:#6D665D">Marca · Literata</span>
+      <span style="font:500 88px/1 Literata,serif;letter-spacing:-0.02em">Aa</span>
+      <span style="font:400 15px/1.5 Literata,serif;color:#6D665D">Títulos, logotipo, capas geradas, telas de boas-vindas.</span>
+    </div>
+    <div style="background:#FCFBF7;border:1px solid #E7E3DA;border-radius:12px;padding:24px;display:flex;flex-direction:column;gap:16px">
+      <span style="font:500 11px 'JetBrains Mono',monospace;color:#6D665D">Interface · Inter</span>
+      <span style="font:500 88px/1 Inter,sans-serif;letter-spacing:-0.03em">Aa</span>
+      <span style="font:400 15px/1.5 Inter,sans-serif;color:#6D665D">Menus, barras, painéis, botões, rótulos.</span>
+    </div>
+    <div style="background:#FCFBF7;border:1px solid #E7E3DA;border-radius:12px;padding:24px;display:flex;flex-direction:column;gap:16px">
+      <span style="font:500 11px 'JetBrains Mono',monospace;color:#6D665D">Código · JetBrains Mono</span>
+      <span style="font:400 88px/1 'JetBrains Mono',monospace;letter-spacing:-0.04em">Aa</span>
+      <span style="font:400 15px/1.5 'JetBrains Mono',monospace;color:#6D665D">epubcfi(/6/14!/4/2/10)</span>
+    </div>
+  </div>
+  <div style="background:#FCFBF7;border:1px solid #E7E3DA;border-radius:12px;padding:8px 24px">
+    <sc-for list="{{ uiScale }}" as="u" hint-placeholder-count="5">
+      <div style="display:grid;grid-template-columns:60px 120px minmax(0,1fr);gap:16px;align-items:baseline;padding:14px 0;border-bottom:1px solid #EFECE5">
+        <span style="font:500 11px 'JetBrains Mono',monospace;color:#1A4FB4">{{ u.token }}</span>
+        <span style="font:400 11px 'JetBrains Mono',monospace;color:#6D665D">{{ u.spec }}</span>
+        <span style="font-family:Inter,sans-serif;font-size:{{ u.size }}px;font-weight:{{ u.w }};color:#2B2722">{{ u.sample }}</span>
+      </div>
+    </sc-for>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <div style="font:600 13px/1 Inter,sans-serif">Fontes de leitura incluídas</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:12px">
+      <sc-for list="{{ readFonts }}" as="f" hint-placeholder-count="6">
+        <div style="background:#FCFBF7;border:1px solid #E7E3DA;border-radius:12px;padding:20px 24px;display:flex;flex-direction:column;gap:10px">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px"><span style="font:600 13px Inter,sans-serif">{{ f.name }}</span><span style="font:400 11px 'JetBrains Mono',monospace;color:#6D665D">{{ f.note }}</span></div>
+          <p style="margin:0;font-family:{{ f.family }};font-size:20px;line-height:1.65;color:#2B2722;text-wrap:pretty">Era uma vez uma página que não queria ser virada, até que alguém a leu inteira.</p>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<!-- 05 ÍCONES -->
+<section data-screen-label="05 Ícones" style="display:flex;flex-direction:column;gap:32px">
+  <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:32px;align-items:end">
+    <div style="display:flex;flex-direction:column;gap:8px"><div style="font:500 12px/1 'JetBrains Mono',monospace;color:#6D665D">05</div><h2 style="margin:0;font:500 40px/1.1 Literata,serif;letter-spacing:-0.01em">Ícones</h2></div>
+    <p style="margin:0;font-size:15px;line-height:1.6;color:#6D665D;max-width:62ch;text-wrap:pretty">Traço linear, grade de 24 px, cantos arredondados, sem preenchimento. Base Lucide (licença ISC, compatível com MIT). Exibidos a 16 px em listas e a 20 px nas barras, sempre na cor <span style="font-family:'JetBrains Mono',monospace;font-size:13px">text-muted</span>; o ativo usa <span style="font-family:'JetBrains Mono',monospace;font-size:13px">text</span>.</p>
+  </div>
+  <sc-for list="{{ iconGroups }}" as="g" hint-placeholder-count="4">
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="font:600 13px/1 Inter,sans-serif">{{ g.title }}</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:8px">
+        <sc-for list="{{ g.icons }}" as="ic" hint-placeholder-count="8">
+          <div style="background:#FCFBF7;border:1px solid #E7E3DA;border-radius:8px;padding:18px 12px 12px;display:flex;flex-direction:column;align-items:center;gap:12px">
+            <div style="width:24px;height:24px;background-color:#2B2722;-webkit-mask-image:url('https://unpkg.com/lucide-static@0.460.0/icons/{{ ic.i }}.svg');mask-image:url('https://unpkg.com/lucide-static@0.460.0/icons/{{ ic.i }}.svg');-webkit-mask-size:contain;mask-size:contain;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat"></div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center"><span style="font-size:12px;color:#2B2722">{{ ic.label }}</span><span style="font:400 10px 'JetBrains Mono',monospace;color:#8A8378">{{ ic.i }}</span></div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </sc-for>
+</section>
+
+<!-- 06 TOKENS -->
+<section data-screen-label="06 Tokens" style="display:flex;flex-direction:column;gap:32px">
+  <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:32px;align-items:end">
+    <div style="display:flex;flex-direction:column;gap:8px"><div style="font:500 12px/1 'JetBrains Mono',monospace;color:#6D665D">06</div><h2 style="margin:0;font:500 40px/1.1 Literata,serif;letter-spacing:-0.01em">Espaço, forma e movimento</h2></div>
+    <p style="margin:0;font-size:15px;line-height:1.6;color:#6D665D;max-width:62ch;text-wrap:pretty">Valores da seção 12.2, compartilhados com o L'Essentiel pelo JSON de tokens.</p>
+  </div>
+  <div style="display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr) minmax(0,1fr);gap:16px">
+    <div style="background:#FCFBF7;border:1px solid #E7E3DA;border-radius:12px;padding:24px;display:flex;flex-direction:column;gap:10px">
+      <div style="font:600 13px/1 Inter,sans-serif;margin-bottom:6px">Espaço · escala de 4</div>
+      <sc-for list="{{ spaces }}" as="s" hint-placeholder-count="8">
+        <div style="display:grid;grid-template-columns:40px minmax(0,1fr);gap:12px;align-items:center"><span style="font:400 11px 'JetBrains Mono',monospace;color:#6D665D">{{ s }}</span><div style="height:10px;width:{{ s }}px;background:#1A4FB4;border-radius:2px"></div></div>
+      </sc-for>
+    </div>
+    <div style="background:#FCFBF7;border:1px solid #E7E3DA;border-radius:12px;padding:24px;display:flex;flex-direction:column;gap:16px">
+      <div style="font:600 13px/1 Inter,sans-serif">Raio</div>
+      <div style="display:flex;gap:16px;flex-wrap:wrap">
+        <div style="display:flex;flex-direction:column;gap:8px;align-items:center"><div style="width:64px;height:64px;border:2px solid #2B2722;border-radius:4px"></div><span style="font:400 11px 'JetBrains Mono',monospace;color:#6D665D">sm 4</span></div>
+        <div style="display:flex;flex-direction:column;gap:8px;align-items:center"><div style="width:64px;height:64px;border:2px solid #2B2722;border-radius:8px"></div><span style="font:400 11px 'JetBrains Mono',monospace;color:#6D665D">md 8</span></div>
+        <div style="display:flex;flex-direction:column;gap:8px;align-items:center"><div style="width:64px;height:64px;border:2px solid #2B2722;border-radius:12px"></div><span style="font:400 11px 'JetBrains Mono',monospace;color:#6D665D">lg 12</span></div>
+      </div>
+      <p style="margin:0;font-size:12px;line-height:1.6;color:#6D665D">sm em botões e campos; md em cartões e menus; lg em pop-ups e diálogos.</p>
+      <div style="font:600 13px/1 Inter,sans-serif;margin-top:8px">Foco</div>
+      <div style="display:flex;gap:12px;align-items:center">
+        <span style="padding:8px 14px;border-radius:4px;background:#2B2722;color:#FCFBF7;font:500 13px Inter,sans-serif;outline:2px solid #1A4FB4;outline-offset:2px">Ler</span>
+        <span style="font:400 11px 'JetBrains Mono',monospace;color:#6D665D">focus-ring 2 px · offset 2</span>
+      </div>
+    </div>
+    <div style="background:#FCFBF7;border:1px solid #E7E3DA;border-radius:12px;padding:24px;display:flex;flex-direction:column;gap:16px">
+      <div style="font:600 13px/1 Inter,sans-serif">Movimento · ease-out</div>
+      <sc-for list="{{ motion }}" as="m" hint-placeholder-count="3">
+        <div style="display:flex;flex-direction:column;gap:6px"><div style="display:flex;justify-content:space-between;font:400 11px 'JetBrains Mono',monospace;color:#6D665D"><span>{{ m.token }}</span><span>{{ m.ms }} ms</span></div><div style="height:6px;border-radius:3px;background:#EFECE5;overflow:hidden"><div style="height:6px;width:{{ m.pct }}%;background:#2B2722"></div></div><span style="font-size:12px;color:#6D665D">{{ m.use }}</span></div>
+      </sc-for>
+      <div style="font:600 13px/1 Inter,sans-serif;margin-top:8px">Medida da coluna</div>
+      <div style="display:flex;gap:16px;font:400 11px 'JetBrains Mono',monospace;color:#6D665D"><span>min 45 ch</span><span style="color:#2B2722">padrão 66 ch</span><span>máx 90 ch</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 APLICAÇÕES -->
+<section data-screen-label="07 Aplicações" style="display:flex;flex-direction:column;gap:32px">
+  <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:32px;align-items:end">
+    <div style="display:flex;flex-direction:column;gap:8px"><div style="font:500 12px/1 'JetBrains Mono',monospace;color:#6D665D">07</div><h2 style="margin:0;font:500 40px/1.1 Literata,serif;letter-spacing:-0.01em">Aplicações</h2></div>
+    <p style="margin:0;font-size:15px;line-height:1.6;color:#6D665D;max-width:62ch;text-wrap:pretty">Capa substituta (RF-BIB-17), página de leitura, menu de seleção e aviso com desfazer.</p>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px">
+    <sc-for list="{{ covers }}" as="c" hint-placeholder-count="4">
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="aspect-ratio:2/3;border-radius:4px;background:{{ c.bg }};padding:24px 20px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 1px 2px rgba(43,39,34,.12),inset 0 0 0 1px rgba(128,128,128,.2)">
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div style="width:28px;height:2px;background:{{ c.accent }}"></div>
+            <div style="font:500 24px/1.15 Literata,serif;color:{{ c.text }};letter-spacing:-0.01em;text-wrap:balance">{{ c.title }}</div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:8px">
+            <span style="font:400 13px/1.4 Inter,sans-serif;color:{{ c.muted }}">{{ c.author }}</span>
+            <svg style="flex-shrink:0" width="11" height="14" viewBox="-4 -4 88 108"><polygon points="0,0 80,0 80,70 50,100 0,100" fill="{{ c.muted }}"></polygon><polygon points="80,70 50,70 50,100" fill="{{ c.accent }}"></polygon></svg>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:4px">
+          <span style="font:500 13px Inter,sans-serif">{{ c.title }}</span>
+          <span style="font-size:12px;color:#6D665D">{{ c.author }}</span>
+          <div style="height:3px;border-radius:2px;background:#E7E3DA;margin-top:4px"><div style="height:3px;border-radius:2px;width:{{ c.pct }}%;background:#1A4FB4"></div></div>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="border-radius:12px;overflow:hidden;background:{{ rt.bg }};box-shadow:0 1px 2px rgba(0,0,0,.08),inset 0 0 0 1px rgba(128,128,128,.25);display:flex;flex-direction:column">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid {{ rt.border }}">
+      <div style="display:flex;align-items:center;gap:16px">
+        <div style="width:20px;height:20px;background-color:{{ rt.muted }};-webkit-mask-image:url('https://unpkg.com/lucide-static@0.460.0/icons/arrow-left.svg');mask-image:url('https://unpkg.com/lucide-static@0.460.0/icons/arrow-left.svg');-webkit-mask-size:contain;mask-size:contain"></div>
+        <span style="font:500 13px Inter,sans-serif;color:{{ rt.muted }}">Capítulo 3 · A biblioteca de areia</span>
+      </div>
+      <div style="display:flex;gap:16px">
+        <sc-for list="{{ toolbar }}" as="i" hint-placeholder-count="4">
+          <div style="width:20px;height:20px;background-color:{{ rt.muted }};-webkit-mask-image:url('https://unpkg.com/lucide-static@0.460.0/icons/{{ i }}.svg');mask-image:url('https://unpkg.com/lucide-static@0.460.0/icons/{{ i }}.svg');-webkit-mask-size:contain;mask-size:contain"></div>
+        </sc-for>
+      </div>
+    </div>
+    <div style="padding:40px 24px 96px;display:flex;flex-direction:column;align-items:center;gap:24px;position:relative">
+      <div style="max-width:620px;display:flex;flex-direction:column;gap:18px;font:400 20px/1.65 Literata,serif;color:{{ rt.text }}">
+        <h3 style="margin:0 0 8px;font:500 30px/1.2 Literata,serif;letter-spacing:-0.01em">III</h3>
+        <p style="margin:0;text-wrap:pretty">Ninguém sabia ao certo quantos volumes havia nas estantes do térreo. O catálogo terminava na letra M, e as fichas seguintes tinham sido usadas, anos antes, para acender o fogão.</p>
+        <p style="margin:0;text-wrap:pretty">Ela abriu o primeiro livro ao acaso e encontrou, sublinhada a lápis, <span style="background:{{ rt.hl }};box-shadow:inset 0 -3px 0 {{ rt.hlLine }};border-radius:2px">uma frase que parecia escrita para ela</span>.<sup style="color:{{ rt.link }};font-size:13px;font-family:Inter,sans-serif;padding-left:2px">1</sup> Fechou o volume devagar, como quem guarda um segredo.</p>
+        <div style="align-self:center;display:flex;align-items:center;gap:4px;padding:6px;border-radius:8px;background:{{ rt.elev }};box-shadow:0 4px 16px rgba(0,0,0,.14),inset 0 0 0 1px {{ rt.border }}">
+          <sc-for list="{{ rt.dots }}" as="d" hint-placeholder-count="5">
+            <span style="width:22px;height:22px;border-radius:11px;background:{{ d }};margin:5px"></span>
+          </sc-for>
+          <span style="width:1px;height:20px;background:{{ rt.border }};margin:0 4px"></span>
+          <sc-for list="{{ selTools }}" as="i" hint-placeholder-count="4">
+            <div style="width:32px;height:32px;display:flex;align-items:center;justify-content:center"><div style="width:18px;height:18px;background-color:{{ rt.text }};-webkit-mask-image:url('https://unpkg.com/lucide-static@0.460.0/icons/{{ i }}.svg');mask-image:url('https://unpkg.com/lucide-static@0.460.0/icons/{{ i }}.svg');-webkit-mask-size:contain;mask-size:contain"></div></div>
+          </sc-for>
+        </div>
+        
+      </div>
+      <div style="position:absolute;right:20px;bottom:20px;display:flex;align-items:center;gap:16px;padding:10px 12px 10px 16px;border-radius:8px;background:{{ rt.text }};color:{{ rt.bg }};font:500 13px Inter,sans-serif">
+        <span>Destaque excluído</span><span style="padding:4px 10px;border-radius:4px;box-shadow:inset 0 0 0 1px {{ rt.bg }}">Desfazer</span>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px;padding:12px 16px 14px;border-top:1px solid {{ rt.border }}">
+      <div style="height:3px;border-radius:2px;background:{{ rt.border }}"><div style="height:3px;width:37%;border-radius:2px;background:{{ rt.link }}"></div></div>
+      <div style="display:flex;justify-content:space-between;font:400 12px Inter,sans-serif;color:{{ rt.muted }}"><span>37 % · posição 412 de 1.108</span><span>11 min restantes no capítulo</span></div>
+    </div>
+  </div>
+  <p style="margin:-16px 0 0;font-size:12px;color:#6D665D">Tema da página: {{ rt.name }}. Troque nos Tweaks.</p>
+</section>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;wordmarkFont&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Literata&quot;,&quot;Source Serif 4&quot;,&quot;Inter&quot;],&quot;default&quot;:&quot;Literata&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Logo&quot;},&quot;readerTheme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Claro&quot;,&quot;Papel&quot;,&quot;Sépia&quot;,&quot;Escuro&quot;,&quot;Grafite&quot;,&quot;Noite&quot;],&quot;default&quot;:&quot;Papel&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Aplicações&quot;}}">
+function ok(L, C, h) {
+  const a = C * Math.cos(h * Math.PI / 180), b = C * Math.sin(h * Math.PI / 180);
+  const l = (L + 0.3963377774 * a + 0.2158037573 * b) ** 3, m = (L - 0.1055613458 * a - 0.0638541728 * b) ** 3, s = (L - 0.0894841775 * a - 1.291485548 * b) ** 3;
+  const rgb = [4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s, -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s, -0.0041960863 * l - 0.7034186147 * m + 1.707614701 * s];
+  return '#' + rgb.map(x => { x = Math.max(0, Math.min(1, x)); x = x <= 0.0031308 ? 12.92 * x : 1.055 * Math.pow(x, 1 / 2.4) - 0.055; return Math.round(x * 255).toString(16).padStart(2, '0'); }).join('').toUpperCase();
+}
+const HUES = [['Amarelo', 95], ['Verde', 150], ['Azul', 245], ['Rosa', 350], ['Roxo', 305]];
+const hlFor = mode => HUES.map(([name, h]) => mode === 'night'
+  ? { name, bg: 'transparent', line: ok(0.72, 0.14, h) }
+  : { name, bg: mode === 'dark' ? ok(0.45, 0.08, h) : ok(0.91, 0.09, h), line: 'transparent' });
+const THEMES = [
+  ['Claro', '#FFFFFF', '#222222', '#6B6B6B', '#1A4FB4', 'light', 'Plugin', '#FFFFFF', '#E6E6E6'],
+  ['Papel', '#FCFBF7', '#2B2722', '#6D665D', '#1A4FB4', 'light', 'Novo', '#FFFFFF', '#E7E3DA'],
+  ['Sépia', '#FAF7F0', '#342D22', '#70624F', '#7A4B12', 'light', 'Plugin', '#FFFDF8', '#E6DECF'],
+  ['Escuro', '#292A2D', '#D4D4D4', '#AAAAAA', '#8AB4F8', 'dark', 'Plugin', '#34353A', '#3E3F44'],
+  ['Grafite', '#141516', '#DDDDDD', '#AAAAAA', '#8AB4F8', 'dark', 'Novo', '#1F2022', '#2A2B2E'],
+  ['Noite', '#000000', '#E6E6E6', '#AAAAAA', '#8AB4F8', 'night', 'Plugin', '#141414', '#262626']
+].map(([name, bg, text, muted, link, mode, origin, elev, border]) => ({ name, bg, text, muted, link, mode, origin, elev, border, hl: hlFor(mode) }));
+const ic = (i, label) => ({ i, label });
+
+class Component extends DCLogic {
+  renderVals() {
+    const fonts = { 'Literata': 'Literata, serif', 'Source Serif 4': "'Source Serif 4', serif", 'Inter': 'Inter, sans-serif' };
+    const rt = THEMES.find(t => t.name === (this.props.readerTheme ?? 'Papel')) || THEMES[1];
+    return {
+      wordFont: fonts[this.props.wordmarkFont ?? 'Literata'] || fonts.Literata,
+      iconSizes: [16, 32, 48, 64, 128, 256].map(px => ({ px, r: Math.round(px * 0.22), w: Math.round(px * 0.43), h: Math.round(px * 0.54) })),
+      brand: [
+        { name: 'Papel', hex: '#FCFBF7', token: 'bg', use: 'Fundo da marca e do ícone' },
+        { name: 'Tinta', hex: '#2B2722', token: 'text', use: 'Símbolo, texto, logotipo' },
+        { name: 'Azul-tinta', hex: '#1A4FB4', token: 'accent', use: 'Dobra, links, foco, progresso' },
+        { name: 'Grafite', hex: '#141516', token: 'bg', use: 'Fundo escuro da marca' },
+        { name: 'Pedra', hex: '#6D665D', token: 'text-muted', use: 'Texto secundário' }
+      ],
+      themes: THEMES,
+      hlSpec: HUES.map(([name, h]) => ({ name, light: ok(0.91, 0.09, h), dark: ok(0.45, 0.08, h), night: ok(0.72, 0.14, h) })),
+      semantic: [
+        { token: 'bg', l: '#FCFBF7', d: '#141516' }, { token: 'bg-elevated', l: '#FFFFFF', d: '#1F2022' },
+        { token: 'text', l: '#2B2722', d: '#DDDDDD' }, { token: 'text-muted', l: '#6D665D', d: '#AAAAAA' },
+        { token: 'border', l: '#E7E3DA', d: '#2A2B2E' }, { token: 'accent · link', l: '#1A4FB4', d: '#8AB4F8' },
+        { token: 'selection', l: ok(0.88, 0.05, 255), d: ok(0.38, 0.07, 255) },
+        { token: 'danger', l: '#B3261E', d: '#F2B8B5' }, { token: 'focus-ring', l: '#1A4FB4', d: '#8AB4F8' }
+      ],
+      uiScale: [
+        { token: 'xl', spec: '24 · 500', size: 24, w: 500, sample: 'Todos os livros' },
+        { token: 'lg', spec: '18 · 500', size: 18, w: 500, sample: 'Continuar lendo' },
+        { token: 'md', spec: '15 · 400', size: 15, w: 400, sample: 'Agrupar por série, ordenar por última leitura' },
+        { token: 'sm', spec: '13 · 400', size: 13, w: 400, sample: 'Capítulo 3 · 37 % · 11 min restantes' },
+        { token: 'xs', spec: '12 · 500', size: 12, w: 500, sample: 'PROTEGIDO · 412 MARCAÇÕES' }
+      ],
+      readFonts: [
+        { name: 'Georgia', family: 'Georgia, serif', note: 'padrão · do sistema' },
+        { name: 'Literata', family: 'Literata, serif', note: 'padrão no Linux' },
+        { name: 'Source Serif 4', family: "'Source Serif 4', serif", note: 'leitura longa' },
+        { name: 'Merriweather', family: 'Merriweather, serif', note: 'leitura longa' },
+        { name: 'Atkinson Hyperlegible Next', family: "'Atkinson Hyperlegible Next', sans-serif", note: 'baixa visão' },
+        { name: 'Lexend', family: 'Lexend, sans-serif', note: 'dislexia' }
+      ],
+      iconGroups: [
+        { title: 'Biblioteca', icons: [ic('house', 'Início'), ic('library-big', 'Todos os livros'), ic('book-open', 'Lendo'), ic('users', 'Autores'), ic('layers', 'Séries'), ic('tags', 'Gêneros'), ic('library', 'Coleções'), ic('highlighter', 'Marcações'), ic('layout-grid', 'Grade'), ic('list', 'Lista'), ic('folder-open', 'Pasta'), ic('panel-left', 'Barra lateral')] },
+        { title: 'Estados do livro', icons: [ic('circle-dashed', 'Não lido'), ic('circle-dot', 'Lendo'), ic('circle-check', 'Lido'), ic('circle-slash', 'Abandonado'), ic('lock', 'Protegido'), ic('triangle-alert', 'Erro'), ic('copy', 'Duplicado'), ic('file-question', 'Não encontrado')] },
+        { title: 'Leitor', icons: [ic('arrow-left', 'Voltar'), ic('list-tree', 'Sumário'), ic('search', 'Buscar'), ic('a-large-small', 'Aparência'), ic('columns-2', 'Colunas'), ic('sun-moon', 'Tema'), ic('focus', 'Modo foco'), ic('chevrons-down', 'Rolagem auto.'), ic('image', 'Imagem'), ic('external-link', 'Link externo'), ic('bookmark', 'Marcador'), ic('undo-2', 'Desfazer')] },
+        { title: 'Marcações e dados', icons: [ic('highlighter', 'Destaque'), ic('underline', 'Sublinhado'), ic('sticky-note', 'Nota'), ic('clipboard-copy', 'Copiar'), ic('text-quote', 'Com referência'), ic('unlink', 'Órfã'), ic('trash-2', 'Lixeira'), ic('download', 'Exportar'), ic('upload', 'Importar'), ic('archive-restore', 'Backup'), ic('keyboard', 'Atalhos'), ic('settings', 'Configurações')] }
+      ],
+      spaces: [4, 8, 12, 16, 24, 32, 48, 64],
+      motion: [
+        { token: 'duration-fast', ms: 120, pct: 40, use: 'Hover, menus, aviso' },
+        { token: 'duration-base', ms: 200, pct: 67, use: 'Painéis e pop-ups' },
+        { token: 'duration-slow', ms: 300, pct: 100, use: 'Virada de página' }
+      ],
+      covers: [
+        { title: 'A biblioteca de areia', author: 'Helena Ramos', bg: '#FCFBF7', text: '#2B2722', muted: '#6D665D', accent: '#1A4FB4', pct: 37 },
+        { title: 'Cartas do inverno', author: 'João Teles', bg: '#FAF7F0', text: '#342D22', muted: '#70624F', accent: '#7A4B12', pct: 82 },
+        { title: 'O último farol', author: 'M. A. Costa', bg: '#141516', text: '#DDDDDD', muted: '#AAAAAA', accent: '#8AB4F8', pct: 0 },
+        { title: 'Pequeno tratado sobre o silêncio', author: 'Ana Duarte', bg: '#292A2D', text: '#D4D4D4', muted: '#AAAAAA', accent: '#8AB4F8', pct: 100 }
+      ],
+      rt: { ...rt, hl: rt.hl[0].bg, hlLine: rt.hl[0].line, dots: rt.hl.map(h => h.bg === 'transparent' ? h.line : h.bg) },
+      toolbar: ['list-tree', 'search', 'highlighter', 'a-large-small'],
+      selTools: ['underline', 'sticky-note', 'clipboard-copy', 'text-quote']
+    };
+  }
+}
+</script>
+</body>
+</html>
