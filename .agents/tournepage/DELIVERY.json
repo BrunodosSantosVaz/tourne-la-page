@@ -27,5 +27,6 @@
   "Instaladores e assinatura comercial": 33,
   "Desempenho em bibliotecas grandes e fuzzing": 34,
   "Internacionalização e acabamento multiplataforma": 35,
-  "Endurecer confiança dos checks com token no Big Bang": 36
+  "Endurecer confiança dos checks com token no Big Bang": 36,
+  "Refatorar a composição do leitor para os limites COD-09": 42
 }
