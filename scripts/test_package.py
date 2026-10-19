@@ -12,6 +12,25 @@ from scripts import package
 
 
 class Packages(unittest.TestCase):
+    def test_zip_extraction_rejects_unsafe_members_before_writing(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            for name in ("../outside", "/absolute", "C:/drive", "folder\\outside"):
+                archive_path = root / "unsafe.zip"
+                with zipfile.ZipFile(archive_path, "w") as archive:
+                    archive.writestr("valid/file.txt", "safe")
+                    archive.writestr(name, "unsafe")
+                destination = root / "extracted"
+                with zipfile.ZipFile(archive_path) as archive:
+                    with self.assertRaises(ValueError):
+                        package.extract_zip(archive, destination)
+                self.assertFalse(destination.exists())
+            with zipfile.ZipFile(archive_path, "w") as archive:
+                archive.writestr("Tourne-la-page/file.txt", "content")
+            with zipfile.ZipFile(archive_path) as archive:
+                package.extract_zip(archive, destination)
+            self.assertEqual((destination / "Tourne-la-page/file.txt").read_text(), "content")
+
     def test_linux_bundle_contains_launcher_binary_licenses_and_verified_manifest(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
