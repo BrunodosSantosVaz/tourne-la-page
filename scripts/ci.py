@@ -13,6 +13,23 @@ LLVM_COV_VERSION = "0.9.1"
 
 
 def install():
+    if sys.platform == "darwin" and os.environ.get("GITHUB_ACTIONS") == "true":
+        path_file = os.environ.get("GITHUB_PATH")
+        if not path_file or not Path(path_file).is_absolute():
+            raise SystemExit("macOS CI packaging requires an absolute GITHUB_PATH")
+        subprocess.run(["brew", "install", "bash", "coreutils"], cwd=ROOT, check=True)
+        directories = []
+        for formula, suffix, command in (("bash", "bin", "bash"),
+                                         ("coreutils", "libexec/gnubin", "sha256sum")):
+            prefix = subprocess.check_output(["brew", "--prefix", formula], cwd=ROOT, text=True).strip()
+            if not Path(prefix).is_absolute() or "\n" in prefix or "\r" in prefix:
+                raise SystemExit("Homebrew returned an invalid tool prefix")
+            directory = Path(prefix) / suffix
+            subprocess.run([str(directory / command), "--version"], cwd=ROOT, check=True)
+            directories.append(str(directory))
+        # The runner applies this file before choosing the next step's Bash executable.
+        with Path(path_file).open("a", encoding="utf-8") as output:
+            output.write("\n".join(directories) + "\n")
     if sys.platform.startswith("linux") and os.environ.get("GITHUB_ACTIONS") == "true":
         subprocess.run(["sudo", "apt-get", "update", "-qq"], cwd=ROOT, check=True)
         subprocess.run(["sudo", "apt-get", "install", "-y", "pkg-config", "libfontconfig1-dev",
