@@ -19,12 +19,12 @@ permissions:
   contents: read
 
 concurrency:
-  group: bb-framework-cleanup
+  group: bb-cleanup
   cancel-in-progress: false
 
 jobs:
   cleanup:
-    if: github.repository == 'BrunodosSantosVaz/big-bang' && (vars.PROJECT_OWNER != '')
+    if: ${{ vars.PROJECT_OWNER != '' }}
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1

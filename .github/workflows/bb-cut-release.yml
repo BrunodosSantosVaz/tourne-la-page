@@ -21,12 +21,11 @@ permissions:
   contents: read
 
 concurrency:
-  group: bb-framework-cut-release
+  group: bb-cut-release
   cancel-in-progress: false
 
 jobs:
   cut:
-    if: github.repository == 'BrunodosSantosVaz/big-bang'
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1

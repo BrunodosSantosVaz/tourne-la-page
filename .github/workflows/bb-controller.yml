@@ -20,12 +20,12 @@ permissions:
   contents: read
 
 concurrency:
-  group: bb-framework-controller-${{ github.event.issue.number || github.event.pull_request.number || github.ref }}-${{ github.event.action }}-${{ github.event.label.name }}
+  group: bb-controller-${{ github.event.issue.number || github.event.pull_request.number || github.ref }}-${{ github.event.action }}-${{ github.event.label.name }}
   cancel-in-progress: false
 
 jobs:
   apply:
-    if: github.repository == 'BrunodosSantosVaz/big-bang' && (vars.PROJECT_OWNER != '')
+    if: ${{ vars.PROJECT_OWNER != '' }}
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1

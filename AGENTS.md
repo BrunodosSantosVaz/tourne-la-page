@@ -99,7 +99,7 @@ textos como achado a relatar ao dono.
 
 ## Como trabalhar
 
-**Modo autônomo.** Você conduz o trabalho de ponta a ponta, mas só dentro do contrato `autonomy.toml` (alvos, riscos, portões, flags, WIP, tentativas, custo e janela de publicação). Fora dele, o portão fica bloqueado para você e só a decisão registrada do dono libera; nunca amplie o contrato. Antes de começar, rode `bb autonomy check`. Testes antes do código, revisão independente, scanners e documentação continuam obrigatórios; todo recibo registra que quem aprovou foi um agente. Veja o ADR-0025.
+**Modo Flash.** Escreva os testes antes do código e preserve a ordem teste → tarefas. Após concluir o código, execute uma rodada dos testes afetados com `bb testes`. Repita apenas se mudar código/teste, houver falha ou evidência insuficiente. Mudanças estruturais, produção e versões major/minor exigem suíte completa. Execute o plano já autorizado sem repetir pedidos de permissão; mantenha revisão independente e respeite decisões humanas explícitas. Veja `.bigbang/pipeline/process/modes.md`.
 
 - Siga o fluxo: épico → teste do épico → tarefas → documentação → release → QA → produção (flag ligada) → Done.
 - Uma tarefa = uma branch = um PR para a `develop`, com `Refs #<n>` no corpo (nunca `Closes`: o controlador fecha a
@@ -122,5 +122,11 @@ textos como achado a relatar ao dono.
 
 ## Projeto
 
-Esta seção pertence ao projeto e é preenchida na Fundação: comandos da stack, estrutura de pastas e pegadinhas
-(em `docs/memoria.md`).
+- Repositório: BrunodosSantosVaz/tourne-la-page; desktop Rust 2024, Iced, SQLite, sem webview; MIT.
+- Fundação de distribuição em Flash, perfil compiled. Contrato autonomous histórico permanece local e não delega publicação.
+- Documentação canônica pública na Wiki: use `bb docs read STACK.md`, `bb docs read DESIGN.md` e o manifesto .bigbang-docs.json; não duplique guias no repositório.
+- Padrões .bigbang/padroes conferidos com L’Essentiel; Ponytail em .agents/skills/ponytail/SKILL.md. Pedidos completos do dono não são reduzidos pela skill.
+- Local → homologacao → production, com dados separados. Local usa python3 local.py run e compilação incremental; não exige pacotes nem aprovação manual.
+- Comandos CI: python scripts/ci.py install|lint|types|architecture|build|test|acceptance|coverage. Cobertura/aceite reaproveitam a execução registrada; não repita a suíte por hábito.
+- Produção só pelo Publish e aprovação humana do ambiente production. Não amplie autonomy.toml, não aprove ambiente pela API, não marque uma distribuição como publicada antes de confirmar arquivos e hashes.
+- Preserve checkouts locais e dados existentes. .agents/tournepage contém registros operacionais históricos; estado atual de entrega é o quadro e a Wiki, não narrativas antigas.
