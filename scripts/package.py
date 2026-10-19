@@ -26,6 +26,23 @@ TARGETS = {
 }
 
 
+def extract_zip(archive, destination):
+    members = archive.infolist()
+    for member in members:
+        name = member.filename
+        if (name.startswith("/") or "\\" in name or ":" in name or ".." in name.split("/")
+                or (member.external_attr >> 16) & 0o170000 == 0o120000):
+            raise ValueError(f"Unsafe ZIP member: {name}")
+    for member in members:
+        path = destination / member.filename
+        if member.is_dir():
+            path.mkdir(parents=True, exist_ok=True)
+        else:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            with archive.open(member) as source, path.open("wb") as output:
+                shutil.copyfileobj(source, output)
+
+
 def bundle(binary, system, version, output):
     if system not in TARGETS or not re.fullmatch(r"\d+\.\d+\.\d+", version):
         raise ValueError("Unsupported platform or invalid release version")
@@ -147,7 +164,7 @@ def main():
                     member = archive.getinfo("Tourne-la-page/Tourne la page.app/Contents/MacOS/tourne-la-page")
                     if not (member.external_attr >> 16) & 0o111:
                         raise SystemExit("The distributed macOS executable lost its executable permissions")
-                archive.extractall(extracted)
+                extract_zip(archive, extracted)
             launcher = extracted / "Tourne-la-page" / ("tourne-la-page.exe" if expected_os == "Windows" else
                        "Tourne la page.app/Contents/MacOS/tourne-la-page")
             launcher.chmod(0o755)
