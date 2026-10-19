@@ -1,40 +1,44 @@
 ---
 name: bb-escrever-testes-aceite
-description: Use para a issue teste-aceite de um épico. Escreve um teste por critério com RN e marca de pendente da tarefa implementadora, sem escrever implementação.
+description: Use para a sub-issue de teste de aceite de um épico. Escreve um teste por critério com RN e marca de pendente da tarefa implementadora, sem escrever implementação.
 ---
-<!-- Gerado pelo Big Bang v3.1.0 a partir de .bigbang/skills/bb-escrever-testes-aceite/SKILL.md. Não edite: personalize em bigbang.toml. -->
+<!-- Gerado pelo Big Bang v3.1.0 a partir de .bigbang/pipeline/skills/bb-escrever-testes-aceite/SKILL.md. Não edite: personalize em bigbang.toml. -->
 
-# Escrever testes de aceite
+# Escrever testes de aceite (v3)
 
 ## Quando usar
 
-Para o PR de teste do épico, antes das branches de implementação.
+Para a sub-issue `type:test` do épico, criada pelo `bb sprint start`, antes das branches de implementação.
+
+Consulte `project.mode` e `.bigbang/pipeline/process/modes.md`. No normal, o dono decide nos portões. No Flash, você aprova o trabalho comum e chama o dono para o crítico. No autonomous, você só age dentro do `autonomy.toml`; fora dele, o portão fica bloqueado até a decisão registrada do dono.
 
 ## Antes de começar
 
-Os caminhos de documentação do sistema citados aqui são identificadores lógicos: leia com `bb documentacao ler <caminho>`. Em públicos, escreva e revise a proposta na Wiki; em privados, mantenha os arquivos locais. Aplique `.bigbang/processo/18-documentacao.md`, incluindo inventário, matriz, links e publicação confirmada também no Flash. README público é uma apresentação breve com Wiki, Discussions e painéis; conteúdo completo e screenshots ficam na Wiki.
+Os caminhos de documentação do sistema citados aqui são identificadores lógicos: leia com `bb docs read <caminho>`. Em públicos, escreva e revise a proposta na Wiki; em privados, mantenha os arquivos locais. Aplique `.bigbang/processo/18-documentacao.md`, incluindo inventário, matriz, links e publicação confirmada em todos os modos. README público é uma apresentação breve com Wiki, Discussions e o quadro; conteúdo completo e screenshots ficam na Wiki.
 
-Leia `AGENTS.md`, épico/CA-n, RNs, `.bigbang/padroes/testes.md` e `.bigbang/processo/06-execucao.md`.
-Confira a configuração de marca de pendente e as labels testes-revisao-*.
+Leia `AGENTS.md`, o épico com os CA-n, as RNs, `.bigbang/padroes/testes.md` e
+`.bigbang/pipeline/process/execution.md`. Confira a marca de pendente configurada e a label `tests-review:*`.
 
 ## Passos
 
-1. `bb assumir N SEU-NOME`; espere confirmação e trabalhe só na pasta própria informada, na branch teste/N-slug.
-2. Escreva um teste por critério com ID da RN no nome, cenários em português e marca de pendente da tarefa responsável.
-   Crie/atualize documentos RN-* com os critérios confirmados, sem inventar regra.
-3. Demonstre que o cenário não satisfaz o critério sem implementação, além da execução com as marcas pendentes.
-4. Abra PR para epico/N-slug com mapa critério/teste/tarefa, resultados e cenário em português.
-   Peça revisão independente ou do dono conforme as labels; testes-aprovados só após a frase do dono, via bb decisao.
-5. Confira merge e liberação da posse. Se precisar liberar manualmente, use `bb liberar N` na pasta da sessão.
+1. `bb claim N SEU-NOME`; espere a confirmação e trabalhe só na pasta própria informada, na branch `test/N-slug`
+   criada da `develop`.
+2. Escreva um teste por critério, com o ID da RN no nome, os cenários em português e a marca de pendente da tarefa
+   responsável. Crie ou atualize os documentos RN-* com os critérios confirmados, sem inventar regra.
+3. Mostre que o cenário não satisfaz o critério sem implementação e que a suíte passa com as marcas pendentes.
+4. Abra o PR para a `develop` com `Refs #N` e o mapa critério → teste → tarefa. Peça a revisão independente, ou a do
+   dono com `tests-review:human`. `approved:tests` só com a frase do dono, via `bb decision`.
+5. Depois do merge, confira que a tarefa fechou e a trava foi liberada; se ela ficar, use `bb unclaim N` na pasta.
 
 ## Pare e pergunte quando
 
-Critério/RN for ambíguo ou o teste exigir decisão não tomada. Exponha a dúvida antes de codificar.
+Um critério ou RN for ambíguo ou o teste exigir uma decisão não tomada. Exponha a dúvida antes de codificar.
 
 ## Nunca
 
-Escreva implementação, faça teste que passa sem ela ou altere teste existente sem aprovação prevista no processo.
+Escreva implementação, faça teste que passa sem ela ou altere teste existente sem a aprovação prevista
+(`approved:test-change`).
 
 ## Pronto quando
 
-PR de teste aprovado e mesclado no épico; tarefas podem receber suas branches pelo botão Criar branches.
+O PR de teste está aprovado e mesclado na `develop`; as tarefas desbloqueadas recebem as branches com `bb branches`.

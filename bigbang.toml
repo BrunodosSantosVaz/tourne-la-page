@@ -1,0 +1,86 @@
+# Configuração do projeto no Big Bang. Fonte única de tudo que as ferramentas precisam.
+# Criado por `bb init` (F0) e completado na Fundação. Mudar este arquivo é zona sensível (revisão humana).
+# O gerador valida o esquema e recusa chaves desconhecidas. Depois de mudar, rode `bb gerar`.
+
+[bigbang]
+version = "3.1.0"                       # versão do framework instalada (igual a .bigbang/VERSION)
+origin = "BrunodosSantosVaz/big-bang"  # de onde vêm as atualizações
+
+[project]
+mode = "autonomous"                        # normal | flash | autonomous (com autonomy.toml); muda com o dono
+name = "Tourne la page"
+slug = "tourne-la-page"
+owner = "BrunodosSantosVaz"             # login do GitHub do dono
+repository = "BrunodosSantosVaz/tourne-la-page"
+visibility = "public"               # privado | publico
+license = "MIT"                        # obrigatório se publico (identificador SPDX, ex.: "MIT")
+
+[delivery]
+profile = "deploy"                      # deploy | compilado
+target = "vps-docker"                    # deploy: alvo implementado em `bb alvos`; compilado: ""
+artifact_paths = ["src/", "migrations/", "Dockerfile", "package.json", "package-lock.json"]
+version_file = "package.json"          # único arquivo com a versão do artefato (definido em F2)
+ecosystems = ["npm", "docker"]           # pacotes da stack para o Dependabot (definido em F2)
+
+[compiled]                            # só no perfil compilado
+# Cada build_<sistema> deixa exatamente um arquivo em $BB_SAIDA (lê BB_VERSAO, BB_RC, BB_SISTEMA). ADR-0009.
+# Sistemas: windows-x64, windows-arm64, linux-x64, linux-arm64, macos-x64, macos-arm64, android (APK/AAB).
+systems = ["windows-x64", "linux-x64"]
+build_windows-x64 = "python packaging/windows/build.py"
+build_linux-x64 = "bash packaging/linux/build.sh"
+
+[deploy]                               # só no perfil deploy
+# artefato = "imagem"                  # padrão; formatos disponíveis em `bb alvos`
+# runner = ["self-hosted", "rede-deploy"]  # só publicação; build/testes continuam no runner público
+# preparar_rede = "bash deploy/rede.sh"    # script aprovado; segredo apenas por ambiente, nunca literal
+image = "ghcr.io/brunodossantosvaz/tournepage"
+staging_url = "https://staging.exemplo.com"
+production_url = "https://exemplo.com"
+smoke = "npm run test:smoke"
+# Opcionais (com o padrão): servicos = ["app=Dockerfile"] (servico=Dockerfile, uma imagem por serviço),
+# plataformas = ["linux/amd64"] (linux/arm64 para servidor ARM), caminho_saude = "/api/health",
+# servico_migrar = "migrar", servico_checar = "" (pré-checagem do servidor antes de migrar).
+
+[commands]                             # definidos em F2 para a stack escolhida
+# Flash: unidade/integração/aceite afetados e cobertura. Vazio = suíte completa.
+# Recebe BB_BASE_TESTES (SHA) e BB_ARQUIVOS_ALTERADOS (caminho de arquivo JSON com os caminhos).
+affected_tests = ""
+install = "npm ci"
+lint = "npm run lint"
+types = "npm run typecheck"
+test = "npm test"
+acceptance_test = "npm run test:acceptance"
+architecture = "npm run test:architecture"
+coverage = "npm run test:coverage"
+build = "npm run build"
+
+[tests]
+min_coverage = 80                  # % nas camadas de domínio e aplicação
+pending_marker = "test.failing"        # como a stack marca teste com falha esperada (xfail strict, test.failing…)
+test_pattern = "(it|test)\\("          # regex que identifica a declaração de um teste na stack
+
+[security]
+asvs_level = "L2"                      # L1 | L2 (L2 obrigatório com dado pessoal ou dinheiro)
+browser_database = false             # true só com ADR (SEG-IA-01)
+sensitive_paths = ["src/**/auth/**", "src/**/payments/**", "migrations/**"]
+# Sempre sensíveis, além da lista: .github/**, tests/aceite/** (exceto no PR de teste do épico, cuja revisão
+# segue as labels testes-revisao-*), STACK.md, DESIGN.md, PRODUTO.md, bigbang.toml, flags.toml e os arquivos
+# de dependência da stack.
+
+[board]                              # preenchido em F4
+model = "single"                       # Project único, criado em F4
+labels = "v3"
+number = 34                             # número do Project (F4)
+owner = "BrunodosSantosVaz"
+
+[agents]
+names = ["claude-1", "claude-2", "codex-1"]
+tasks_per_agent = 1
+lease_hours = 24
+confirm_seconds = 10
+
+[flags]
+max_age_days = 30
+
+[workflow]
+model = "grouping"                     # épico agrupador (ADR-0022)
