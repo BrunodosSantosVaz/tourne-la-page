@@ -3,10 +3,10 @@
   "repositorio": "BrunodosSantosVaz/tourne-la-page",
   "visibilidade": "publico",
   "wiki": {
-    "base": "219d638203188841680848f13e5244f52a6dddc9",
-    "commit": "575bbaf735168726af9a67e265b75c80244aabfb",
+    "base": "575bbaf735168726af9a67e265b75c80244aabfb",
+    "commit": "59f1943b58e52a9e4e9556d7542b9080543340fa",
     "branch": "master",
-    "proposta": "bigbang/proposta-4-produto"
+    "proposta": "bigbang/proposta-4-entrega"
   },
   "paginas": {
     "docs/Produto.md": "Produto",
@@ -37,7 +37,9 @@
     "docs/funcionalidades/library.md": "Biblioteca-e-progresso",
     "docs/funcionalidades/annotations.md": "Destaques-e-comentarios",
     "docs/funcionalidades/reader.md": "Leitura-e-controles",
-    "docs/funcionalidades/packaging.md": "Distribuicao-nativa"
+    "docs/funcionalidades/packaging.md": "Distribuicao-nativa",
+    "CHANGELOG.md": "Changelog",
+    "docs/Validacao-local-Linux.md": "Validacao-local-Linux"
   },
   "categorias": {
     "produto": {
