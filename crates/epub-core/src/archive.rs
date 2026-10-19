@@ -496,7 +496,7 @@ fn resolve_href(package_path: &str, href: &str) -> Result<String, BookError> {
 }
 
 fn normalize_path(base: &str, path: &str) -> Result<String, BookError> {
-    if path.starts_with('/') || path.contains(['\\', '\0']) {
+    if path.starts_with('/') || path.contains(['\\', '\0', ':']) {
         return Err(BookError::UnsafePath);
     }
     let mut parts = base
@@ -509,7 +509,6 @@ fn normalize_path(base: &str, path: &str) -> Result<String, BookError> {
             "" | "." => {}
             ".." if parts.pop().is_some() => {}
             ".." => return Err(BookError::UnsafePath),
-            value if parts.is_empty() && value.contains(':') => return Err(BookError::UnsafePath),
             value => parts.push(value.to_owned()),
         }
     }
