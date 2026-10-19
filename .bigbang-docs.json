@@ -3,10 +3,10 @@
   "repositorio": "BrunodosSantosVaz/tourne-la-page",
   "visibilidade": "publico",
   "wiki": {
-    "base": "4cc45d71aed1396ae6011f2a97001c98efa7a1f1",
-    "commit": "ab4999b436faa8f64f73c047767d2850b0e57d72",
+    "base": "91d8c3cab68ac320f1404300039dcaba436ad457",
+    "commit": "ecd2d8cc536a891f1403005acc070b2f288dd9d0",
     "branch": "master",
-    "proposta": "bigbang/proposta-4-fundacao-contrato"
+    "proposta": "bigbang/proposta-4-notices"
   },
   "paginas": {
     "docs/Produto.md": "Produto",
@@ -29,7 +29,17 @@
     "docs/arquitetura.md": "Arquitetura",
     "docs/decisoes/ADR-0003-distribuicao.md": "Historico",
     "docs/operacao/checklist-producao.md": "Checklist-producao",
-    "docs/operacao/ambiente.md": "Operacao"
+    "docs/operacao/ambiente.md": "Operacao",
+    "docs/funcionalidades/runtime.md": "Instalacao-e-fontes",
+    "docs/funcionalidades/epub.md": "Importacao-EPUB",
+    "docs/funcionalidades/openbook.md": "Caso-de-uso-abrir",
+    "docs/funcionalidades/storage.md": "Persistencia-local",
+    "docs/funcionalidades/library.md": "Biblioteca-e-progresso",
+    "docs/funcionalidades/annotations.md": "Destaques-e-comentarios",
+    "docs/funcionalidades/reader.md": "Leitura-e-controles",
+    "docs/funcionalidades/packaging.md": "Distribuicao-nativa",
+    "CHANGELOG.md": "Changelog",
+    "docs/Validacao-local-Linux.md": "Validacao-local-Linux"
   },
   "categorias": {
     "produto": {
@@ -67,13 +77,25 @@
     }
   },
   "codigo": {
-    "commit": "fd77cda3a1ce9798aab6a920cabaa04475545d63",
+    "commit": "470714cd46288c6817a5fedf3a57ea3abe1b67ba",
     "raizes": [
+      "app/",
+      "crates/",
+      "scripts/",
+      "packaging/",
+      "assets/",
+      "examples/",
+      "Cargo.toml",
+      "Cargo.lock",
+      "rust-toolchain.toml",
+      "local.py",
       "bigbang.toml",
-      ".bigbang-producao.json",
-      "scripts/ci.py"
+      ".bigbang-producao.json"
     ],
-    "excluir": []
+    "excluir": [
+      "assets/licenses/rust/",
+      "assets/brand/reference/"
+    ]
   },
   "funcionalidades": [
     {
@@ -94,30 +116,452 @@
       },
       "testes": [
         ".bigbang/tests/test_wiki.py:test_complete_inventory_passes",
-        ".bigbang/tests/test_wiki.py:test_new_implemented_module_without_documentation_blocks_delivery"
+        ".bigbang/tests/test_wiki.py:test_new_implemented_module_without_documentation_blocks_delivery",
+        "scripts/test_ci.py:test_architecture_rejects_a_domain_dependency_on_sqlite_adapter",
+        "scripts/test_ci.py:test_acceptance_rejects_a_named_scenario_that_failed_or_never_executed"
+      ]
+    },
+    {
+      "id": "runtime",
+      "pagina": "Instalacao-e-fontes",
+      "requisitos": [
+        "TL-D01",
+        "TL-R03"
+      ],
+      "fontes": [
+        "Cargo.lock",
+        "Cargo.toml",
+        "app/Cargo.toml",
+        "app/build.rs",
+        "app/src/brand.rs",
+        "app/src/brand_tests.rs",
+        "app/src/fonts.rs",
+        "app/src/fonts_tests.rs",
+        "app/src/main.rs",
+        "app/src/runtime.rs",
+        "app/src/runtime_tests.rs",
+        "assets/brand/icons/app-1024.png",
+        "assets/brand/icons/app-128.png",
+        "assets/brand/icons/app-16.png",
+        "assets/brand/icons/app-24.png",
+        "assets/brand/icons/app-256.png",
+        "assets/brand/icons/app-32.png",
+        "assets/brand/icons/app-48.png",
+        "assets/brand/icons/app-512.png",
+        "assets/brand/icons/app-64.png",
+        "assets/brand/icons/tourne-la-page.icns",
+        "assets/brand/icons/tourne-la-page.ico",
+        "assets/brand/mark-symbolic.svg",
+        "assets/brand/mark.svg",
+        "assets/brand/social-preview.png",
+        "assets/brand/social-preview.svg",
+        "assets/fonts/Atkinson/AtkinsonHyperlegibleNext[wght].ttf",
+        "assets/fonts/Atkinson/OFL.txt",
+        "assets/fonts/Inter/Inter[opsz,wght].ttf",
+        "assets/fonts/Inter/OFL.txt",
+        "assets/fonts/Lexend/Lexend[wght].ttf",
+        "assets/fonts/Lexend/OFL.txt",
+        "assets/fonts/Literata/Literata[opsz,wght].ttf",
+        "assets/fonts/Literata/OFL.txt",
+        "assets/fonts/SOURCE.md",
+        "assets/icons/lucide/LICENSE",
+        "assets/icons/lucide/SOURCE.md",
+        "assets/icons/lucide/a-large-small.svg",
+        "assets/icons/lucide/align-center.svg",
+        "assets/icons/lucide/align-justify.svg",
+        "assets/icons/lucide/align-left.svg",
+        "assets/icons/lucide/align-right.svg",
+        "assets/icons/lucide/book-marked.svg",
+        "assets/icons/lucide/book-open.svg",
+        "assets/icons/lucide/bookmark.svg",
+        "assets/icons/lucide/check.svg",
+        "assets/icons/lucide/chevron-down.svg",
+        "assets/icons/lucide/chevron-left.svg",
+        "assets/icons/lucide/chevron-right.svg",
+        "assets/icons/lucide/chevron-up.svg",
+        "assets/icons/lucide/folder-plus.svg",
+        "assets/icons/lucide/gauge.svg",
+        "assets/icons/lucide/grid-2x2.svg",
+        "assets/icons/lucide/heart-filled.svg",
+        "assets/icons/lucide/heart.svg",
+        "assets/icons/lucide/highlighter.svg",
+        "assets/icons/lucide/house.svg",
+        "assets/icons/lucide/image-off.svg",
+        "assets/icons/lucide/image.svg",
+        "assets/icons/lucide/info.svg",
+        "assets/icons/lucide/library.svg",
+        "assets/icons/lucide/list.svg",
+        "assets/icons/lucide/menu.svg",
+        "assets/icons/lucide/minus.svg",
+        "assets/icons/lucide/moon.svg",
+        "assets/icons/lucide/move-horizontal.svg",
+        "assets/icons/lucide/move-vertical.svg",
+        "assets/icons/lucide/palette.svg",
+        "assets/icons/lucide/panel-left.svg",
+        "assets/icons/lucide/pause.svg",
+        "assets/icons/lucide/pencil.svg",
+        "assets/icons/lucide/play.svg",
+        "assets/icons/lucide/plus.svg",
+        "assets/icons/lucide/printer.svg",
+        "assets/icons/lucide/refresh-cw.svg",
+        "assets/icons/lucide/rows-3.svg",
+        "assets/icons/lucide/search.svg",
+        "assets/icons/lucide/settings.svg",
+        "assets/icons/lucide/star.svg",
+        "assets/icons/lucide/sun.svg",
+        "assets/icons/lucide/type.svg",
+        "assets/icons/lucide/x.svg",
+        "local.py",
+        "rust-toolchain.toml",
+        "scripts/generate_brand_assets.py",
+        "scripts/install_desktop.py",
+        "scripts/install_portable.py",
+        "scripts/test_install_desktop.py"
+      ],
+      "hashes": {
+        "Cargo.lock": "87709b20f6eb50915e1c435c6a2b4b18f1d44a2375980b7777bcd2fc7a67011c",
+        "Cargo.toml": "4fecaf00b27587ca21f3aa648b171570d866692a2b754711c58847527cff9d66",
+        "app/Cargo.toml": "0ddc2e7065d14c2c64828867bf3e455c5b0a5548a5535257d69b1c6aa6e32768",
+        "app/build.rs": "cea61a5beee7b9e2cfbd7e5e17c58e1941e8506ac6fcf3cfbd2535b52c41ddd1",
+        "app/src/brand.rs": "f0e8da14fef7e8b5b984f604aef8d63e807abc31a3987145d9537a2524bda8d3",
+        "app/src/brand_tests.rs": "feefecf084c8f4077aa405136c02ca6bbc00e43edd7d58238a97a97c89e26b75",
+        "app/src/fonts.rs": "05741a3dbc12030397263959c5166a3702b25504462244cc4c56f83045eeea1f",
+        "app/src/fonts_tests.rs": "61c6f00588ba367bc80f7cdc2235fdd8e0f57d8116498ebbc23bc814d9a2e62b",
+        "app/src/main.rs": "5d5706bfcda47f54852feeeb903f1e02178ca92d8109591fa988d7e779525290",
+        "app/src/runtime.rs": "fcf7ead2ccdfdba33754fc2b7931628fc8d3e6dd0bfdfea1f04ba4061b08a413",
+        "app/src/runtime_tests.rs": "3baa57618fd8c23c14c019433f5945f288b8ec8be61cfaed0d84d2a458cba7ac",
+        "assets/brand/icons/app-1024.png": "4c0ee969c45a993cccf17d5d1278f7236aee6b0c9b29a826688695073a246573",
+        "assets/brand/icons/app-128.png": "304797ab8aba5ea31ab14451efe50305fdd73291600e6a5ff5a2203ead1d51e4",
+        "assets/brand/icons/app-16.png": "ab2e57b0b2ebfad5ce5f04f47376bcb951a89264446ad2fe08e3e13265937803",
+        "assets/brand/icons/app-24.png": "314eaf57a2cf1be5b00c8b424580f76a4c679a97ae03b9c516f6449e7125b02d",
+        "assets/brand/icons/app-256.png": "8f5146c2a97beb3012e9cca49a6b6ae9c7f83acfc5cbf04a220466a7e5944d33",
+        "assets/brand/icons/app-32.png": "98023375592e3bca87ec0da7431fca7d97a358de17ca3420d09dfd5e11f13494",
+        "assets/brand/icons/app-48.png": "5dfc20501f42d49aeaa39eb61d485da547a66ee982dc23314d599c8b787665d5",
+        "assets/brand/icons/app-512.png": "f97765ce321d9c344c69e244da3c2900e3c77a7ede158eebf1b7eed710467e0c",
+        "assets/brand/icons/app-64.png": "e1fa1030db59b955355ad7775bdd04f121e97141e3cacefa393b26bca4959abf",
+        "assets/brand/icons/tourne-la-page.icns": "260fd3d3ff6698d57826faacdcd4411f737fa90acd2310542d5f8e0abee368a5",
+        "assets/brand/icons/tourne-la-page.ico": "921764c4c38137c6d53ba7da64a9e0aed17232485793ab9f42bf97e0a3f85fe8",
+        "assets/brand/mark-symbolic.svg": "271d5df692a1fb8424b629055a71dbffff68ce50985d078eb0d62f6b1880380b",
+        "assets/brand/mark.svg": "bee416fd9a07e84658fa7b91ec3de58c50dcb5825881df8ead64ea2d715be58a",
+        "assets/brand/social-preview.png": "3d8366c84ac516df4851461e04238756b2afa8e31b531db13ce39cd95233dbb9",
+        "assets/brand/social-preview.svg": "f801d1bf9c553809d1410575ee3df0bfff7fca2e3113f78bdb0f0ae985e689e4",
+        "assets/fonts/Atkinson/AtkinsonHyperlegibleNext[wght].ttf": "5a455d1cfa099b601ab70751bb9673e8fe1854dc4500c80e1a220d0d75e31745",
+        "assets/fonts/Atkinson/OFL.txt": "aca6a428580965d2297d1b718042dd427c2a9443ece3b0d02d758e161e0c4030",
+        "assets/fonts/Inter/Inter[opsz,wght].ttf": "29160a80ff49ddcab2c97711247e08b1fab27a484a329ce8b813d820dc559031",
+        "assets/fonts/Inter/OFL.txt": "5b9321a4298cfeb6b34354164a1c3afc3db114569984c502b9b35d988fd58c57",
+        "assets/fonts/Lexend/Lexend[wght].ttf": "3add53e641fbc81da64da4bb254285e2831b52b029527bc0714e2b9610832ee6",
+        "assets/fonts/Lexend/OFL.txt": "5da8505887d0fa7fe963445fd58852707fda34adfeb65af25c99d152bab285bd",
+        "assets/fonts/Literata/Literata[opsz,wght].ttf": "b41138c9373112f32abb589cc22e8674b06ed4048b0c513be922bdd26f274440",
+        "assets/fonts/Literata/OFL.txt": "8742963604cd89dc81437811a850018fc03b2bfad686d7422c8235967c87614e",
+        "assets/fonts/SOURCE.md": "f1a0dbdbf7eb2c0a0fef3a5f6928d5f7833802acb0a06dced71ba66e4d65dc72",
+        "assets/icons/lucide/LICENSE": "b495047bd93a9b06913511076f504daba17d5bbeb3e0650f3bb53a4220329c57",
+        "assets/icons/lucide/SOURCE.md": "a923aead766273ffc0f844bcd059c84e0dab6ee9fb0055a3d99a43a0f87b60b5",
+        "assets/icons/lucide/a-large-small.svg": "d7780d7dfa8eac36fc276cb8643302ee226721006711a73c21eb59b364b2c503",
+        "assets/icons/lucide/align-center.svg": "b2d193f310453e09ce9200e7c53c92d80a55db30aea10acedf6b10e79fd99fbb",
+        "assets/icons/lucide/align-justify.svg": "ed464e903f2853fee965f453a02331806ffef387861549e4af58784f803a3216",
+        "assets/icons/lucide/align-left.svg": "2123a81549be3bc050dcdc4240456652d8eea8ec513347fec13d6116625a5a13",
+        "assets/icons/lucide/align-right.svg": "fa1ba486383d0d85a5dc6d6f910e9835e12d8e2c8dd6647fd6410d7ffa4a15fb",
+        "assets/icons/lucide/book-marked.svg": "d185522f140e1a8fe3d6627e89e01b59d5bac767f89fb283c5c45d902a10a775",
+        "assets/icons/lucide/book-open.svg": "3cc66629bf1967e1f6fdf0a7700c9581b6c556111495bdfe925a91ba99d25ee1",
+        "assets/icons/lucide/bookmark.svg": "7732a039e13961a1e862adc0b253856deeae5ab751502a198af10f2991500f37",
+        "assets/icons/lucide/check.svg": "2087c58bc2a1780fb3b46198f87f21e03198d2360d9e95559136e0054cb5851e",
+        "assets/icons/lucide/chevron-down.svg": "7345b09168970e85352af7a397ba107fd9d8b12db292ccbc74e2dee1d536efd5",
+        "assets/icons/lucide/chevron-left.svg": "55855ba9ca6bd3f350d1f6e092f669518679d1c86a52607a1bd2640cbf5af31e",
+        "assets/icons/lucide/chevron-right.svg": "b9e4521dff43288a385af1421b625da8fd40cf28c272a508c933217002090776",
+        "assets/icons/lucide/chevron-up.svg": "0d550fa5f5c0888e1db6298ad7f3a2e8f6eda90ec6933a2cb0e9067737f3d775",
+        "assets/icons/lucide/folder-plus.svg": "b8ea299e31f04e4dadc52b98f301a6d2ae52113ab7358e864a7625eb5b266258",
+        "assets/icons/lucide/gauge.svg": "c3b3bb7190a817cc2d5003d9b00ca667d56e93a26908d93a63a61e2596d52ce3",
+        "assets/icons/lucide/grid-2x2.svg": "537c1c00d89a9c53769e5f3c9ce0986d1514c3c6e20d36156328bd80c9f6e49e",
+        "assets/icons/lucide/heart-filled.svg": "e52bd52a7c72c237e6551d0148b99f0a09edb3f8384b1ef5e7ae4bbf545021e8",
+        "assets/icons/lucide/heart.svg": "60daf9fd4954f31b6e92b0570abd471fb6376d07f17a3b3b96fef578e1ffa461",
+        "assets/icons/lucide/highlighter.svg": "549df820dc41590a2b61f8ba7fd911930588e992bfd00d98836f7440227a2954",
+        "assets/icons/lucide/house.svg": "9491b2ae53be57db9f8a6a1c21766da4b9f54aeeb1f3ceb09768b78ee0e3199b",
+        "assets/icons/lucide/image-off.svg": "e3e65c6d336b47214416291e123ec4fa00397876e1fb09f1f76db2957af4ef85",
+        "assets/icons/lucide/image.svg": "bd33f9ce149098d4729669e62e2c3ceb042083a3f294f51deaa54f92ef01c7bc",
+        "assets/icons/lucide/info.svg": "db7d1ca1b95300a329ec86b68db960c90158ae44536cd5fefaf236fc94ffbe5b",
+        "assets/icons/lucide/library.svg": "60ef8ccbd654171336cc2e3fbcd5d93e5437963154136c9ff5b81b160976bf0a",
+        "assets/icons/lucide/list.svg": "a03ca69b02e297de44a6c1e0a35af4262c36be3b6b9c692294ca2f74a405e9fb",
+        "assets/icons/lucide/menu.svg": "8f8b1a368a111ab8be6c07d2d20622f0a57592b972c2ef7d55ce5fb6ac1112fc",
+        "assets/icons/lucide/minus.svg": "aa3ef03c3175ca17faed7656bb392e3c50b5676f78242f4033fae0b95c079b56",
+        "assets/icons/lucide/moon.svg": "811e53fbfe9572174588012102712d6b9135a21cc19569afcef6d2e226958142",
+        "assets/icons/lucide/move-horizontal.svg": "35ed46e57b8a07c6029fb94c974ef172a1c48f09083ec523580a6811fc145fc5",
+        "assets/icons/lucide/move-vertical.svg": "d6be44b244affc68dacbce7ed3c00642d2746db29b8a915efcd0e0b42bec454b",
+        "assets/icons/lucide/palette.svg": "e79c43f7019b1503a3c0ecd72019cdf268677b37bd4a0fdea201a4c5bacfa7ff",
+        "assets/icons/lucide/panel-left.svg": "1dedd50174fcc288230a6de3fa8bb8ec84e973ac4cc143801eca4e4b2e619d2c",
+        "assets/icons/lucide/pause.svg": "a1fe8487700ffe50777f5da27538a159a95e8644eed4b0a10f602df8b62f3402",
+        "assets/icons/lucide/pencil.svg": "7724d9b160c18aa2214e6031157af650f3b78881d832b38381182e9c19b4e860",
+        "assets/icons/lucide/play.svg": "d899e50a8649cb0b066a73375b06888e08556959415151ae8fb5d668808429e2",
+        "assets/icons/lucide/plus.svg": "faf0bab01219d720cdd3047f6b5755c78c8e5a6743008a8fcd1c48fec4879519",
+        "assets/icons/lucide/printer.svg": "6c65723a21e34d366bfedfac19e44a740897ccf66c11e0c6781e593a4b6da9ca",
+        "assets/icons/lucide/refresh-cw.svg": "a9d6e0745dbf84232c6c9c98b317813802661bceb649ce12a8c4751c896a827a",
+        "assets/icons/lucide/rows-3.svg": "b9ca0aae7d3b1999a56685f2dc48bc92cc37f785350dd077bf3a399648bd0fe2",
+        "assets/icons/lucide/search.svg": "c151d66bb2d179451283dfbf8b88609b1789ef07699884d941eea07245ab7cd8",
+        "assets/icons/lucide/settings.svg": "c23eb8c13e7ee68672cca78ff5176f6fa89238ae5c0eec960a2e1e161e8d25cc",
+        "assets/icons/lucide/star.svg": "7b06f013db3388ed9c1ec4e6b8ae379c2ba695fcce8b4f1e1425ceb8d1e53c97",
+        "assets/icons/lucide/sun.svg": "e00cbd74f9cf7b463d45f4980388d745095cea2188a1729d734b80fc5055187d",
+        "assets/icons/lucide/type.svg": "24cc57814b1b94cbb1bb881ee8662244c54ed5c96d8baefb31f06e3aa0329030",
+        "assets/icons/lucide/x.svg": "b22c83fd632ff4082021e34d64b1393591134e7ce2889a6dad5361eff2fcc716",
+        "local.py": "d06878f11ec349845101e9cf5c4e97fb6457e474416fbe8e1d721feaf61c36bc",
+        "rust-toolchain.toml": "b9c8d2d59f6f46474c0cfa0b8b77bea21d94fc73a30ad93d5bf6385c422197d2",
+        "scripts/generate_brand_assets.py": "47cc76e86230bc66c951de4b56842ba086c9cd4bfdf50b0325e4ae24b105c6ff",
+        "scripts/install_desktop.py": "27ca69cf8a3da268d54c72970e729efa42b8fec24870b0b3e2e7586c0f2c6554",
+        "scripts/install_portable.py": "71d75636eb801e2bbcaf809c536cb214701cea49312efce5f8fe777eb87c8617",
+        "scripts/test_install_desktop.py": "9b872ebe62ac79a42f24dab43f2a82f7fa1757f4cf962d2441ed2bd6d89a5011"
+      },
+      "testes": [
+        "app/src/runtime_tests.rs:installed_builds_use_platform_data_without_requiring_a_checkout",
+        "app/src/brand_tests.rs:bundled_icon_is_valid_and_the_same_id_is_used_for_linux_desktop_integration",
+        "app/src/fonts_tests.rs:uses_georgia_when_installed_and_literata_as_the_fallback"
+      ]
+    },
+    {
+      "id": "epub",
+      "pagina": "Importacao-EPUB",
+      "requisitos": [
+        "TL-S01",
+        "TL-R01",
+        "TL-R02"
+      ],
+      "fontes": [
+        "crates/epub-core/Cargo.toml",
+        "crates/epub-core/src/archive.rs",
+        "crates/epub-core/src/content.rs",
+        "crates/epub-core/src/lib.rs",
+        "crates/epub-core/src/model.rs",
+        "crates/epub-core/tests/boundaries.rs",
+        "crates/epub-core/tests/parser.rs",
+        "examples/amostra-tournepage.epub"
+      ],
+      "hashes": {
+        "crates/epub-core/Cargo.toml": "a7f8faa81680d34c2566602131c26f9bd2953aafa3b17f3b3e0387cce0b0e752",
+        "crates/epub-core/src/archive.rs": "2799a00c8fe9a8967a581fcbfd13df722d4c1f857aba22bf430d3779e6150c5e",
+        "crates/epub-core/src/content.rs": "90160cc0799fdb24906cf20d9050f87c074d5cf1945b5437c45b9a31a9efeca9",
+        "crates/epub-core/src/lib.rs": "b8c4505d2ff50409b2c778a7bfbbb51fcda6fba9dfa24545631efbc1992b6c44",
+        "crates/epub-core/src/model.rs": "e0aa1c76601056e4eb35c68fa55f70387c469283aba80e11be15ff37cde156a5",
+        "crates/epub-core/tests/boundaries.rs": "9b8ff1c6af57e8de683a2ae2dfe0dfaf694b21a5c56a13a9e7cbedeca59c684c",
+        "crates/epub-core/tests/parser.rs": "6abe0860f293df732d2860ee3a006d34c886e947b2c440e37526ddbecb82bbea",
+        "examples/amostra-tournepage.epub": "230d12bf4dbb7a09bd0ea2955de690b8fc72558ecd235bbfec391d7f7f6b381b"
+      },
+      "testes": [
+        "crates/epub-core/tests/parser.rs:repeated_chapters_cannot_amplify_the_total_text_budget",
+        "crates/epub-core/tests/parser.rs:rejects_excessive_spine_references_before_emitting_chapters",
+        "crates/epub-core/tests/boundaries.rs:legacy_ncx_resolves_encoded_links_and_fragments_to_human_chapter_names",
+        "crates/epub-core/tests/boundaries.rs:encoded_and_external_chapter_references_never_escape_the_archive"
+      ]
+    },
+    {
+      "id": "openbook",
+      "pagina": "Caso-de-uso-abrir",
+      "requisitos": [
+        "TL-R01"
+      ],
+      "fontes": [
+        "crates/app-core/Cargo.toml",
+        "crates/app-core/src/lib.rs",
+        "crates/app-core/tests/open_book.rs"
+      ],
+      "hashes": {
+        "crates/app-core/Cargo.toml": "a60c020d9a0e139fe9f8438731ab4f1d204b7afe73168e8e1fd1aaa24d88008a",
+        "crates/app-core/src/lib.rs": "e9176c5a9b34b74ced4e83623ade6303bb92876969d2e6db23a6c8efe3a6377c",
+        "crates/app-core/tests/open_book.rs": "b4fcacec68da002b8308eb4d503c00c8c30575bba16e05333846ec138e2422a5"
+      },
+      "testes": [
+        "crates/app-core/tests/open_book.rs:opening_rejects_other_formats_before_reaching_the_reader",
+        "crates/app-core/tests/open_book.rs:opening_accepts_epub_extension_without_case_sensitivity"
+      ]
+    },
+    {
+      "id": "storage",
+      "pagina": "Persistencia-local",
+      "requisitos": [
+        "TL-R06",
+        "TL-D01"
+      ],
+      "fontes": [
+        "crates/storage/Cargo.toml",
+        "crates/storage/src/lib.rs",
+        "crates/storage/tests/library_store.rs"
+      ],
+      "hashes": {
+        "crates/storage/Cargo.toml": "3d94acd49f187f4396ee187ce78e4cd3d4a9a2b02c95483d6238ac023e86068c",
+        "crates/storage/src/lib.rs": "7f19699b496c422909b42622d059e5c0e2c02cabded285dc3f6e99de824a963d",
+        "crates/storage/tests/library_store.rs": "ab64d1590fef783585df90326a0798ea81a77448b5d744fbe4118d26c0d482f1"
+      },
+      "testes": [
+        "crates/storage/tests/library_store.rs:persists_and_deduplicates_library_folders",
+        "crates/storage/tests/library_store.rs:reads_only_the_requested_preference_prefix_and_preserves_other_data",
+        "crates/storage/tests/library_store.rs:reopening_schema_one_preserves_existing_folders_and_preferences"
+      ]
+    },
+    {
+      "id": "library",
+      "pagina": "Biblioteca-e-progresso",
+      "requisitos": [
+        "TL-R01",
+        "TL-R05",
+        "TL-R06"
+      ],
+      "fontes": [
+        "app/src/library.rs",
+        "app/src/reader/book_details.rs",
+        "app/src/reader/book_details/tests.rs",
+        "app/src/reader/library_screen.rs",
+        "app/src/reader/library_screen/about.rs",
+        "app/src/reader/library_screen/review.rs",
+        "app/src/reader/library_screen/tests.rs",
+        "app/src/reader/reading_history.rs",
+        "app/src/reader/reading_history/tests.rs"
+      ],
+      "hashes": {
+        "app/src/library.rs": "1c40fd3f454ee4141ca6ebbf4f3d2139202e23cc18e9bb3a7189f3a3c18447ed",
+        "app/src/reader/book_details.rs": "4b46c3a4b294489983d94c52bfb5d5e1ed18ddc1584537165b4ea75f712f73c8",
+        "app/src/reader/book_details/tests.rs": "25372241920d54412c25b305cc5e3bab9a6f5289fe1f9fa9ad15a9554575f1b1",
+        "app/src/reader/library_screen.rs": "1d9a8bd18e781f916abd8083c41db71f9463a07525244d95ff972b399ebc67e9",
+        "app/src/reader/library_screen/about.rs": "02e2e1601bc2dd0c2c68e2197823c95c2fa32916fe34851e57ef79ec08465b71",
+        "app/src/reader/library_screen/review.rs": "ceaa9ba83bf6a9553d788bfe72cd0a2a779d4b32abdf7d40177ccd72a5fc0046",
+        "app/src/reader/library_screen/tests.rs": "a306c7671e746df304fd9c629c2b47fdce7e202292cb30db835df98942962d62",
+        "app/src/reader/reading_history.rs": "806c24bf7021a15993a7b69b20962fa4239e5a0116d6d7c91b3935879d0c239f",
+        "app/src/reader/reading_history/tests.rs": "6140c70d877636584c81708fd1807d8c73a6ac149aa67ae5bea104dc63ab5dc7"
+      },
+      "testes": [
+        "app/src/reader/reading_history/tests.rs:reading_lists_every_started_unfinished_book_in_recent_order",
+        "app/src/reader/reading_history/tests.rs:closing_from_library_flushes_ratings_favorites_and_book_comments_without_a_reader",
+        "app/src/reader/reading_history/tests.rs:partial_loading_and_invalid_positions_never_mark_a_book_as_finished"
+      ]
+    },
+    {
+      "id": "annotations",
+      "pagina": "Destaques-e-comentarios",
+      "requisitos": [
+        "TL-R04",
+        "TL-R06"
+      ],
+      "fontes": [
+        "app/src/reader/annotations.rs",
+        "app/src/reader/preferences.rs"
+      ],
+      "hashes": {
+        "app/src/reader/annotations.rs": "4ca3783673848cd90b94e0570d1b52d17226f41e64ff426702da97974fc7e600",
+        "app/src/reader/preferences.rs": "dfc8563f117bdce3ae1fc72ad27b719d3b17b288745a18f2d90b7eb9023d3799"
+      },
+      "testes": [
+        "app/src/reader/diagnostics.rs:annotations_are_created_once_and_comments_are_optional",
+        "app/src/reader/reading_history/tests.rs:switching_books_immediately_preserves_the_previous_books_last_comment",
+        "app/src/reader/reading_history/tests.rs:returning_to_a_book_before_its_async_write_finishes_reads_the_pending_snapshot",
+        "app/src/reader/reading_history/tests.rs:an_earlier_write_failure_cannot_unlock_the_closing_snapshot"
+      ]
+    },
+    {
+      "id": "reader",
+      "pagina": "Leitura-e-controles",
+      "requisitos": [
+        "TL-R02",
+        "TL-R03",
+        "TL-R04"
+      ],
+      "fontes": [
+        "app/src/reader.rs",
+        "app/src/reader/action.rs",
+        "app/src/reader/adaptive_scroll.rs",
+        "app/src/reader/bar.rs",
+        "app/src/reader/bar/arrange.rs",
+        "app/src/reader/bar/tests.rs",
+        "app/src/reader/diagnostics.rs",
+        "app/src/reader/popover.rs",
+        "app/src/reader/surface.rs",
+        "app/src/reader/surface/cache.rs",
+        "app/src/reader/surface/drawing.rs",
+        "app/src/reader/surface/heights.rs",
+        "app/src/reader/surface/input.rs",
+        "app/src/reader/surface/layout.rs",
+        "app/src/reader/surface/selection.rs",
+        "app/src/reader/surface/tests.rs",
+        "app/src/reader/surface/widget_impl.rs",
+        "app/src/reader/toolbar.rs",
+        "app/src/reader/toolbar/tests.rs",
+        "app/src/reader/transitions.rs"
+      ],
+      "hashes": {
+        "app/src/reader.rs": "99689635caf1e03ca6491049e096bf32207b5c8adc8311641c2fac4e64214af8",
+        "app/src/reader/action.rs": "d3c1db2e8a02982bf57b183ad765ef5642cf23f311807be5f13d1c2ee3dad524",
+        "app/src/reader/adaptive_scroll.rs": "708717bb7ac5f77bf5007bb6b5134e853c50f62a33c26393c35620db4375b229",
+        "app/src/reader/bar.rs": "7b7d78874a0924210ea2394d3ac8b2cf6961245b4d342741025f9725c7901a71",
+        "app/src/reader/bar/arrange.rs": "24a5b28a819d5bd3d8acf14530be860d74fee7c4628ee88be30d9bf6431014b2",
+        "app/src/reader/bar/tests.rs": "f591fc1a66fce3aae8b26ad3704167b4d45ea91b3f1be76cc035bf4e1078620b",
+        "app/src/reader/diagnostics.rs": "adf015e73780489ea31e8cd84130882fdb7ccaa727469528cbd1148aa5f73201",
+        "app/src/reader/popover.rs": "d8b3e5c984f55dbf9e1dfc227df5099ff97971cf25f75b77472b0635536eec93",
+        "app/src/reader/surface.rs": "976766347bace246821041db4f34d8feacd69c2d4b011a93c6cf4f4f675416c0",
+        "app/src/reader/surface/cache.rs": "81bf8edead08c3c3111474c38b02b6223063a30c86f441329c7354e44cd862d8",
+        "app/src/reader/surface/drawing.rs": "39ab38e85e14d0583f625ccb95c195c8726b6fde8820d88973eede0eb5842946",
+        "app/src/reader/surface/heights.rs": "71386d8f6e249f8887f1be54fa2276561f2526ff512ce44252d26b34ea84cc5d",
+        "app/src/reader/surface/input.rs": "fa7cbb28604945c63a6cf319ca554a1f3ae8ad7c0e90d8ee6b7c381605f3a06b",
+        "app/src/reader/surface/layout.rs": "136f615218fc2a1ff12dc007c3c2ab738092078ba1c976295838437deb66207e",
+        "app/src/reader/surface/selection.rs": "50e5821c78ca97a87a6b865dcccf935d16011ba13f7e91219698e75fc333b99e",
+        "app/src/reader/surface/tests.rs": "b60fc256e6a78f05a031e65989654cc3bb7eb2dcae0ed2fab5771a565a3b0a15",
+        "app/src/reader/surface/widget_impl.rs": "c3aeedc3d09685a1e43f1ffb84614d5fe2f8d5c0b9cde5a8d8a0cd92b4a0fcc4",
+        "app/src/reader/toolbar.rs": "836d251f813d19aa033d214cdde9fe884deac00a6f43619316a9ef882c3322db",
+        "app/src/reader/toolbar/tests.rs": "ce3995350de407b2720513bdeacdd14431e6f4bb970b12deddac74f1f77ad0c6",
+        "app/src/reader/transitions.rs": "9f89e2dcdbb1dda5a73a297958ede56cec569c480c628ae7d97cbe9b2fe138b5"
+      },
+      "testes": [
+        "app/src/reader/transitions.rs:opening_epub_from_the_library_preserves_a_valid_widget_tree",
+        "app/src/reader/diagnostics.rs:cpu_reader_review",
+        "app/src/reader/diagnostics.rs:resizing_and_collapsing_cannot_leave_an_invisible_menu_open"
+      ]
+    },
+    {
+      "id": "packaging",
+      "pagina": "Distribuicao-nativa",
+      "requisitos": [
+        "TL-D01",
+        "TL-F01"
+      ],
+      "fontes": [
+        "packaging/linux/build.sh",
+        "scripts/package.py",
+        "scripts/test_ci.py",
+        "scripts/test_package.py"
+      ],
+      "hashes": {
+        "packaging/linux/build.sh": "9818c5366c345b8d7d6b51b5b8013b9c62a52dcd727f2b5fc3a5b9aa4a760093",
+        "scripts/package.py": "a81ef7539e43268e5b226392cea0d04ccec7434b9278b0aa589f66a7c0a97a9f",
+        "scripts/test_ci.py": "c1608166738407a4cb9e265be58743728aadec4ae0819e4f2319395ed444432c",
+        "scripts/test_package.py": "ec510be5819764586850ae0f2587b57b3120e0a4d83684fdd7c2e7ed521dc814"
+      },
+      "testes": [
+        "scripts/test_package.py:test_linux_bundle_contains_launcher_binary_licenses_and_verified_manifest",
+        "scripts/test_package.py:test_windows_and_mac_bundles_have_platform_layouts",
+        "scripts/test_package.py:test_invalid_platform_or_version_never_creates_an_archive"
       ]
     }
   ],
-  "arquivos_funcionais": [
-    {
-      "caminho": "Leitor EPUB — Especificação de Desenvolvimento.md",
-      "motivo": "Fonte original fornecida pelo dono, preservada até confirmar publicação idêntica na Wiki; não é documentação canônica."
-    },
-    {
-      "caminho": "GUIA-TESTE-LOCAL.md",
-      "motivo": "Fonte original fornecida pelo dono, preservada até confirmar publicação idêntica na Wiki; não é documentação canônica."
-    },
-    {
-      "caminho": "docs/decisoes/ADR-0001-stack-local.md",
-      "motivo": "Fonte original fornecida pelo dono, preservada até confirmar publicação idêntica na Wiki; não é documentação canônica."
-    },
-    {
-      "caminho": "docs/decisoes/ADR-0002-marca-tourne-la-page.md",
-      "motivo": "Fonte original fornecida pelo dono, preservada até confirmar publicação idêntica na Wiki; não é documentação canônica."
-    }
-  ],
+  "arquivos_funcionais": [],
   "requisitos": {
     "TL-F01": {
+      "pagina": "Requisitos"
+    },
+    "TL-D01": {
+      "pagina": "Requisitos"
+    },
+    "TL-R03": {
+      "pagina": "Requisitos"
+    },
+    "TL-S01": {
+      "pagina": "Requisitos"
+    },
+    "TL-R01": {
+      "pagina": "Requisitos"
+    },
+    "TL-R02": {
+      "pagina": "Requisitos"
+    },
+    "TL-R06": {
+      "pagina": "Requisitos"
+    },
+    "TL-R05": {
+      "pagina": "Requisitos"
+    },
+    "TL-R04": {
       "pagina": "Requisitos"
     }
   }

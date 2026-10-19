@@ -1,0 +1,1 @@
+The published crate contains no separate copyright notice. Package author attribution is retained in Cargo.toml and index.json.

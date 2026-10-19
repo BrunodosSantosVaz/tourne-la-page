@@ -1,4 +1,4 @@
-# Como contribuir com Tournepage
+# Como contribuir com Tourne la page
 
 <!-- DOC-16: criado pelo bb init a partir de .bigbang/modelos/comunidade/. Pertence ao projeto: complete com o que
      for específico (ambiente de desenvolvimento, convenções da stack). -->
@@ -8,7 +8,7 @@ uma pessoa decide e IAs executam, e toda mudança passa por uma esteira com test
 
 ## Relatar um bug ou pedir algo
 
-1. Procure nas [issues](https://github.com/BrunodosSantosVaz/tournepage/issues) se já existe.
+1. Procure nas [issues](https://github.com/BrunodosSantosVaz/tourne-la-page/issues) se já existe.
 2. Abra uma issue pelo formulário (Bug ou Ideia). Para bug: o que você fez, o que esperava e o que aconteceu, com a
    versão e o aparelho ou navegador.
 3. Falha de segurança: **não** abra issue pública com detalhes; veja [SECURITY.md](SECURITY.md).
