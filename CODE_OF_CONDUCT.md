@@ -7,7 +7,7 @@ resumido aqui.
 
 ## Nosso compromisso
 
-Quem participa de Tournepage (issues, PRs, discussões, revisões) se compromete a fazer disso uma experiência
+Quem participa de Tourne la page (issues, PRs, discussões, revisões) se compromete a fazer disso uma experiência
 livre de assédio para todas as pessoas, independentemente de idade, corpo, deficiência, etnia, identidade ou
 expressão de gênero, nível de experiência, educação, situação socioeconômica, nacionalidade, aparência, raça,
 religião ou orientação sexual.
@@ -28,7 +28,7 @@ religião ou orientação sexual.
 ## Aplicação
 
 Comportamento abusivo pode ser relatado ao responsável pelo projeto, **@BrunodosSantosVaz**, por uma
-[issue](https://github.com/BrunodosSantosVaz/tournepage/issues) pedindo contato privado (sem detalhes públicos). Toda
+[issue](https://github.com/BrunodosSantosVaz/tourne-la-page/issues) pedindo contato privado (sem detalhes públicos). Toda
 denúncia é analisada com sigilo. As consequências vão de um aviso ao banimento permanente do projeto, conforme as
 [diretrizes de aplicação](https://www.contributor-covenant.org/pt-br/version/2/1/code_of_conduct/#diretrizes-de-aplica%C3%A7%C3%A3o)
 do Contributor Covenant.

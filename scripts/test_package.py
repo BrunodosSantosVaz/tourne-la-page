@@ -48,6 +48,7 @@ class Packages(unittest.TestCase):
                 self.assertEqual(info["CFBundleIdentifier"], "io.github.BrunodosSantosVaz.TourneLaPage")
                 self.assertEqual(info["CFBundleShortVersionString"], "0.2.0")
                 self.assertIn(prefix + "MacOS/tourne-la-page", source.namelist())
+                self.assertTrue((source.getinfo(prefix + "MacOS/tourne-la-page").external_attr >> 16) & 0o111)
                 self.assertEqual(info["LSMinimumSystemVersion"], "12.0")
                 self.assertIn(prefix + "Resources/licenses/rust/index.json", source.namelist())
 

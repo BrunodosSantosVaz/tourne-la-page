@@ -143,6 +143,10 @@ def main():
             launcher = extracted / "Tourne-la-page/AppRun"
         else:
             with zipfile.ZipFile(archive_path) as archive:
+                if expected_os == "Darwin":
+                    member = archive.getinfo("Tourne-la-page/Tourne la page.app/Contents/MacOS/tourne-la-page")
+                    if not (member.external_attr >> 16) & 0o111:
+                        raise SystemExit("The distributed macOS executable lost its executable permissions")
                 archive.extractall(extracted)
             launcher = extracted / "Tourne-la-page" / ("tourne-la-page.exe" if expected_os == "Windows" else
                        "Tourne la page.app/Contents/MacOS/tourne-la-page")
