@@ -3,10 +3,10 @@
   "repositorio": "BrunodosSantosVaz/tourne-la-page",
   "visibilidade": "publico",
   "wiki": {
-    "base": "cfa369a43b5d4eaf9b37e14b77b0f32bb90d3c87",
-    "commit": "4cc45d71aed1396ae6011f2a97001c98efa7a1f1",
+    "base": "4cc45d71aed1396ae6011f2a97001c98efa7a1f1",
+    "commit": "ab4999b436faa8f64f73c047767d2850b0e57d72",
     "branch": "master",
-    "proposta": "bigbang/proposta-4-fundacao"
+    "proposta": "bigbang/proposta-4-fundacao-contrato"
   },
   "paginas": {
     "docs/Produto.md": "Produto",
@@ -27,7 +27,9 @@
     "STACK.md": "Stack",
     "DESIGN.md": "Design",
     "docs/arquitetura.md": "Arquitetura",
-    "docs/decisoes/ADR-0003-distribuicao.md": "Historico"
+    "docs/decisoes/ADR-0003-distribuicao.md": "Historico",
+    "docs/operacao/checklist-producao.md": "Checklist-producao",
+    "docs/operacao/ambiente.md": "Operacao"
   },
   "categorias": {
     "produto": {
@@ -67,7 +69,9 @@
   "codigo": {
     "commit": "6cf9af926447b05150bb6462cb5a2437173a30d2",
     "raizes": [
-      "bigbang.toml"
+      "bigbang.toml",
+      ".bigbang-producao.json",
+      "scripts/ci.py"
     ],
     "excluir": []
   },
@@ -79,10 +83,14 @@
         "TL-F01"
       ],
       "fontes": [
-        "bigbang.toml"
+        "bigbang.toml",
+        ".bigbang-producao.json",
+        "scripts/ci.py"
       ],
       "hashes": {
-        "bigbang.toml": "e1f8fe56dff3fa2ddc3be645c3739435d2feb38fe70dfcdfe5d701d0b2839bd2"
+        "bigbang.toml": "e1f8fe56dff3fa2ddc3be645c3739435d2feb38fe70dfcdfe5d701d0b2839bd2",
+        ".bigbang-producao.json": "53f10c904b51fb56f3eb43baf7b6f6134e08a4c8f97bc14191920ea14e8da31e",
+        "scripts/ci.py": "3b54f137e81bf31faaa9c7f845c7cb4f4b95c3f7dc84a40b4f1b83e1b69a9042"
       },
       "testes": [
         ".bigbang/tests/test_wiki.py:test_complete_inventory_passes",
