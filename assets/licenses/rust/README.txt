@@ -1,1 +1,3 @@
 Third-party Rust dependency notices, including optional and platform-specific locked dependencies. Inclusion does not imply that every dependency is linked on every platform. Original license/copyright notices are reproduced unchanged. The index identifies exact crate versions, original source archives and notice sources. MPL-2.0 covered source (selectors) is available unchanged from the source URL recorded in index.json; no modifications were made.
+
+The rsqlite-vfs-0.1.1 upstream README is preserved byte-for-byte as README.md.txt. Its relative links refer to the upstream repository, not this distribution. Original source URLs in index.json are unchanged.

@@ -3,10 +3,10 @@
   "repositorio": "BrunodosSantosVaz/tourne-la-page",
   "visibilidade": "publico",
   "wiki": {
-    "base": "59f1943b58e52a9e4e9556d7542b9080543340fa",
-    "commit": "91d8c3cab68ac320f1404300039dcaba436ad457",
+    "base": "91d8c3cab68ac320f1404300039dcaba436ad457",
+    "commit": "ecd2d8cc536a891f1403005acc070b2f288dd9d0",
     "branch": "master",
-    "proposta": "bigbang/proposta-4-ci"
+    "proposta": "bigbang/proposta-4-notices"
   },
   "paginas": {
     "docs/Produto.md": "Produto",
