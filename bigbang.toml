@@ -8,10 +8,10 @@ origin = "BrunodosSantosVaz/big-bang"  # de onde vêm as atualizações
 
 [project]
 mode = "autonomous"                        # normal | flash | autonomous (com autonomy.toml); muda com o dono
-name = "Tournepage"
-slug = "tournepage"
+name = "Tourne la page"
+slug = "tourne-la-page"
 owner = "BrunodosSantosVaz"             # login do GitHub do dono
-repository = "BrunodosSantosVaz/tournepage"
+repository = "BrunodosSantosVaz/tourne-la-page"
 visibility = "public"               # privado | publico
 license = "MIT"                        # obrigatório se publico (identificador SPDX, ex.: "MIT")
 
@@ -70,7 +70,7 @@ sensitive_paths = ["src/**/auth/**", "src/**/payments/**", "migrations/**"]
 [board]                              # preenchido em F4
 model = "single"                       # Project único, criado em F4
 labels = "v3"
-number = 0                             # número do Project (F4)
+number = 34                             # número do Project (F4)
 owner = "BrunodosSantosVaz"
 
 [agents]

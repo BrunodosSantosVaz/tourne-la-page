@@ -1,7 +1,7 @@
 <!-- bigbang:inicio v3.1.0 -->
 <!-- Gerado pelo Big Bang v3.1.0 a partir de .bigbang/pipeline/AGENTS.base.md. Não edite: personalize em bigbang.toml. -->
 
-# Instruções para IAs — Tournepage
+# Instruções para IAs — Tourne la page
 
 Este sistema é construído com o **Big Bang v3.1.0** (fluxo v3: quadro único e épico agrupador). Estas
 instruções valem para qualquer IA. Leia nesta ordem, no início de toda sessão: `PRODUTO.md`, `STACK.md`, `DESIGN.md`
