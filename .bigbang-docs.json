@@ -3,10 +3,10 @@
   "repositorio": "BrunodosSantosVaz/tourne-la-page",
   "visibilidade": "publico",
   "wiki": {
-    "base": "575bbaf735168726af9a67e265b75c80244aabfb",
-    "commit": "59f1943b58e52a9e4e9556d7542b9080543340fa",
+    "base": "59f1943b58e52a9e4e9556d7542b9080543340fa",
+    "commit": "91d8c3cab68ac320f1404300039dcaba436ad457",
     "branch": "master",
-    "proposta": "bigbang/proposta-4-entrega"
+    "proposta": "bigbang/proposta-4-ci"
   },
   "paginas": {
     "docs/Produto.md": "Produto",
@@ -77,7 +77,7 @@
     }
   },
   "codigo": {
-    "commit": "70a71d0389f805702c76ea70d607e4290df1bff6",
+    "commit": "470714cd46288c6817a5fedf3a57ea3abe1b67ba",
     "raizes": [
       "app/",
       "crates/",
@@ -306,7 +306,7 @@
         "scripts/generate_brand_assets.py": "47cc76e86230bc66c951de4b56842ba086c9cd4bfdf50b0325e4ae24b105c6ff",
         "scripts/install_desktop.py": "27ca69cf8a3da268d54c72970e729efa42b8fec24870b0b3e2e7586c0f2c6554",
         "scripts/install_portable.py": "71d75636eb801e2bbcaf809c536cb214701cea49312efce5f8fe777eb87c8617",
-        "scripts/test_install_desktop.py": "0924d5222da6f3cb6d5c62243593e7b7edf636f5aa351a5781e3c12841e8b1a7"
+        "scripts/test_install_desktop.py": "9b872ebe62ac79a42f24dab43f2a82f7fa1757f4cf962d2441ed2bd6d89a5011"
       },
       "testes": [
         "app/src/runtime_tests.rs:installed_builds_use_platform_data_without_requiring_a_checkout",
@@ -385,7 +385,7 @@
       "hashes": {
         "crates/storage/Cargo.toml": "3d94acd49f187f4396ee187ce78e4cd3d4a9a2b02c95483d6238ac023e86068c",
         "crates/storage/src/lib.rs": "7f19699b496c422909b42622d059e5c0e2c02cabded285dc3f6e99de824a963d",
-        "crates/storage/tests/library_store.rs": "f12323e42efe77cb24614857a178ddd1df6df1e66acc4aba0e981c1798c7438d"
+        "crates/storage/tests/library_store.rs": "ab64d1590fef783585df90326a0798ea81a77448b5d744fbe4118d26c0d482f1"
       },
       "testes": [
         "crates/storage/tests/library_store.rs:persists_and_deduplicates_library_folders",
@@ -417,7 +417,7 @@
         "app/src/reader/book_details.rs": "4b46c3a4b294489983d94c52bfb5d5e1ed18ddc1584537165b4ea75f712f73c8",
         "app/src/reader/book_details/tests.rs": "25372241920d54412c25b305cc5e3bab9a6f5289fe1f9fa9ad15a9554575f1b1",
         "app/src/reader/library_screen.rs": "1d9a8bd18e781f916abd8083c41db71f9463a07525244d95ff972b399ebc67e9",
-        "app/src/reader/library_screen/about.rs": "baecc4792746423ba0c4b6514eac44ee8c6a2a87141c328edcbb2e4447479b47",
+        "app/src/reader/library_screen/about.rs": "02e2e1601bc2dd0c2c68e2197823c95c2fa32916fe34851e57ef79ec08465b71",
         "app/src/reader/library_screen/review.rs": "ceaa9ba83bf6a9553d788bfe72cd0a2a779d4b32abdf7d40177ccd72a5fc0046",
         "app/src/reader/library_screen/tests.rs": "a306c7671e746df304fd9c629c2b47fdce7e202292cb30db835df98942962d62",
         "app/src/reader/reading_history.rs": "806c24bf7021a15993a7b69b20962fa4239e5a0116d6d7c91b3935879d0c239f",
@@ -526,7 +526,7 @@
         "packaging/linux/build.sh": "9818c5366c345b8d7d6b51b5b8013b9c62a52dcd727f2b5fc3a5b9aa4a760093",
         "scripts/package.py": "a81ef7539e43268e5b226392cea0d04ccec7434b9278b0aa589f66a7c0a97a9f",
         "scripts/test_ci.py": "c1608166738407a4cb9e265be58743728aadec4ae0819e4f2319395ed444432c",
-        "scripts/test_package.py": "3deb28f0a4b8c4c80b6821f7fc7abb537d51f18b38d960fcda881b19f8ee40f6"
+        "scripts/test_package.py": "ec510be5819764586850ae0f2587b57b3120e0a4d83684fdd7c2e7ed521dc814"
       },
       "testes": [
         "scripts/test_package.py:test_linux_bundle_contains_launcher_binary_licenses_and_verified_manifest",
