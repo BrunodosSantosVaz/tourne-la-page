@@ -22,7 +22,7 @@ Sua biblioteca fica no seu computador, e os seus livros nunca são modificados.
 [![Rust](https://img.shields.io/badge/Rust-1.99-6D665D?style=flat-square&logo=rust&logoColor=FCFBF7&labelColor=2B2722)](rust-toolchain.toml)
 [![Iced](https://img.shields.io/badge/Iced-0.14-6D665D?style=flat-square&labelColor=2B2722)](https://iced.rs)
 [![SQLite](https://img.shields.io/badge/SQLite-local-6D665D?style=flat-square&logo=sqlite&logoColor=FCFBF7&labelColor=2B2722)](crates/storage)
-[![Plataformas](https://img.shields.io/badge/Windows%20%C2%B7%20macOS%20%C2%B7%20Linux-x64%20%7C%20arm64-6D665D?style=flat-square&labelColor=2B2722)](#-downloads)
+[![Plataformas](https://img.shields.io/badge/Windows%20%C2%B7%20macOS%20%C2%B7%20Linux-x64%20%7C%20arm64-6D665D?style=flat-square&labelColor=2B2722)](#-downloads-e-instalação)
 
 <br>
 
