@@ -1,8 +1,10 @@
+<p align="center"><img src="docs/design/icone.svg" alt="Ícone do Tourne la page" width="96"></p>
+
 # Tourne la page
 
 Leitor EPUB para Windows, macOS e Linux, com interface nativa em Rust/Iced e dados locais em SQLite.
 
-Biblioteca com capas, busca, favoritos, estrelas e progresso; leitura contínua com índice, fontes do computador, temas editáveis e destaques com comentários. A primeira distribuição 0.x parte da versão aprovada em testes locais. Os limites conhecidos e requisitos ainda pendentes estão documentados na Wiki.
+Biblioteca com capas, busca, favoritos, estrelas e progresso; leitura contínua com índice, fontes do computador, temas editáveis e destaques com comentários. A versão estável **v0.1.0** já está disponível para Windows, macOS e Linux. Limites conhecidos e requisitos ainda pendentes estão documentados na Wiki.
 
 [Downloads e candidatas](https://github.com/BrunodosSantosVaz/tourne-la-page/releases) ·
 [Como instalar](https://github.com/BrunodosSantosVaz/tourne-la-page/wiki/Uso) ·

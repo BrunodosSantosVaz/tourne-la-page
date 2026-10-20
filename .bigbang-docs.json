@@ -3,10 +3,10 @@
   "repositorio": "BrunodosSantosVaz/tourne-la-page",
   "visibilidade": "publico",
   "wiki": {
-    "base": "27193eced3604e5f840f9d0aa5100974db5afa76",
-    "commit": "96cef1e1a2bfe2a2fd41dba275f1b72831360773",
+    "base": "96cef1e1a2bfe2a2fd41dba275f1b72831360773",
+    "commit": "6ec959ffd477b73c2f9001a580635f7b7502aa58",
     "branch": "master",
-    "proposta": "bigbang/proposta-64-executaveis-seguros"
+    "proposta": "bigbang/proposta-68-release-doc17"
   },
   "paginas": {
     "docs/Produto.md": "Produto",
@@ -39,7 +39,8 @@
     "docs/funcionalidades/reader.md": "Leitura-e-controles",
     "docs/funcionalidades/packaging.md": "Distribuicao-nativa",
     "CHANGELOG.md": "Changelog",
-    "docs/Validacao-local-Linux.md": "Validacao-local-Linux"
+    "docs/Validacao-local-Linux.md": "Validacao-local-Linux",
+    "Home.md": "Home"
   },
   "categorias": {
     "produto": {
