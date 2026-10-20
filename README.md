@@ -197,7 +197,7 @@ flowchart LR
 | [`app`](app) | Interface nativa, leitor, biblioteca, temas, fontes e identidade visual |
 | [`epub-core`](crates/epub-core) | Abertura segura e leitura do conteúdo EPUB |
 | [`storage`](crates/storage) | Persistência local em SQLite (WAL), pastas da biblioteca e preferências |
-| [`app-core`](crates/app-core) | Tipos e regras compartilhados |
+| [`app-core`](crates/app-core) | Validação do formato e caso de uso para abrir um EPUB |
 
 <details>
 <summary><b>Stack completa</b></summary>
