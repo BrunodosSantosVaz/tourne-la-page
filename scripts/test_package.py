@@ -85,3 +85,49 @@ class Packages(unittest.TestCase):
                 with self.assertRaises(ValueError):
                     package.bundle(binary, system, version, root / "output")
             self.assertFalse((root / "output").exists())
+
+    def test_install_smoke_resolves_the_launcher_before_changing_working_directory(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            package_root = root / "extracted app"
+            package_root.mkdir()
+            launcher = package_root / "tourne-la-page.exe"
+            launcher.write_bytes(b"native-test-executable")
+            environment = {"TOURNEPAGE_ENV": "homologacao"}
+
+            def launch(arguments, *, executable, cwd, env, check):
+                self.assertTrue(Path(executable).is_absolute())
+                self.assertEqual(executable, str(launcher.resolve()))
+                self.assertEqual(arguments[0], "tourne-la-page")
+                self.assertEqual(arguments[1:], ["--verify-install", "install-verification.json"])
+                self.assertEqual(cwd, package_root)
+                self.assertEqual(env, environment)
+                self.assertTrue(check)
+                (cwd / "install-verification.json").write_text(json.dumps({"database": "ok", "version": "0.2.0"}))
+
+            with patch("scripts.package.subprocess.run", side_effect=launch):
+                package.verify_installation(launcher, package_root, environment, "0.2.0")
+
+    def test_install_smoke_rejects_a_failed_database_or_a_different_binary_version(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            (root / "tourne-la-page.exe").write_bytes(b"native-test-executable")
+            for details in ({"database": "failed", "version": "0.2.0"},
+                            {"database": "ok", "version": "0.1.0"}):
+                def launch(*args, **kwargs):
+                    (root / "install-verification.json").write_text(json.dumps(details))
+                with patch("scripts.package.subprocess.run", side_effect=launch):
+                    with self.assertRaises(SystemExit):
+                        package.verify_installation(root / "tourne-la-page.exe", root, {}, "0.2.0")
+
+    def test_install_smoke_rejects_an_executable_outside_the_expected_package_paths(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            package_root = root / "package"
+            package_root.mkdir()
+            for launcher in (root / "tourne-la-page.exe", package_root / "unexpected.exe"):
+                launcher.write_bytes(b"not-the-package-launcher")
+                with patch("scripts.package.subprocess.run") as run:
+                    with self.assertRaises(ValueError):
+                        package.verify_installation(launcher, package_root, {}, "0.2.0")
+                    run.assert_not_called()
