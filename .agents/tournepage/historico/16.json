@@ -1,0 +1,43 @@
+{
+  "issue": 16,
+  "title": "Consolidar histórico: Play e velocidade percentual",
+  "kind": "retrospective-documentation",
+  "recorded_at": "2026-10-19",
+  "code_commit": "70a71d0389f805702c76ea70d607e4290df1bff6",
+  "wiki_commit": "575bbaf735168726af9a67e265b75c80244aabfb",
+  "page": "Leitura-e-controles",
+  "requirements": [
+    "TL-R02",
+    "TL-R03",
+    "TL-R04"
+  ],
+  "sources": [
+    "app/src/reader.rs",
+    "app/src/reader/action.rs",
+    "app/src/reader/adaptive_scroll.rs",
+    "app/src/reader/bar.rs",
+    "app/src/reader/bar/arrange.rs",
+    "app/src/reader/bar/tests.rs",
+    "app/src/reader/diagnostics.rs",
+    "app/src/reader/popover.rs",
+    "app/src/reader/surface.rs",
+    "app/src/reader/surface/cache.rs",
+    "app/src/reader/surface/drawing.rs",
+    "app/src/reader/surface/heights.rs",
+    "app/src/reader/surface/input.rs",
+    "app/src/reader/surface/layout.rs",
+    "app/src/reader/surface/selection.rs",
+    "app/src/reader/surface/tests.rs",
+    "app/src/reader/surface/widget_impl.rs",
+    "app/src/reader/toolbar.rs",
+    "app/src/reader/toolbar/tests.rs",
+    "app/src/reader/transitions.rs"
+  ],
+  "scenarios": [
+    "app/src/reader/transitions.rs:opening_epub_from_the_library_preserves_a_valid_widget_tree",
+    "app/src/reader/diagnostics.rs:cpu_reader_review",
+    "app/src/reader/diagnostics.rs:resizing_and_collapsing_cannot_leave_an_invisible_menu_open"
+  ],
+  "evidence": "Implementação local previamente experimentada e aprovada pelo dono; consolidação documental atual. A CI do produto e os seis pacotes ainda devem ser comprovados na entrega #4/#10.",
+  "limits": "Não registra TDD retroativo, homologação da candidata, execução destes cenários ou produção. Pendências integrais na Wiki/Limites-e-backlog e issues #28–#36, #42 e #44."
+}

@@ -1,0 +1,25 @@
+{
+  "issue": 11,
+  "title": "Consolidar histórico: Preparação, requisitos e padrões L’Essentiel/Ponytail",
+  "kind": "retrospective-documentation",
+  "recorded_at": "2026-10-19",
+  "code_commit": "70a71d0389f805702c76ea70d607e4290df1bff6",
+  "wiki_commit": "575bbaf735168726af9a67e265b75c80244aabfb",
+  "page": "Fundacao",
+  "requirements": [
+    "TL-F01"
+  ],
+  "sources": [
+    "bigbang.toml",
+    ".bigbang-producao.json",
+    "scripts/ci.py"
+  ],
+  "scenarios": [
+    ".bigbang/tests/test_wiki.py:test_complete_inventory_passes",
+    ".bigbang/tests/test_wiki.py:test_new_implemented_module_without_documentation_blocks_delivery",
+    "scripts/test_ci.py:test_architecture_rejects_a_domain_dependency_on_sqlite_adapter",
+    "scripts/test_ci.py:test_acceptance_rejects_a_named_scenario_that_failed_or_never_executed"
+  ],
+  "evidence": "Implementação local previamente experimentada e aprovada pelo dono; consolidação documental atual. A CI do produto e os seis pacotes ainda devem ser comprovados na entrega #4/#10.",
+  "limits": "Não registra TDD retroativo, homologação da candidata, execução destes cenários ou produção. Pendências integrais na Wiki/Limites-e-backlog e issues #28–#36, #42 e #44."
+}

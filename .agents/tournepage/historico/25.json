@@ -1,0 +1,32 @@
+{
+  "issue": 25,
+  "title": "Consolidar histórico: Lendo com todos os iniciados e progresso por livro",
+  "kind": "retrospective-documentation",
+  "recorded_at": "2026-10-19",
+  "code_commit": "70a71d0389f805702c76ea70d607e4290df1bff6",
+  "wiki_commit": "575bbaf735168726af9a67e265b75c80244aabfb",
+  "page": "Biblioteca-e-progresso",
+  "requirements": [
+    "TL-R01",
+    "TL-R05",
+    "TL-R06"
+  ],
+  "sources": [
+    "app/src/library.rs",
+    "app/src/reader/book_details.rs",
+    "app/src/reader/book_details/tests.rs",
+    "app/src/reader/library_screen.rs",
+    "app/src/reader/library_screen/about.rs",
+    "app/src/reader/library_screen/review.rs",
+    "app/src/reader/library_screen/tests.rs",
+    "app/src/reader/reading_history.rs",
+    "app/src/reader/reading_history/tests.rs"
+  ],
+  "scenarios": [
+    "app/src/reader/reading_history/tests.rs:reading_lists_every_started_unfinished_book_in_recent_order",
+    "app/src/reader/reading_history/tests.rs:closing_from_library_flushes_ratings_favorites_and_book_comments_without_a_reader",
+    "app/src/reader/reading_history/tests.rs:partial_loading_and_invalid_positions_never_mark_a_book_as_finished"
+  ],
+  "evidence": "Implementação local previamente experimentada e aprovada pelo dono; consolidação documental atual. A CI do produto e os seis pacotes ainda devem ser comprovados na entrega #4/#10.",
+  "limits": "Não registra TDD retroativo, homologação da candidata, execução destes cenários ou produção. Pendências integrais na Wiki/Limites-e-backlog e issues #28–#36, #42 e #44."
+}

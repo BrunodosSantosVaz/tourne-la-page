@@ -1,0 +1,32 @@
+{
+  "issue": 13,
+  "title": "Consolidar histórico: Importação segura de EPUB e abertura progressiva",
+  "kind": "retrospective-documentation",
+  "recorded_at": "2026-10-19",
+  "code_commit": "70a71d0389f805702c76ea70d607e4290df1bff6",
+  "wiki_commit": "575bbaf735168726af9a67e265b75c80244aabfb",
+  "page": "Importacao-EPUB",
+  "requirements": [
+    "TL-S01",
+    "TL-R01",
+    "TL-R02"
+  ],
+  "sources": [
+    "crates/epub-core/Cargo.toml",
+    "crates/epub-core/src/archive.rs",
+    "crates/epub-core/src/content.rs",
+    "crates/epub-core/src/lib.rs",
+    "crates/epub-core/src/model.rs",
+    "crates/epub-core/tests/boundaries.rs",
+    "crates/epub-core/tests/parser.rs",
+    "examples/amostra-tournepage.epub"
+  ],
+  "scenarios": [
+    "crates/epub-core/tests/parser.rs:repeated_chapters_cannot_amplify_the_total_text_budget",
+    "crates/epub-core/tests/parser.rs:rejects_excessive_spine_references_before_emitting_chapters",
+    "crates/epub-core/tests/boundaries.rs:legacy_ncx_resolves_encoded_links_and_fragments_to_human_chapter_names",
+    "crates/epub-core/tests/boundaries.rs:encoded_and_external_chapter_references_never_escape_the_archive"
+  ],
+  "evidence": "Implementação local previamente experimentada e aprovada pelo dono; consolidação documental atual. A CI do produto e os seis pacotes ainda devem ser comprovados na entrega #4/#10.",
+  "limits": "Não registra TDD retroativo, homologação da candidata, execução destes cenários ou produção. Pendências integrais na Wiki/Limites-e-backlog e issues #28–#36, #42 e #44."
+}
